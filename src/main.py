@@ -1,37 +1,65 @@
 """
 A script to run and summarise random tournaments.
+
+Generates:
+
+    - <directory>/parameters.csv a csv file with parameters for each tournament
+    - <directory>/data/<seed>.csv a csv file summarising a tournament for a
+      given <seed>.
 """
 
 import axelrod as axl
+import pandas as pd
 import random
-import glob
+import sys
 
 max_size = len(axl.strategies)  # Max number of strategies
-turns = 100  # Number of turns of each tournament
-repetitions = 200  # Number of repetitions
-directory = "../data/"  # Directory in which to save the files
+min_size = 2  # Min number of strategies
 
+max_turns = 200
+min_turns = 1
+
+max_repetitions = 100
+min_repetitions = 10
+
+# Read the directory
 try:
-    # Attempt to read directory to count number of tournaments that have been
-    # run
-    seed = max([int(f[len(directory):-4])
-                for f in glob.glob("{}*csv".format(directory))])
-    seed += 1
-except ValueError:
+    directory = sys.argv[1]
+except IndexError:
+    directory = "../data/"
+
+# Attempt to read directory to count number of tournaments that have been run
+try:
+    parameters_df = pd.read_csv("{}parameters.csv".format(directory))
+    seed = int(parameters_df.seed.max() + 1)
+except OSError:
+    parameters_df = pd.DataFrame(columns=["seed", "turns", "repetitions"])
     seed = 0
 
 while True:
-    axl.seed(seed)  # Seed the tournament
-
-    # Select the strategies
-    size = random.randint(2, 10)
+    # Define parameter
+    axl.seed(seed)
+    size = random.randint(min_size, max_size)
     strategies = random.sample(axl.strategies, size)
     players = [s() for s in strategies]
+    next_sample = seed + 5
 
-    # Run the tournament
-    tournament = axl.Tournament(players, turns=turns, repetitions=repetitions)
-    results = tournament.play()
-    results.write_summary("{}{}.csv".format(directory, seed))
+    while seed < next_sample:
+        # Select the strategies
+        turns = random.randint(min_turns, max_turns)
+        repetitions = random.randint(min_repetitions, max_repetitions)
+        df = pd.DataFrame([[seed, turns, repetitions] + players],
+                          columns=["seed", "turns", "repetitions"] +
+                                  ["player_{}".format(i) for i in range(size)])
+        parameters_df = parameters_df.append(df)
 
-    # Increment the seed
-    seed += 1
+        # Run the tournament
+        axl.seed(seed)
+        tournament = axl.Tournament(players, turns=turns,
+                                    repetitions=repetitions)
+        results = tournament.play(processes=0)
+        results.write_summary("{}data/{}.csv".format(directory, seed))
+        parameters_df.to_csv("{}parameters.csv".format(directory))
+
+        # Increment the seed
+        seed += 1
