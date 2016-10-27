@@ -13,7 +13,7 @@ import pandas as pd
 import random
 import sys
 
-max_size = 5  #len(axl.strategies)  # Max number of strategies
+max_size = len(axl.strategies)  # Max number of strategies
 min_size = 2  # Min number of strategies
 
 max_turns = 200
@@ -43,7 +43,7 @@ while True:
     size = random.randint(min_size, max_size)
     strategies = random.sample(axl.strategies, size)
     players = [s() for s in strategies]
-    next_sample = seed + 5
+    next_sample = seed + 20
 
     while seed < next_sample:
         # Select the strategies
