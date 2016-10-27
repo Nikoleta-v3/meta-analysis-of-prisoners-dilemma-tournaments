@@ -43,7 +43,7 @@ while True:
     size = random.randint(min_size, max_size)
     strategies = random.sample(axl.strategies, size)
     players = [s() for s in strategies]
-    next_sample = seed + 5
+    next_sample = seed + 20
 
     while seed < next_sample:
         # Select the strategies
