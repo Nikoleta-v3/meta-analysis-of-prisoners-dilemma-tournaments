@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -q workq
+#PBS -N stdaxl
+#PBS -P PR350
+#PBS -o axlmlout.txt
+#PBS -e axlmlerr.txt
+#PBS -l select=1:ncpus=16:mpiprocs=16
+#PBS -l place=scatter:excl
+#PBS -l walltime=30:00:00
+
+export MPLBACKEND="agg"
+# Run std
+cd /home/smavak/axlml/src
+/home/smavak/anaconda3/bin/python main.py /scratch/smavak/axl/data/
