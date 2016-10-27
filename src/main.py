@@ -13,7 +13,7 @@ import pandas as pd
 import random
 import sys
 
-max_size = 5  #len(axl.strategies)  # Max number of strategies
+max_size = len(axl.strategies)  # Max number of strategies
 min_size = 2  # Min number of strategies
 
 max_turns = 200
