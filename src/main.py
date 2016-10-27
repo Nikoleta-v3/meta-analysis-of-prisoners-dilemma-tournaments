@@ -13,7 +13,7 @@ import pandas as pd
 import random
 import sys
 
-max_size = len(axl.strategies)  # Max number of strategies
+max_size = 5  #len(axl.strategies)  # Max number of strategies
 min_size = 2  # Min number of strategies
 
 max_turns = 200
@@ -33,7 +33,8 @@ try:
     parameters_df = pd.read_csv("{}parameters.csv".format(directory))
     seed = int(parameters_df.seed.max() + 1)
 except OSError:
-    parameters_df = pd.DataFrame(columns=["seed", "turns", "repetitions"])
+    parameters_df = pd.DataFrame(columns=["seed", "size",
+                                          "turns", "repetitions"])
     seed = 0
 
 while True:
@@ -48,10 +49,10 @@ while True:
         # Select the strategies
         turns = random.randint(min_turns, max_turns)
         repetitions = random.randint(min_repetitions, max_repetitions)
-        df = pd.DataFrame([[seed, turns, repetitions] + players],
-                          columns=["seed", "turns", "repetitions"] +
+        df = pd.DataFrame([[seed, size, turns, repetitions] + players],
+                          columns=["seed", "size", "turns", "repetitions"] +
                                   ["player_{}".format(i) for i in range(size)])
-        parameters_df = parameters_df.append(df)
+        parameters_df = pd.concat([parameters_df, df], ignore_index=True)
 
         # Run the tournament
         axl.seed(seed)
@@ -59,7 +60,7 @@ while True:
                                     repetitions=repetitions)
         results = tournament.play(processes=0)
         results.write_summary("{}data/{}.csv".format(directory, seed))
-        parameters_df.to_csv("{}parameters.csv".format(directory))
+        parameters_df.to_csv("{}parameters.csv".format(directory), index=False)
 
         # Increment the seed
         seed += 1
