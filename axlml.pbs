@@ -11,4 +11,4 @@
 export MPLBACKEND="agg"
 # Run std
 cd /home/smavak/axlml/src
-/home/smavak/anaconda3/bin/python main.py /scratch/smavak/axl/data/
+/home/smavak/anaconda3/envs/axlml/bin/python main.py /scratch/smavak/axl/data/
