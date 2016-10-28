@@ -34,7 +34,8 @@ try:
     seed = int(parameters_df.seed.max() + 1)
 except OSError:
     parameters_df = pd.DataFrame(columns=["seed", "size",
-                                          "turns", "repetitions"])
+                                          "turns", "repetitions",
+                                          "noise", "probend"])
     seed = 0
 
 while True:
@@ -46,20 +47,34 @@ while True:
     next_sample = seed + 20
 
     while seed < next_sample:
-        # Select the strategies
+        # Select the parameters
         turns = random.randint(min_turns, max_turns)
         repetitions = random.randint(min_repetitions, max_repetitions)
-        df = pd.DataFrame([[seed, size, turns, repetitions] + players],
-                          columns=["seed", "size", "turns", "repetitions"] +
+        noise = random.random()
+        prob_end = random.random()
+        df = pd.DataFrame([[seed, size, turns,
+                            repetitions, noise, prob_end] + players],
+                          columns=["seed", "size", "turns",
+                                   "repetitions", "noise", "probend"] +
                                   ["player_{}".format(i) for i in range(size)])
         parameters_df = pd.concat([parameters_df, df], ignore_index=True)
 
-        # Run the tournament
-        axl.seed(seed)
-        tournament = axl.Tournament(players, turns=turns,
-                                    repetitions=repetitions)
-        results = tournament.play(processes=0)
-        results.write_summary("{}data/{}.csv".format(directory, seed))
+        # Create the tournaments
+        tournaments = []
+        tournaments.append(axl.Tournament(players, turns=turns,
+                                          repetitions=repetitions))
+        tournaments.append(axl.Tournament(players, turns=turns,
+                                          repetitions=repetitions, noise=noise))
+        tournaments.append(axl.ProbEndTournament(players, prob_end=prob_end,
+                                                 repetitions=repetitions))
+
+        # Run the tournaments
+        for tournament, name in zip(tournaments, ["std", "noise", "probend"]):
+            axl.seed(seed)
+            results = tournament.play(processes=0)
+            results.write_summary("{}{}-data/{}.csv".format(directory, name,
+                                                            seed))
+        # Write the parameters for the complete tournament
         parameters_df.to_csv("{}parameters.csv".format(directory), index=False)
 
         # Increment the seed
