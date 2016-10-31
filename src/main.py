@@ -71,7 +71,7 @@ while True:
         # Run the tournaments
         for tournament, name in zip(tournaments, ["std", "noise", "probend"]):
             axl.seed(seed)
-            results = tournament.play(processes=0)
+            results = tournament.play(processes=0, progress_bar=False)
             results.write_summary("{}{}-data/{}.csv".format(directory, name,
                                                             seed))
         # Write the parameters for the complete tournament
