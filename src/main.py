@@ -14,7 +14,7 @@ import random
 import sys
 
 max_size = len(axl.strategies)  # Max number of strategies
-min_size = 5  # Min number of strategies
+min_size = 3  # Min number of strategies
 
 max_turns = 200
 min_turns = 1
