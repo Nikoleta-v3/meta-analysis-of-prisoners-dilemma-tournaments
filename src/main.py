@@ -13,8 +13,8 @@ import pandas as pd
 import random
 import sys
 
-max_size = 3#  len(axl.strategies)  # Max number of strategies
-min_size = 2  # Min number of strategies
+max_size = len(axl.strategies)  # Max number of strategies
+min_size = 3  # Min number of strategies
 
 max_turns = 200
 min_turns = 1
@@ -67,9 +67,13 @@ while True:
                                           repetitions=repetitions, noise=noise))
         tournaments.append(axl.ProbEndTournament(players, prob_end=prob_end,
                                                  repetitions=repetitions))
+        tournaments.append(axl.ProbEndTournament(players, prob_end=prob_end,
+                                                 repetitions=repetitions,
+                                                 noise=noise))
 
         # Run the tournaments
-        for tournament, name in zip(tournaments, ["std", "noise", "probend"]):
+        for tournament, name in zip(tournaments, ["std", "noise", "probend",
+                                                  "noise-probend"]):
             axl.seed(seed)
             results = tournament.play(processes=0, progress_bar=False)
             results.write_summary("{}{}-data/{}.csv".format(directory, name,
