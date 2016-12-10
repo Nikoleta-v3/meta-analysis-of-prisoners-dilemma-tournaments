@@ -36,6 +36,7 @@ dependencies:
   - nbformat==4.1.0
   - notebook==4.2.3
   - numpy==1.11.2
+  - pandas==0.19.1
   - pexpect==4.2.1
   - pickleshare==0.7.4
   - prompt-toolkit==1.0.8
@@ -46,6 +47,8 @@ dependencies:
   - pytz==2016.7
   - pyzmq==16.0.0
   - qtconsole==4.2.1
+  - scipy==0.18.1
+  - seaborn==0.7.1
   - simplegeneric==0.8.1
   - six==1.10.0
   - spark-parser==1.4.0
@@ -57,5 +60,5 @@ dependencies:
   - wcwidth==0.1.7
   - widgetsnbextension==1.2.6
   - xdis==3.2.0
-prefix: /Users/vince/anaconda3/envs/axlml
+prefix: /home/vince/anaconda3/envs/axlml
 
