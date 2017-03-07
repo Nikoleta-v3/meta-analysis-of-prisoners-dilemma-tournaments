@@ -120,8 +120,6 @@ def reading_in_data(parameters_df):
         # add the common params
         dfs = reader.common_rows(dfs)
 
-        dfs = pd.concat(dfs)
-
         data_frame = data_frame.append(dfs)
 
     return data_frame
