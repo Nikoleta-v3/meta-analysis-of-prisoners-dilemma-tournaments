@@ -95,7 +95,7 @@ def reading_in_data(parameters_df):
     A function for reading in each of the 4 data sets for a given parameters
     row. It concats everything together and returns a pandas Data Frame.
     """
-    data_frame = pd.DataFrame()
+    data_frame = []
     for i in parameters_df.index:
         dfs = []
         row = parameters_df.loc[i]
@@ -120,7 +120,7 @@ def reading_in_data(parameters_df):
         # add the common params
         dfs = reader.common_rows(dfs)
 
-        data_frame = data_frame.append(dfs)
+        data_frame.append(dfs)
 
     return data_frame
 
