@@ -117,6 +117,10 @@ class TestReadingIn(unittest.TestCase):
 
     def test_reading_in_data(self):
         df = read_in.reading_in_data(self.parameters_df)
+        temp = [pandas.concat(dfs) for dfs in df]
+
+        df = pandas.concat(temp)
+
         probend_data = df[df['turns'].isnull()]
         self.assertEqual(len(probend_data), len(df[df['probend'].notnull()]))
         self.assertEqual(list(probend_data.CC_rate),

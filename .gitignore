@@ -3,3 +3,4 @@ data/
 .idea/
 src/__pycache__/
 Example.ipynb
+src/data_frame.csv
