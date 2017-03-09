@@ -12,13 +12,13 @@ def strategies_properties():
                                            'Makes_use_of_length'])
 
     for i, strategy in enumerate(axl.strategies):
-        use_of_game = 0
-        use_of_length = 0
+        use_of_game = False
+        use_of_length = False
 
         if 'game' in strategy.classifier['makes_use_of']:
-            use_of_game = 1
+            use_of_game = True
         if 'length' in strategy.classifier['makes_use_of']:
-            use_of_length = 0
+            use_of_length = True
         axl_strategies.loc[i] = [strategy.name,
                                  strategy.classifier['stochastic'],
                                  strategy.classifier['memory_depth'],
@@ -53,39 +53,36 @@ class Reader():
 
     def get_noise_df(self):
         noise = pd.read_csv('../data/noise-data/{}.csv'.format(int(self.seed)))
-        noise['noise'] = [self.noise_param for _ in range(len(noise))]
-        noise['turns'] = [self.turns_param for _ in range(len(noise))]
+        noise['noise'] = self.noise_param
+        noise['turns'] = self.turns_param
 
         return noise
 
     def get_probend_noise_df(self):
         probend_noise = pd.read_csv('../data/noise-probend-data/{}.csv'.format(
                                                                 int(self.seed)))
-        probend_noise['noise'] = [self.noise_param
-                                  for _ in range(len(probend_noise))]
-        probend_noise['probend'] = [self.probend_param
-                                    for _ in range(len(probend_noise))]
+        probend_noise['noise'] = self.noise_param
+        probend_noise['probend'] = self.probend_param
+
 
         return probend_noise
 
     def get_standar_df(self):
         std = pd.read_csv('../data/std-data/{}.csv'.format(int(self.seed)))
-        std['turns'] = [self.turns_param for _ in range(len(std))]
-
+        std['turns'] = self.turns_param
         return std
 
     def get_proend_df(self):
         probend = pd.read_csv('../data/probend-data/{}.csv'.format(int(
                                                                     self.seed)))
-        probend['probend'] = [self.probend_param for _ in range(len(probend))]
+        probend['probend'] = self.probend_param
 
         return probend
 
     def common_rows(self, df):
-        for i in range(len(df)):
-            df[i]['repetitions'] = [self.repetitions for _ in range(len(df[i]))]
-            df[i]['size'] = [self.size for _ in range(len(df[i]))]
-            df[i]['seed'] = [self.seed for _ in range(len(df[i]))]
+        df['repetitions'] = self.repetitions
+        df['size'] = self.size
+        df['seed'] = self.seed
 
         return df
 
@@ -95,38 +92,31 @@ def reading_in_data(parameters_df):
     A function for reading in each of the 4 data sets for a given parameters
     row. It concats everything together and returns a pandas Data Frame.
     """
-    data_frame = []
-    for i in parameters_df.index:
-        dfs = []
-        row = parameters_df.loc[i]
+    list_frames = []
+    for _, row in parameters_df.iterrows():
         reader = Reader(row)
 
         # get noise
         noise = reader.get_noise_df()
-        dfs.append(noise)
+        noise = reader.common_rows(noise)
+        list_frames.append(noise)
 
         # get probend noise
         probend_noise = reader.get_probend_noise_df()
-        dfs.append(probend_noise)
+        probend_noise = reader.common_rows(probend_noise)
+        list_frames.append(probend_noise)
 
         # get standar
         std = reader.get_standar_df()
-        dfs.append(std)
+        std = reader.common_rows(std)
+        list_frames.append(std)
 
         # get probend
         probend = reader.get_proend_df()
-        dfs.append(probend)
+        probend = reader.common_rows(probend)
+        list_frames.append(probend)
 
-        # add the common params
-        dfs = reader.common_rows(dfs)
-
-        data_frame.append(dfs)
+    data_frame = pd.concat(list_frames, ignore_index=True)
 
     return data_frame
 
-# parameters_df = parameters_data_frame()
-# df = reading_in_data(parameters_df)
-# strategies_df = strategies_properties()
-#
-# final_df = pd.merge(df, strategies_df, on='Name')
-# final_df.to_csv('data.csv')

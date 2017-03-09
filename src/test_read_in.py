@@ -18,10 +18,11 @@ class TestStrategies(unittest.TestCase):
             self.assertIsInstance(memory_depth, float)
 
         for use_of_game in self.df['Makes_use_of_game']:
-            self.assertLessEqual(use_of_game, 1.00)
+
+            self.assertIsInstance(use_of_game, bool)
 
         for use_of_length in self.df['Makes_use_of_length']:
-            self.assertLessEqual(use_of_length, 1.00)
+            self.assertIsInstance(use_of_length, bool)
 
     def test_specific_strategy_properties(self):
 
@@ -117,9 +118,6 @@ class TestReadingIn(unittest.TestCase):
 
     def test_reading_in_data(self):
         df = read_in.reading_in_data(self.parameters_df)
-        temp = [pandas.concat(dfs) for dfs in df]
-
-        df = pandas.concat(temp)
 
         probend_data = df[df['turns'].isnull()]
         self.assertEqual(len(probend_data), len(df[df['probend'].notnull()]))
@@ -129,4 +127,13 @@ class TestReadingIn(unittest.TestCase):
         turns_data = df[df['probend'].isnull()]
         self.assertEqual(len(turns_data), len(df[df['turns'].notnull()]))
         self.assertEqual(list(turns_data.CC_rate),
-                        list(df[df['turns'].notnull()].CC_rate))
+                         list(df[df['turns'].notnull()].CC_rate))
+        self.assertEqual(sum(df.turns.notnull()) + sum(df.probend.notnull()),
+                         len(df))
+
+        # some extra tests
+        self.assertTrue(all(df.seed.notnull()))
+        self.assertTrue(all(df.repetitions.notnull()))
+        self.assertTrue(all(df['size'].notnull()))
+
+
