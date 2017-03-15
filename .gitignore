@@ -1,6 +1,15 @@
-data/
-.ipynb_checkpoints/
-
 # pycharm files
 .idea/*
 
+# notebooks`
+src/__pycache__/
+src/ignored nbs/*
+Example.ipynb
+*/.ipynb_checkpoints/*
+
+
+# data
+src/data_frame.csv
+src/df.csv
+src/data/*
+data/*
