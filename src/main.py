@@ -45,7 +45,7 @@ try:
     seed = int(df["seed"].max() + 1)
 
 except ValueError:
-    seed = 0
+    seed = min_seed
 
 try:
     parameters_df = pd.read_csv("{}parameters_{}-{}.csv".format(directory,
