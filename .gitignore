@@ -1,5 +1,7 @@
 data/
 .ipynb_checkpoints/
-# pycharm files
-.idea/*
-
+.idea/
+src/__pycache__/
+Example.ipynb
+src/data_frame.csv
+src/df.csv
