@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -q workq
+#PBS -N 14000-14999
+#PBS -P PR350
+#PBS -o axlml14000-14999out.txt
+#PBS -e axlml14000-14999err.txt
+#PBS -l select=1:ncpus=16:mpiprocs=16
+#PBS -l place=scatter:excl
+#PBS -l walltime=70:00:00
+
+export MPLBACKEND="agg"
+# Run std
+cd /home/c1569433/rsc/axlml/src
+/home/c1569433/anaconda3/envs/axlml/bin/python main.py /scratch/c1569433/axlml/data/ 14000 15000 
