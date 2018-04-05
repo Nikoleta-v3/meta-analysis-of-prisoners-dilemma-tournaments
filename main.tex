@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[margin=2.5cm, includefoot, footskip=30pt]{geometry}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1}
+
+%%%%Packages%%%%
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphics}
+\usepackage{multicol}
+\usepackage{algorithm,algorithmic}
+%%%%%%%%%%%%%%%%%
+
+\setlength{\tabcolsep}{3pt}
+
+\title{Applying modern data analysis techniques to tournament results of the
+Iterated Prisoner's Dilemma.}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{The Prisoner's Dilemma}
+
+The Prisoner's Dilemma is a two player repeated game commonly known in Game Theory
+as the model of cooperative behaviour. Each of the players has two strategies,
+to either cooperate (C) or defect (D). The decisions are made simultaneously
+and independently. The normal form representation of the game is given by
+matrix~\ref{matrix:pd}.
+
+\begin{equation}\label{matrix:pd}
+    \begin{bmatrix}
+    (R,R) & (S,T)  \\
+    (T,S) & (P,P)
+    \end{bmatrix}
+\end{equation}
+
+where the payoffs \((R, P, S, T)\) are constrained by equations (\ref{eq:constrain_one})
+and (\ref{eq:constrain_two}).
+
+\begin{equation}\label{eq:constrain_one}
+    T > R > P > S,
+\end{equation}
+
+\begin{equation}\label{eq:constrain_two}
+    2R > T + S.
+\end{equation}
+
+In the one shot game the Nash equilibrium is given at (D, D) and both players
+received a payoff of \(P\). Thus, at the point where both players defect.
+In the repeated form of the game the behaviour becomes more complicated. The optimal
+behaviour of a player in the repeated game, in the Iterated Prisoner's Dilemma,
+has been the focus of research for years.
+
+An interesting approach was introduced in 1980 by, where a computer tournament
+was used to tackle the same question.
+
+\begin{itemize}
+    \item The definition of a strategy
+    \item The definition of a tournament.
+\end{itemize}
+
+\section{Collecting data}
+
+For performing a large number of computer tournaments the open source package
+Axelrod Library is used in this work. The package was introduced in 2015,
+it is written in the programming language Python and it allow us to perform
+a number of tournaments with different strategies. The payoff values used in
+Axelrod are \((3, 1, 0, 5)\) and the following type of tournaments have been performed.
+
+There are several tournament types introduced in the literature that have not been
+discussed.
+
+\begin{enumerate}
+    \item \textbf{Standard tournament}. A round robin tournament where
+    the number of turns for each match can vary between 200 and 1. The tournament
+    is repeated between 10 and 100 times.
+    \item \textbf{Noisy tournament}. Similar to a standard tournament. A noisy
+    tournament in a round robin tournament where noise is introduced. Noise is the
+    probability that a players action is flipped. The probability of noise is
+    ranging between 0 and 1.
+    \item \textbf{Probabilistic ending tournament}. Similar to a standard tournament
+    however in a probabilistic ending tournament the number of turns is not specified.
+    There is a probability (ranges between 0 and 1) that the match will end in
+    the next round. Probabilistic ending tournament will be referred to as
+    probend hereupon.
+    \item \textbf{Noisy and Probabilistic ending tournament}. A combination of
+    noisy and probabilistic ending tournaments.
+\end{enumerate}
+
+The process for generating the data set is described by Algorithm~\ref{alg:tournaments}.
+Every 20 iterations of a random seed a new sample is chosen. For each sample, for 20
+repetitions random numbers of turns, repetitions of the tournament, the probability of
+noise in the tournament and the probability of the game ending in after each interaction
+are sampled.
+
+For that set of parameters, four types of tournaments (as discussed above) are conducted.
+A standard one, a noisy one, a probend one and lastly a probend with noise.
+
+\begin{algorithm}
+    \caption{Generating data}
+    \label{alg:tournaments}
+      \begin{algorithmic}[1]
+        \FOR{seed \textbf{in} 10000}
+            \IF{$seed \ mod \ 20 =0$}
+                \STATE size $\gets$ random  size
+                \STATE players $\gets$ random players
+             \ELSE
+                 \STATE turns $\gets$ random turns
+                 \STATE repetitions  $\gets$  random  repetitions
+                 \STATE noise  $\gets$ random  noise  probability
+                 \STATE end  $\gets$  random end probability
+                 \STATE standard results $\gets$ tournament(turns, players, repetitions) 
+                 \STATE noise results $\gets$ tournament(turns, players, repetitions, noise)
+                 \STATE probend results $\gets$ tournament(players, repetitions, end)
+                 \STATE probend noise results $\gets$ tournament(players, repetitions, noise, end)
+             \ENDIF
+             \RETURN standard, noise, probend, probend noise results
+        \ENDFOR
+      \end{algorithmic}
+\end{algorithm}
+
+Once a tournaments is performed we export a summary of the performance
+of each strategy in the tournament. In the following sections we discuss how we
+manipulate the result set exported by Axelrod and hold a data analysis.
+
+\section{Data preparation}
+
+The data set used for the study is the combination of all of these summary data sets.
+The structure of the data set is shown in Table~\ref{table:result_set}. Each row
+represents a player in a given tournament.
+
+Name is the name of the strategy. Stochastic, Memory depth and Use of arguments are
+characteristics of the given strategy. The performance of the strategy is reflected
+by columns Rate, Median score, Rank and Wins.
+
+The environment and the type of tournaments are captured by columns Noise, Probend,
+Repetitions, Size and Turns. Note that when turns are non given the tournament is a
+probabilistic ending one, and vise versa. Similarly, when Noise argument in non given
+the tournament is known to be standard. Finally, when both Noise and Probend are
+non zero then the tournament is an probabilistic and noisy tournament
+
+\begin{table}[htpb]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{ccccccccccccccccccccccccccccccccc}
+\toprule
+% columns
+Name & Stochastic & \multicolumn{1}{p{2cm}}{\centering Memory \\ depth} &
+\multicolumn{1}{p{2cm}}{\centering Use of \\ game} &
+\multicolumn{1}{p{2cm}}{\centering Use of \\ length} & CC rate &  CD rate &
+\multicolumn{1}{p{2cm}}{\centering Cooperation \\rating} & DC rate & DD rate &
+Median score &  Rank &  Wins &  Noise  &  Probend & Repetitions &  Seed & Size & Turns \\
+\midrule
+% first row
+Adaptive & False & inf & True & False & 0.195 &  0.214 & 0.409 & 0.279 & 0.310 &
+2.430 & 14 &  77.0 &  0.391 & NaN & 25.0 & 0.0 & 101.0 & 148.0 \\
+% second row
+Adaptive & False & inf & True & False & 0.783 & 0.194 & 0.928 & 0.012 & 0.009 &
+2.292 & 88 & 5.0 &  0.391 & 0.370 & 25.0 & 0.0 & 101.0 & NaN \\
+\bottomrule
+\end{tabular}}
+\caption{Result Set}
+\label{table:result_set}
+\end{table}
+
+\begin{itemize}
+    \item the cooperation in each environment
+    \item show that got a uniform distribution of our parameters
+\end{itemize}
+In this work each tournament type is studied individually. An individual data set
+containing the following information is constructed for each type.
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item tournament index \(i\)
+        \item tournament size \(N_{i}\)
+        \item cooperation rating \((C_{r})\)
+        \item rank \((r_{i})\)
+        \item normalized rank \(\bar{r_{i}} = \frac{r_{i}}{N_{i}}\)
+        \item maximum cooperation rating \(C^{*}_{r}\)
+        \item minimum cooperation rating  \(\tilde{C_{r}}\)
+        \item normalised rank of maximum cooperator \(\bar{r_{C}}\)
+        \item normalised rank of minimum cooperator \(\bar{r_{D}}\)
+        \item mean cooperation rating \(\bar{C_{r}}\)
+        \item median cooperation rating \(\breve{C_{r}}\)
+        \item \(C\) ratio of the winner \(C_{W}\)
+        \item \(C\) ratio of the looser \(C_{L}\)
+        \item standard deviation of the cooperating ratio \(\sigma\).
+    \end{itemize}
+    \end{multicols}
+
+\section{Analysis}
+
+\begin{itemize}
+\item add \(r\) plots
+\item some more plots
+\end{itemize}
+\end{document}
