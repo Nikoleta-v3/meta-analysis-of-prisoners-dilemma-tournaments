@@ -11,6 +11,8 @@
 \usepackage{graphics}
 \usepackage{multicol}
 \usepackage{algorithm,algorithmic}
+\usepackage{graphicx}
+\usepackage{subcaption}
 %%%%%%%%%%%%%%%%%
 
 \setlength{\tabcolsep}{3pt}
@@ -23,13 +25,22 @@ Iterated Prisoner's Dilemma.}
 
 \maketitle
 
-\section{The Prisoner's Dilemma}
+\section{Introduction}
 
-The Prisoner's Dilemma is a two player repeated game commonly known in Game Theory
-as the model of cooperative behaviour. Each of the players has two strategies,
-to either cooperate (C) or defect (D). The decisions are made simultaneously
-and independently. The normal form representation of the game is given by
-matrix~\ref{matrix:pd}.
+According to Charles Darwin’s theory of evolution~\cite{oldroyd1986}, natural
+selection is ruled by the survival of the fittest. However, in spite of all the
+`selfish genes` it is observed that in interactions both social and biological
+cooperation emerges. Individuals that cooperate more than other can even outperform
+their population. Thus the following question arises: why cooperation emerges;
+More over, how cooperative an individual must be to perform well in their respective
+environment.
+
+In the field of Game Theory the game of the Prisoner's Dilemma (PD) has been used
+to explain the emerge of cooperative behaviour. The PD is a \(2\) player game
+where both players have two strategies. They can either cooperate (C) or defect (D)
+with one another. Their decisions are made simultaneously and independently.
+
+The normal form representation of the game is given by matrix~\ref{matrix:pd}.
 
 \begin{equation}\label{matrix:pd}
     \begin{bmatrix}
@@ -49,26 +60,31 @@ and (\ref{eq:constrain_two}).
     2R > T + S.
 \end{equation}
 
-In the one shot game the Nash equilibrium is given at (D, D) and both players
-received a payoff of \(P\). Thus, at the point where both players defect.
-In the repeated form of the game the behaviour becomes more complicated. The optimal
-behaviour of a player in the repeated game, in the Iterated Prisoner's Dilemma,
-has been the focus of research for years.
+Constraint~\ref{eq:constrain_one} ensures that D dominates the first action C
+and constraint~\ref{eq:constrain_two} ensures that a social dilemma arises. That
+is because the sum of the utilities to both players is best when they both cooperate.
 
-An interesting approach was introduced in 1980 by, where a computer tournament
-was used to tackle the same question.
+Though not many insights can be gained from one shot game, complex behaviour that
+allow further investigation arise in the repeated form; in the Iterated Prisoner's
+Dilemma (IPD).
 
-\begin{itemize}
-    \item The definition of a strategy
-    \item The definition of a tournament.
-\end{itemize}
+In the 1980’s, a political scientist called Robert Axelrod carried out a computer
+tournament. Scholars from various disciplines were invited to submit strategies
+in computer code and they would compete in a round robin tournament where the
+strategy with the highest average score would be the winner. Axelrod’s tournament
+has been used to explain how cooperation can be evolutionarily advantageous.
+
+Strategies are a set of rules used to describe to a player how to play the IPD game.
+The research of computer tournaments includes studying the interactions of such
+strategies and the exploration of a strategy that dominates them all.
+
 
 \section{Collecting data}
 
 For performing a large number of computer tournaments the open source package
-Axelrod Library is used in this work. The package was introduced in 2015,
+Axelrod Library~\cite{axelrodproject} is used. The package was introduced in 2015,
 it is written in the programming language Python and it allow us to perform
-a number of tournaments with different strategies. The payoff values used in
+a number of different tournaments with different strategies. The payoff values used in
 Axelrod are \((3, 1, 0, 5)\) and the following type of tournaments have been performed.
 
 There are several tournament types introduced in the literature that have not been
@@ -129,48 +145,66 @@ manipulate the result set exported by Axelrod and hold a data analysis.
 
 \section{Data preparation}
 
-The data set used for the study is the combination of all of these summary data sets.
-The structure of the data set is shown in Table~\ref{table:result_set}. Each row
-represents a player in a given tournament.
-
-Name is the name of the strategy. Stochastic, Memory depth and Use of arguments are
-characteristics of the given strategy. The performance of the strategy is reflected
-by columns Rate, Median score, Rank and Wins.
+Each tournaments exports a summary of the results. These are separated by tournament
+type. The structure of a single row of the results set is shown in
+Table~\ref{table:result_set}. Name is the name of the strategy. Stochastic,
+Memory depth and Use of arguments are characteristics of the given strategy.
+The performance of the strategy is reflected by columns Rate, Median score, Rank and Wins.
 
 The environment and the type of tournaments are captured by columns Noise, Probend,
 Repetitions, Size and Turns. Note that when turns are non given the tournament is a
 probabilistic ending one, and vise versa. Similarly, when Noise argument in non given
 the tournament is known to be standard. Finally, when both Noise and Probend are
-non zero then the tournament is an probabilistic and noisy tournament
+non zero then the tournament is an probabilistic and noisy tournament.
 
 \begin{table}[htpb]
-\centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{ccccccccccccccccccccccccccccccccc}
-\toprule
-% columns
-Name & Stochastic & \multicolumn{1}{p{2cm}}{\centering Memory \\ depth} &
-\multicolumn{1}{p{2cm}}{\centering Use of \\ game} &
-\multicolumn{1}{p{2cm}}{\centering Use of \\ length} & CC rate &  CD rate &
-\multicolumn{1}{p{2cm}}{\centering Cooperation \\rating} & DC rate & DD rate &
-Median score &  Rank &  Wins &  Noise  &  Probend & Repetitions &  Seed & Size & Turns \\
-\midrule
-% first row
-Adaptive & False & inf & True & False & 0.195 &  0.214 & 0.409 & 0.279 & 0.310 &
-2.430 & 14 &  77.0 &  0.391 & NaN & 25.0 & 0.0 & 101.0 & 148.0 \\
-% second row
-Adaptive & False & inf & True & False & 0.783 & 0.194 & 0.928 & 0.012 & 0.009 &
-2.292 & 88 & 5.0 &  0.391 & 0.370 & 25.0 & 0.0 & 101.0 & NaN \\
-\bottomrule
-\end{tabular}}
-\caption{Result Set}
-\label{table:result_set}
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{ccccccccccccccccccccccccccccccccc}
+    \toprule
+    % columns
+    Name & Stochastic & \multicolumn{1}{p{2cm}}{\centering Memory \\ depth} &
+    \multicolumn{1}{p{2cm}}{\centering Use of \\ game} &
+    \multicolumn{1}{p{2cm}}{\centering Use of \\ length} & CC rate &  CD rate &
+    \multicolumn{1}{p{2cm}}{\centering Cooperation \\rating} & DC rate & DD rate &
+    Median score &  Rank &  Wins &  Noise  &  Probend & Repetitions &  Seed & Size & Turns \\
+    \midrule
+    % first row
+    Adaptive & False & inf & True & False & 0.195 &  0.214 & 0.409 & 0.279 & 0.310 &
+    2.430 & 14 &  77.0 &  0.391 & NaN & 25.0 & 0.0 & 101.0 & 148.0 \\
+    \bottomrule
+    \end{tabular}}
+    \caption{Result Set}
+    \label{table:result_set}
 \end{table}
 
-\begin{itemize}
-    \item the cooperation in each environment
-    \item show that got a uniform distribution of our parameters
-\end{itemize}
+Each types is explored separately. Figure~\ref{fig:cooperation_distributions} shows
+the distributions of the cooperation rating for each type. As suggested probabilistic
+ending tournaments are the most cooperative tournaments. Standard tournaments
+appear to be most cooperative as well and any tournament which includes noise
+the cooperation rating appears to follow a normalised distribution.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/cooperation_distribution_std}
+        \caption{Standard tournament type.}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/cooperation_distribution_noise}
+        \caption{Noise tournament type.}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/cooperation_distribution_probend}
+        \caption{Probend tournament type.}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{images/cooperation_distribution_noise_probend}
+        \caption{Noise Probend tournament type.}
+    \end{subfigure}
+    \caption{Cooperation rating distribution.}\label{fig:cooperation_distributions}
+\end{figure}
+
 In this work each tournament type is studied individually. An individual data set
 containing the following information is constructed for each type.
 
@@ -178,25 +212,25 @@ containing the following information is constructed for each type.
     \begin{itemize}
         \item tournament index \(i\)
         \item tournament size \(N_{i}\)
-        \item cooperation rating \((C_{r})\)
-        \item rank \((r_{i})\)
-        \item normalized rank \(\bar{r_{i}} = \frac{r_{i}}{N_{i}}\)
         \item maximum cooperation rating \(C^{*}_{r}\)
         \item minimum cooperation rating  \(\tilde{C_{r}}\)
-        \item normalised rank of maximum cooperator \(\bar{r_{C}}\)
-        \item normalised rank of minimum cooperator \(\bar{r_{D}}\)
         \item mean cooperation rating \(\bar{C_{r}}\)
         \item median cooperation rating \(\breve{C_{r}}\)
+        \item standard deviation of the cooperating ratio \(\sigma\)
         \item \(C\) ratio of the winner \(C_{W}\)
         \item \(C\) ratio of the looser \(C_{L}\)
-        \item standard deviation of the cooperating ratio \(\sigma\).
+        \item \(C\) to \(CC\) rate of the winner
+        \item \(C\) to \(CD\) rate of the winner
+        \item \(C\) to \(DC\) rate of the winner
+        \item \(C\) to \(DD\) rate of the winner
+        \item normalised rank of maximum cooperator \(\bar{r_{C}}\)
+        \item normalised rank of minimum cooperator \(\bar{r_{D}}\)
     \end{itemize}
     \end{multicols}
 
 \section{Analysis}
 
-\begin{itemize}
-\item add \(r\) plots
-\item some more plots
-\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
 \end{document}
