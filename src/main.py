@@ -34,7 +34,7 @@ except IndexError:
 try:
     min_seed, max_seed = map(int, sys.argv[2:])
 except IndexError:
-    min_seed, max_seed = 0, float('inf')
+    min_seed, max_seed = 0, float("inf")
 
 # Attempt to read directory to count number of tournaments that have been run
 try:
@@ -48,13 +48,13 @@ except ValueError:
     seed = min_seed
 
 try:
-    parameters_df = pd.read_csv("{}parameters_{}-{}.csv".format(directory,
-                                                                min_seed,
-                                                                max_seed))
+    parameters_df = pd.read_csv(
+        "{}parameters_{}-{}.csv".format(directory, min_seed, max_seed)
+    )
 except OSError:
-    parameters_df = pd.DataFrame(columns=["seed", "size",
-                                          "turns", "repetitions",
-                                          "noise", "probend"])
+    parameters_df = pd.DataFrame(
+        columns=["seed", "size", "turns", "repetitions", "noise", "probend"]
+    )
 while seed < max_seed:
 
     # Define parameter
@@ -71,36 +71,46 @@ while seed < max_seed:
         repetitions = random.randint(min_repetitions, max_repetitions)
         noise = random.random()
         prob_end = random.random()
-        df = pd.DataFrame([[seed, size, turns,
-                            repetitions, noise, prob_end] + players],
-                          columns=["seed", "size", "turns",
-                                   "repetitions", "noise", "probend"] +
-                                  ["player_{}".format(i) for i in range(size)])
+        df = pd.DataFrame(
+            [[seed, size, turns, repetitions, noise, prob_end] + players],
+            columns=["seed", "size", "turns", "repetitions", "noise", "probend"]
+            + ["player_{}".format(i) for i in range(size)],
+        )
         parameters_df = pd.concat([parameters_df, df], ignore_index=True)
 
         # Create the tournaments
         tournaments = []
-        tournaments.append(axl.Tournament(players, turns=turns,
-                                          repetitions=repetitions))
-        tournaments.append(axl.Tournament(players, turns=turns,
-                                          repetitions=repetitions, noise=noise))
-        tournaments.append(axl.Tournament(players, prob_end=prob_end,
-                                          repetitions=repetitions))
-        tournaments.append(axl.Tournament(players, prob_end=prob_end,
-                                          repetitions=repetitions, noise=noise))
+        tournaments.append(
+            axl.Tournament(players, turns=turns, repetitions=repetitions)
+        )
+        tournaments.append(
+            axl.Tournament(
+                players, turns=turns, repetitions=repetitions, noise=noise
+            )
+        )
+        tournaments.append(
+            axl.Tournament(players, prob_end=prob_end, repetitions=repetitions)
+        )
+        tournaments.append(
+            axl.Tournament(
+                players, prob_end=prob_end, repetitions=repetitions, noise=noise
+            )
+        )
 
         # Run the tournaments
-        for tournament, name in zip(tournaments, ["std", "noise", "probend",
-                                                  "noise-probend"]):
+        for tournament, name in zip(
+            tournaments, ["std", "noise", "probend", "noise-probend"]
+        ):
             axl.seed(seed)
             results = tournament.play(processes=0, progress_bar=False)
-            results.write_summary("{}{}-data/{}.csv".format(directory, name,
-                                                            seed))
+            results.write_summary(
+                "{}{}-data/{}.csv".format(directory, name, seed)
+            )
         # Write the parameters for the complete tournament
-        parameters_df.to_csv("{}parameters_{}-{}.csv".format(directory,
-                                                             min_seed, 
-                                                             max_seed), 
-                             index=False)
+        parameters_df.to_csv(
+            "{}parameters_{}-{}.csv".format(directory, min_seed, max_seed),
+            index=False,
+        )
 
         # Increment the seed
         seed += 1
