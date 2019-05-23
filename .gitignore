@@ -13,3 +13,16 @@ src/data_frame.csv
 src/df.csv
 src/data/*
 data/*
+
+.zshrc
+main.bbl
+main.blg
+main.fdb_latexmk
+main.fls
+main.synctex.gz
+src/python-machine-learning/
+nbs/dask-worker-space/
+
+# images
+images/clustering/
+performance_dist/
