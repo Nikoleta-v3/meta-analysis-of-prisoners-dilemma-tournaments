@@ -1,42 +1,10 @@
 import glob
 import sys
 
+import numpy as np
 import pandas as pd
 
 import axelrod as axl
-
-
-def strategies_properties():
-    """
-     A function that returns a data frame with the strategies of the Axelrod
-     library and for each strategy it's property.
-    """
-    axl_strategies = pd.DataFrame(
-        columns=[
-            "Name",
-            "Stochastic",
-            "Memory_depth",
-            "Makes_use_of_game",
-            "Makes_use_of_length",
-        ]
-    )
-
-    for i, strategy in enumerate(axl.strategies):
-        use_of_game = False
-        use_of_length = False
-
-        if "game" in strategy().classifier["makes_use_of"]:
-            use_of_game = True
-        if "length" in strategy().classifier["makes_use_of"]:
-            use_of_length = True
-        axl_strategies.loc[i] = [
-            strategy().name,
-            strategy().classifier["stochastic"],
-            strategy().classifier["memory_depth"],
-            use_of_game,
-            use_of_length,
-        ]
-    return axl_strategies
 
 
 def get_parameters_data_frame(directory):
@@ -44,11 +12,38 @@ def get_parameters_data_frame(directory):
     A function for reading in the parameters data frame.
     """
     csv_files = glob.glob("{}parameters_*-*.csv".format(directory))
-    dfs = (pd.read_csv(f) for f in csv_files)
-    df = pd.concat(dfs)
-    df = df[["noise", "probend", "repetitions", "seed", "size", "turns"]]
+    dfs = [pd.read_csv(f) for f in csv_files]
+    dfs = [
+        df[["noise", "probend", "repetitions", "seed", "size", "turns"]]
+        for df in dfs
+    ]
+    df = pd.concat(dfs, ignore_index=True)
+    df = df.drop_duplicates()
 
     return df.sort_values(["seed"]).reset_index()
+
+
+def get_least_squares(vector, game=axl.game.Game()):
+    """
+    Obtain the least squares directly
+    
+    Returns:
+    
+    - xstar
+    - residual
+    """
+
+    R, P, S, T = game.RPST()
+
+    C = np.array([[R - P, R - P], [S - P, T - P], [T - P, S - P], [0, 0]])
+
+    tilde_p = np.array([vector[0] - 1, vector[1] - 1, vector[2], vector[3]])
+
+    xstar = np.linalg.inv(C.transpose() @ C) @ C.transpose() @ tilde_p
+
+    SSError = tilde_p.transpose() @ tilde_p - tilde_p @ C @ xstar
+
+    return SSError
 
 
 class Reader:
@@ -110,62 +105,59 @@ class Reader:
         return df
 
 
-def prepare_type_dataframes(parameters_df, directory):
+def prepare_type_dataframes(parameters_df, directory, tournament_type):
     """
     A function for reading in each of the 4 data sets for a given parameters
     row. It concats everything together and returns a pandas Data Frame.
     """
-    std_frames, noise_frames, probend_frames, noise_probend_frames = (
-        [],
-        [],
-        [],
-        [],
-    )
-    for _, row in parameters_df.iterrows():
-        reader = Reader(row, directory)
+    frames = []
 
-        std = reader.get_standard_df()
-        std = reader.common_rows(std)
-        std_frames.append(std)
+    if tournament_type == "standard":
+        for _, row in parameters_df.iterrows():
+            reader = Reader(row, directory)
 
-        noise = reader.get_noise_df()
-        noise = reader.common_rows(noise)
-        noise_frames.append(noise)
+            std = reader.get_standard_df()
+            std = reader.common_rows(std)
+            frames.append(std)
 
-        probend = reader.get_proend_df()
-        probend = reader.common_rows(probend)
-        probend_frames.append(probend)
+    if tournament_type == "noise":
+        for _, row in parameters_df.iterrows():
+            reader = Reader(row, directory)
 
-        probend_noise = reader.get_probend_noise_df()
-        probend_noise = reader.common_rows(probend_noise)
-        noise_probend_frames.append(probend_noise)
+            noise = reader.get_noise_df()
+            noise = reader.common_rows(noise)
+            frames.append(noise)
 
-        data_frames = [
-            pd.concat(frames, ignore_index=True)
-            for frames in [
-                std_frames,
-                noise_frames,
-                probend_frames,
-                noise_probend_frames,
-            ]
-        ]
-    return data_frames
+    if tournament_type == "probend":
+        for _, row in parameters_df.iterrows():
+            reader = Reader(row, directory)
+
+            probend = reader.get_proend_df()
+            probend = reader.common_rows(probend)
+            frames.append(probend)
+
+    if tournament_type == "probend_noise":
+        for _, row in parameters_df.iterrows():
+            reader = Reader(row, directory)
+
+            probend_noise = reader.get_probend_noise_df()
+            probend_noise = reader.common_rows(probend_noise)
+            frames.append(probend_noise)
+
+    data_frame = pd.concat(frames, ignore_index=True)
+
+    return data_frame
 
 
 if __name__ == "__main__":
 
     directory = sys.argv[1]
-    labels = ["standard", "noise", "probend", "probend_noise"]
+    tournament_types = ["standard", "probend", "probend_noise"]
 
     print("Reading parameters data frames.")
     parameters_df = get_parameters_data_frame(directory)
-    print("Creating type data frames.")
-    dfs = prepare_type_dataframes(parameters_df, directory)
 
-    # if sys.argv[2] == "extra_columns":
-    #     print("Extra columns")
-    #     pass
-
-    print("Exporting data frames.")
-    for df, label in zip(dfs, labels):
-        df.to_csv("data/%s.csv" % label)
+    for tournament_type in tournament_types:
+        print("Creating & exporting %s data frames." % tournament_type)
+        df = prepare_type_dataframes(parameters_df, directory, tournament_type)
+        df.to_csv("data/%s.csv" % tournament_type)

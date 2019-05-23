@@ -21,4 +21,8 @@ main.fdb_latexmk
 main.fls
 main.synctex.gz
 src/python-machine-learning/
+nbs/dask-worker-space/
 
+# images
+images/clustering/
+performance_dist/

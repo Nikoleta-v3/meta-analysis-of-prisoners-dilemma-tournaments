@@ -1,40 +1,25 @@
 import prepare_data
+import process_data
 import axelrod
 import pandas
 import numpy as np
 
 
-def test_strategies_properties():
-    df = prepare_data.strategies_properties()
-
-    assert isinstance(df, pandas.DataFrame)
-    assert len(df) == len(axelrod.strategies)
-
-    for memory_depth in df["Memory_depth"]:
-        assert isinstance(memory_depth, float)
-
-    for use_of_game in df["Makes_use_of_game"]:
-        assert isinstance(use_of_game, bool)
-
-    for use_of_length in df["Makes_use_of_length"]:
-        assert isinstance(use_of_length, bool)
-
-
 def test_specific_strategy_properties():
 
-    df = prepare_data.strategies_properties()
+    df = process_data.get_strategies_properties()
 
     tit_for_tat = df[df["Name"] == "Tit For Tat"]
     assert tit_for_tat.Name.all() == "Tit For Tat"
     assert tit_for_tat.Memory_depth.values[0] == 1.0
-    assert tit_for_tat.Stochastic.all() is False
+    assert tit_for_tat.Stochastic.all() == 0.0
     assert tit_for_tat.Makes_use_of_game.all() == 0.0
     assert tit_for_tat.Makes_use_of_length.all() == 0.0
 
     adaptive = df[df["Name"] == "Adaptive"]
     assert adaptive.Name.all() == "Adaptive"
     assert adaptive.Memory_depth.values[0] == np.inf
-    assert adaptive.Stochastic.all() is False
+    assert adaptive.Stochastic.all() == 0.0
     assert adaptive.Makes_use_of_game.all() == 1.0
     assert adaptive.Makes_use_of_length.all() == 0.0
 
@@ -45,8 +30,24 @@ parameters_df = prepare_data.get_parameters_data_frame(
 
 
 def test_parameters_data_frame():
+    expected_columns = [
+        "index",
+        "noise",
+        "probend",
+        "repetitions",
+        "seed",
+        "size",
+        "turns",
+    ]
     assert isinstance(parameters_df, pandas.DataFrame)
-    assert len(parameters_df) == 13081
+    assert all(
+        [
+            column == expected_column
+            for column, expected_column in zip(
+                parameters_df.columns, expected_columns
+            )
+        ]
+    )
 
 
 def test_reader():
@@ -107,7 +108,7 @@ def test_get_probend_noise_df():
                 "DC_rate",
                 "DD_rate",
                 "noise",
-                "probend"
+                "probend",
             ]
         ]
     )
@@ -132,7 +133,7 @@ def test_get_standard_df():
                 "CD_rate",
                 "DC_rate",
                 "DD_rate",
-                "turns"
+                "turns",
             ]
         ]
     )
@@ -157,7 +158,7 @@ def test_get_proend_df():
                 "CD_rate",
                 "DC_rate",
                 "DD_rate",
-                "probend"
+                "probend",
             ]
         ]
     )
