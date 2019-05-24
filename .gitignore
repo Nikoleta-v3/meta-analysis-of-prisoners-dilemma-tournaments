@@ -26,3 +26,6 @@ nbs/dask-worker-space/
 # images
 images/clustering/
 performance_dist/
+
+output/
+dask-worker-space/
