@@ -8,6 +8,7 @@ import dask.dataframe as dd
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from dask.distributed import Client
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import silhouette_score
@@ -164,6 +165,18 @@ if __name__ == "__main__":
     upper_n_clusters = 5
     sample_frac = 0.3
 
+    print("Plotting Heatmap")
+
+    corr_data = ddf[features + clustering_on].compute(num_workers=4)
+    corrmat = corr_data.corr()
+    top_corr_features = corrmat.index
+    plt.figure(figsize=(10, 8))
+
+    sns.heatmap(corr_data[top_corr_features].corr(), annot=True,cmap="viridis")
+
+    plt.savefig("%scorrelation_plot.pdf" % output_directory, bbox_inches="tight")
+    plt.close()
+
     print("Clustering Analysis")
     data = ddf[clustering_on].compute(num_workers=num_of_workers)
 
@@ -209,9 +222,6 @@ if __name__ == "__main__":
         X, importances, std, indices, features, output_directory
     )
 
-    for i, estimator in enumerate(random_forest.estimators_):
-        export_random_forest_tree(estimator, i, features, output_directory)
-
     print("Tree Interpeter Forest Analysis")
 
     sample_X = da.array(
@@ -236,18 +246,9 @@ if __name__ == "__main__":
             tree_inter_importances[feature],
         )
 
-    print('LIME Analysis')
-    num_lime_graphs = 50
-    explainer = lime.lime_tabular.LimeTabularExplainer(sample_X.values,
-                                                    mode = 'regression',
-                                                    feature_names = features,
-    )
+    for i, estimator in enumerate(sample_random_forest.estimators_):
+        export_random_forest_tree(estimator, i, features, output_directory)
 
-    exp = explainer.explain_instance(sample_X.values[1], sample_random_forest.predict)
-    for _ in range(num_lime_graphs):
-        value = random.choice(sample_X.values)
-        exp = explainer.explain_instance(value, sample_random_forest.predict)
-    exp.save_to_file('%slime_plots.html' % output_directory)
 
     textfile = open("%soutput.txt" % output_directory, "w")
     textfile.write(output)
