@@ -5,6 +5,7 @@ import sys
 
 import dask.array as da
 import dask.dataframe as dd
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -20,6 +21,9 @@ import lime
 import lime.lime_tabular
 import pydot
 from treeinterpreter import treeinterpreter as ti
+
+matplotlib.use('Agg')
+
 
 
 def cluster_analysis(df, columns, upper_n_clusters):
