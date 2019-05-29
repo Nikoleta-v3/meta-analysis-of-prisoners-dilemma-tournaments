@@ -6,6 +6,7 @@ import sys
 import dask.array as da
 import dask.dataframe as dd
 import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -21,9 +22,6 @@ import lime
 import lime.lime_tabular
 import pydot
 from treeinterpreter import treeinterpreter as ti
-
-matplotlib.use('Agg')
-
 
 
 def cluster_analysis(df, columns, upper_n_clusters):
@@ -124,10 +122,10 @@ def get_tree_interpreter_feature_importance(random_forest, X, num_of_workers):
     feature_dict = dict((k, []) for k in list(X))
     for instance_contributions in contributions:
         for c, feature in zip(instance_contributions, list(X)):
-            feature_dict[feature].append(c[0])
+            feature_dict[feature].append(c)
 
     for feature in feature_dict.keys():
-        feature_dict[feature] = np.mean(feature_dict[feature])
+        feature_dict[feature] = np.mean(feature_dict[feature], axis=0)
 
     return feature_dict
 
@@ -141,7 +139,7 @@ if __name__ == "__main__":
         num_of_workers = 4
 
     input_directory = "data/%s_processed.csv" % file
-    output_name = file.split("_")[0]
+    output_name = file.split("_processed")[0]
 
     output_directory = "output/%s/" % output_name
     if not os.path.exists(output_directory):
@@ -167,7 +165,7 @@ if __name__ == "__main__":
         "Cooperation_rating_x",
     ]
     upper_n_clusters = 5
-    sample_frac = 0.3
+    sample_frac = 0.2
 
     print("Plotting Heatmap")
 
@@ -176,9 +174,11 @@ if __name__ == "__main__":
     top_corr_features = corrmat.index
     plt.figure(figsize=(10, 8))
 
-    sns.heatmap(corr_data[top_corr_features].corr(), annot=True,cmap="viridis")
+    sns.heatmap(corr_data[top_corr_features].corr(), annot=True, cmap="viridis")
 
-    plt.savefig("%scorrelation_plot.pdf" % output_directory, bbox_inches="tight")
+    plt.savefig(
+        "%scorrelation_plot.pdf" % output_directory, bbox_inches="tight"
+    )
     plt.close()
 
     print("Clustering Analysis")
@@ -205,6 +205,12 @@ if __name__ == "__main__":
         num_of_clusters_to_fit, silhouette_avgs, chosen_n_cluster
     )
 
+    means = ddf.groupby(chosen_n_cluster)[clustering_on].mean()
+    medians = ddf.groupby(chosen_n_cluster)[clustering_on].median()
+
+    for table, label in zip([means, medians], ["table_means", "table_medians"]):
+        table.to_csv("%s%s" % (output_directory, label))
+
     print("Random Forest Analysis")
     X = da.array(ddf[features].compute(num_workers=num_of_workers))
     y = da.array(ddf[chosen_n_cluster].compute(num_workers=num_of_workers))
@@ -228,9 +234,7 @@ if __name__ == "__main__":
 
     print("Tree Interpeter Forest Analysis")
 
-    sample_X = da.array(
-        sample[features].compute(num_workers=num_of_workers)
-    )
+    sample_X = da.array(sample[features].compute(num_workers=num_of_workers))
     sample_y = da.array(
         sample[chosen_n_cluster].compute(num_workers=num_of_workers)
     )
@@ -243,16 +247,18 @@ if __name__ == "__main__":
         sample_random_forest, sample_X, num_of_workers
     )
 
-    output += """\nTree Interpeter. Feature Importance (sample_frac %f):\n""" % sample_frac
+    output += (
+        """\nTree Interpeter. Feature Importance (sample_frac %f):\n"""
+        % sample_frac
+    )
     for i, feature in enumerate(tree_inter_importances):
-        output += "Feature %s (%.6f) \n" % (
-            feature,
-            tree_inter_importances[feature],
+        output += "Feature %s (%s) \n" % (
+            feature, 
+            (",").join([str(v) for v in tree_inter_importances[feature]]),
         )
 
     for i, estimator in enumerate(sample_random_forest.estimators_):
         export_random_forest_tree(estimator, i, features, output_directory)
-
 
     textfile = open("%soutput.txt" % output_directory, "w")
     textfile.write(output)
