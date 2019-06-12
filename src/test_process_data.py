@@ -58,6 +58,6 @@ def test_get_memory_percentage():
 
 
 def get_cooporation_rating_compared_to_max(row):
-    row = {"Cooperation_rating_x": 0.2, "Cooperation_rating_y": 0.8}
+    row = {"Cooperation_rating": 0.2, "Cooperation_rating_max": 0.8}
 
     assert process_data.get_cooporation_rating_compared_to_max(row) == 0.25

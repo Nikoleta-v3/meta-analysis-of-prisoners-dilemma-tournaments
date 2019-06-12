@@ -72,7 +72,21 @@ def get_memory_percentage(row):
 
 
 def get_cooporation_rating_compared_to_max(row):
-    return row["Cooperation_rating_x"] / row["Cooperation_rating_y"]
+    return row["Cooperation_rating"] / row["Cooperation_rating_max"]
+
+
+def get_cooporation_rating_compared_to_median(row):
+    return row["Cooperation_rating"] / row["Cooperation_rating_median"]
+
+
+def get_cooporation_rating_compared_to_mean(row):
+    return row["Cooperation_rating"] / row["Cooperation_rating_mean"]
+
+
+def get_cooporation_rating_compared_to_min(row):
+    if row["Cooperation_rating_max"] == 0:
+        return row["Cooperation_rating"]
+    return row["Cooperation_rating"] / row["Cooperation_rating_max"]
 
 
 if __name__ == "__main__":
@@ -102,15 +116,51 @@ if __name__ == "__main__":
     )
     df["Memory_usage"] = df.apply(get_memory_percentage, axis=1)
 
-    max_coop = pd.DataFrame(df.groupby("seed")["Cooperation_rating"].max())
+    max_coop = pd.DataFrame(
+        df.groupby("seed")["Cooperation_rating"].max()
+    ).rename(columns={"Cooperation_rating": "Cooperation_rating_max"})
     df = pd.merge(
         df, max_coop, left_on="seed", right_index=True, how="left", sort=False
+    )
+
+    min_coop = pd.DataFrame(
+        df.groupby("seed")["Cooperation_rating"].min()
+    ).rename(columns={"Cooperation_rating": "Cooperation_rating_min"})
+    df = pd.merge(
+        df, min_coop, left_on="seed", right_index=True, how="left", sort=False
+    )
+
+    median_coop = pd.DataFrame(
+        df.groupby("seed")["Cooperation_rating"].median()
+    ).rename(columns={"Cooperation_rating": "Cooperation_rating_median"})
+    df = pd.merge(
+        df,
+        median_coop,
+        left_on="seed",
+        right_index=True,
+        how="left",
+        sort=False,
+    )
+
+    mean_coop = pd.DataFrame(
+        df.groupby("seed")["Cooperation_rating"].mean()
+    ).rename(columns={"Cooperation_rating": "Cooperation_rating_mean"})
+    df = pd.merge(
+        df, mean_coop, left_on="seed", right_index=True, how="left", sort=False
     )
 
     df["Cooperation_rating_comp_to_max"] = df.apply(
         get_cooporation_rating_compared_to_max, axis=1
     )
-
+    df["Cooperation_rating_comp_to_min"] = df.apply(
+        get_cooporation_rating_compared_to_min, axis=1
+    )
+    df["Cooperation_rating_comp_to_median"] = df.apply(
+        get_cooporation_rating_compared_to_median, axis=1
+    )
+    df["Cooperation_rating_comp_to_mean"] = df.apply(
+        get_cooporation_rating_compared_to_mean, axis=1
+    )
     to_drop = df[df["Normalized_Rank"] > 1]["seed"].unique()
     if len(to_drop) != 0:
         df = df[~(df["seed"].isin(to_drop))]
