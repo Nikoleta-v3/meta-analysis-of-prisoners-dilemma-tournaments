@@ -6,6 +6,7 @@ import sys
 import dask.array as da
 import dask.dataframe as dd
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +25,7 @@ import pydot
 from treeinterpreter import treeinterpreter as ti
 
 
-def cluster_analysis(df, columns, upper_n_clusters):
+def cluster_analysis(data, ddf, columns, upper_n_clusters):
     num_of_clusters_to_fit = range(2, upper_n_clusters)
 
     silhouette_avgs = {}
@@ -161,11 +162,28 @@ if __name__ == "__main__":
         "Makes_use_of_length",
         "Memory_usage",
         "Stochastic",
+        "Cooperation_rating",
+        "Cooperation_rating_max",
+        "Cooperation_rating_min",
+        "Cooperation_rating_median",
+        "Cooperation_rating_mean",
         "Cooperation_rating_comp_to_max",
-        "Cooperation_rating_x",
+        "Cooperation_rating_comp_to_min",
+        "Cooperation_rating_comp_to_median",
+        "Cooperation_rating_comp_to_mean",
+        "turns",
     ]
+
+    if file == "noise":
+        features += ["noise"]
+    if file == "probend":
+        features += ["probend"]
+    if file == "probend_noise":
+        features += ["probend", "noise"]
+    print(features)
+
     upper_n_clusters = 5
-    sample_frac = 0.2
+    sample_frac = 0.05
 
     print("Plotting Heatmap")
 
@@ -185,7 +203,7 @@ if __name__ == "__main__":
     data = ddf[clustering_on].compute(num_workers=num_of_workers)
 
     ddf, silhouette_avgs, num_of_clusters_to_fit = cluster_analysis(
-        ddf, clustering_on, upper_n_clusters
+        data, ddf, clustering_on, upper_n_clusters
     )
 
     sample = ddf.sample(frac=sample_frac)
@@ -205,11 +223,12 @@ if __name__ == "__main__":
         num_of_clusters_to_fit, silhouette_avgs, chosen_n_cluster
     )
 
-    means = ddf.groupby(chosen_n_cluster)[clustering_on].mean()
-    medians = ddf.groupby(chosen_n_cluster)[clustering_on].median()
-
-    for table, label in zip([means, medians], ["table_means", "table_medians"]):
-        table.to_csv("%s%s" % (output_directory, label))
+    means = (
+        ddf.groupby(chosen_n_cluster)[clustering_on]
+        .mean()
+        .compute(num_workers=num_of_workers)
+    )
+    means.to_csv("%smean_table" % (output_directory))
 
     print("Random Forest Analysis")
     X = da.array(ddf[features].compute(num_workers=num_of_workers))
@@ -253,7 +272,7 @@ if __name__ == "__main__":
     )
     for i, feature in enumerate(tree_inter_importances):
         output += "Feature %s (%s) \n" % (
-            feature, 
+            feature,
             (",").join([str(v) for v in tree_inter_importances[feature]]),
         )
 
