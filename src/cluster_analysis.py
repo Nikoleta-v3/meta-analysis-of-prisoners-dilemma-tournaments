@@ -43,7 +43,7 @@ def cluster_analysis(data, ddf, columns, upper_n_clusters):
             )
             silhouette_avgs["Clusters: n = %s" % n_clusters] = silhouette_avg
 
-    return df, silhouette_avgs, num_of_clusters_to_fit
+    return ddf, silhouette_avgs, num_of_clusters_to_fit
 
 
 def draw_clusters_plot(sample, upper_n_clusters, output_directory):
@@ -180,7 +180,6 @@ if __name__ == "__main__":
         features += ["probend"]
     if file == "probend_noise":
         features += ["probend", "noise"]
-    print(features)
 
     upper_n_clusters = 5
     sample_frac = 0.05
@@ -282,3 +281,4 @@ if __name__ == "__main__":
     textfile = open("%soutput.txt" % output_directory, "w")
     textfile.write(output)
     textfile.close()
+    client.close()
