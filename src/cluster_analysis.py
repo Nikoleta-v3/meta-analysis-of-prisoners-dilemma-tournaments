@@ -171,11 +171,12 @@ if __name__ == "__main__":
         "Cooperation_rating_comp_to_min",
         "Cooperation_rating_comp_to_median",
         "Cooperation_rating_comp_to_mean",
-        "turns",
     ]
 
+    if file == "standard":
+        features += ["turns"]
     if file == "noise":
-        features += ["noise"]
+        features += ["noise", "turns"]
     if file == "probend":
         features += ["probend"]
     if file == "probend_noise":
