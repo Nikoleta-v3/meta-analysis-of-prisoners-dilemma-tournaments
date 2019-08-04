@@ -10,226 +10,361 @@
 \usepackage{booktabs}
 \usepackage{graphics}
 \usepackage{multicol}
-\usepackage{algorithm,algorithmic}
+\usepackage[]{algorithm2e,setspace}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{color,colortbl}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{wrapfig, blindtext}
 %%%%%%%%%%%%%%%%%
+
+\definecolor{Gray}{gray}{0.95}
+\usepackage[first=0,last=9]{lcg}
+\newcommand{\ra}{\rand0.\arabic{rand}}
 
 \setlength{\tabcolsep}{3pt}
 
-\title{Applying modern data analysis techniques to tournament results of the
+\title{A meta analysis of tournaments and an evaluation of performance in the
 Iterated Prisoner's Dilemma.}
+\author{Nikoleta E. Glynatsi, Dr Vincent A. Knight}
 \date{}
 
 \begin{document}
 
 \maketitle
 
-\section{Introduction}
+\section{Abstract}
 
-According to Charles Darwin’s theory of evolution~\cite{oldroyd1986}, natural
-selection is ruled by the survival of the fittest. However, in spite of all the
-`selfish genes` it is observed that in interactions both social and biological
-cooperation emerges. Individuals that cooperate more than other can even outperform
-their population. Thus the following question arises: why cooperation emerges;
-More over, how cooperative an individual must be to perform well in their respective
-environment.
+The Iterated Prisoner's Dilemma has been used for decades as a powerful model of
+behavioural interactions. From the celebrated performance of Tit for Tat in the
+early computer tournaments, to the introduction of Pavlov and the use of
+sophisticated strategies such as neural networks, the literature has been
+exploring the performance of strategies in the iterated games for years. With
+the use of an open source package we now have access to most of these
+strategies. This paper conducts a meta analysis of a large number of tournaments
+and evaluates the performance of over 200 strategies from the literature.
 
-In the field of Game Theory the game of the Prisoner's Dilemma (PD) has been used
-to explain the emerge of cooperative behaviour. The PD is a \(2\) player game
-where both players have two strategies. They can either cooperate (C) or defect (D)
-with one another. Their decisions are made simultaneously and independently.
+\section{Background}
 
-The normal form representation of the game is given by matrix~\ref{matrix:pd}.
+The Iterated Prisoner's Dilemma is a two players repeated game. At each turn a
+player chooses between cooperation (C) or defection (D) whilst the prior outcomes
+matters. The payoff at each given turn are defined by the matrix,
 
-\begin{equation}\label{matrix:pd}
-    \begin{bmatrix}
-    (R,R) & (S,T)  \\
-    (T,S) & (P,P)
-    \end{bmatrix}
-\end{equation}
+\[\begin{pmatrix}
+R & S \\
+T & P
+\end{pmatrix}\]
 
-where the payoffs \((R, P, S, T)\) are constrained by equations (\ref{eq:constrain_one})
-and (\ref{eq:constrain_two}).
+where \(T > R > P > S\) and \(2R > T + S\).
 
-\begin{equation}\label{eq:constrain_one}
-    T > R > P > S,
-\end{equation}
+In the early 80's \textbf{literature review on strategies}.
 
-\begin{equation}\label{eq:constrain_two}
-    2R > T + S.
-\end{equation}
+Type of tournaments, \textbf{literature review on types}, for example a standard
+tournament is a round robin tournament where the number of turns and the tournament
+is also repeated. A noisy tournament is similar to a standard tournament. A noisy
+tournament in a round robin tournament where noise is introduced. Noise is the
+probability that a players action is flipped.
 
-Constraint~\ref{eq:constrain_one} ensures that D dominates the first action C
-and constraint~\ref{eq:constrain_two} ensures that a social dilemma arises. That
-is because the sum of the utilities to both players is best when they both cooperate.
+A probabilistic ending tournament. Similar to a standard tournament
+however in a probabilistic ending tournament the number of turns is not specified.
+There is a probability (ranges between 0 and 1) that the match will end in
+the next round.
 
-Though not many insights can be gained from one shot game, complex behaviour that
-allow further investigation arise in the repeated form; in the Iterated Prisoner's
-Dilemma (IPD).
+\textbf{Over time which strategies were defined as the best}
 
-In the 1980’s, a political scientist called Robert Axelrod carried out a computer
-tournament. Scholars from various disciplines were invited to submit strategies
-in computer code and they would compete in a round robin tournament where the
-strategy with the highest average score would be the winner. Axelrod’s tournament
-has been used to explain how cooperation can be evolutionarily advantageous.
+This manuscript accesses the performance of strategies. This is achieved
+by analysing a large data set containing results of the iterated prisoner's
+dilemma tournaments, which is archived in.
 
-Strategies are a set of rules used to describe to a player how to play the IPD game.
-The research of computer tournaments includes studying the interactions of such
-strategies and the exploration of a strategy that dominates them all.
+The structure of this manuscript is as follows. In
+Section~\ref{section:data_collection} the data collection is covered. In
+Section~\ref{section:top_performances}, the best performed strategies for each
+type of tournament and overall are presented.
+Section~\ref{section:evaluation_of_performance}, explores the traits which
+contribute to good performance and finally in Section~\ref{section:conclusion}
+we conclude and summarise the results.
 
 
-\section{Collecting data}
+\section{Data generating process}\label{section:data_collection}
 
-For performing a large number of computer tournaments the open source package
-Axelrod Library~\cite{axelrodproject} is used. The package was introduced in 2015,
-it is written in the programming language Python and it allow us to perform
-a number of different tournaments with different strategies. The payoff values used in
-Axelrod are \((3, 1, 0, 5)\) and the following type of tournaments have been performed.
+For the purposes of this manuscript a large data set containing results on
+iterate prisoner's dilemma tournaments has been generated. In this section
+the method and the outputs of the data generating process are covered.
 
-There are several tournament types introduced in the literature that have not been
-discussed.
+This manuscript uses the open source package Axelrod-Python~\cite{axelrodproject}
+to simulate tournaments of the IPD, more specifically, version 3.0.0.
+Axelrod-Python allows for different types of IPD computer tournaments to be
+simulated whilst containing a list of over 200 strategies. Most of these are
+strategies described in the literature, with a few exceptions being strategies
+that have been contributed specifically to the package. Though Axelrod-Python
+features several tournament types, this work considers only standard tournaments,
+noisy tournaments, probabilistic ending tournaments and noisy probabilistic
+ending ones.
 
-\begin{enumerate}
-    \item \textbf{Standard tournament}. A round robin tournament where
-    the number of turns for each match can vary between 200 and 1. The tournament
-    is repeated between 10 and 100 times.
-    \item \textbf{Noisy tournament}. Similar to a standard tournament. A noisy
-    tournament in a round robin tournament where noise is introduced. Noise is the
-    probability that a players action is flipped. The probability of noise is
-    ranging between 0 and 1.
-    \item \textbf{Probabilistic ending tournament}. Similar to a standard tournament
-    however in a probabilistic ending tournament the number of turns is not specified.
-    There is a probability (ranges between 0 and 1) that the match will end in
-    the next round. Probabilistic ending tournament will be referred to as
-    probend hereupon.
-    \item \textbf{Noisy and Probabilistic ending tournament}. A combination of
-    noisy and probabilistic ending tournaments.
-\end{enumerate}
+\textbf{Standard tournaments}, are tournaments with \(N\)
+strategies and an \(n\) number of turns. Similarly, \textbf{noisy tournaments}
+are of \(N\) strategies and of \(n\) number of turns but at each turn there is a
+noise probability of \(p\) that a player's action will be flipped.
+\textbf{Probabilistic ending tournaments}, are of size \(N\) and after each turn
+a match between strategies ends with a given probability \(e\). Finally,
+\textbf{noisy probabilistic ending} tournaments have both a noise probability
+\(p\) and an ending probability \(e\). For smoothing the simulated results a
+tournament is repeated for \(r\) number of times.
 
-The process for generating the data set is described by Algorithm~\ref{alg:tournaments}.
-Every 20 iterations of a random seed a new sample is chosen. For each sample, for 20
-repetitions random numbers of turns, repetitions of the tournament, the probability of
-noise in the tournament and the probability of the game ending in after each interaction
-are sampled.
+For each run of the generating data process a random size \(N\), a random list
+of strategies are selected and a random number of repetitions \(r\), and for
+these, a standard, noise, probabilistic ending and a noisy probabilistic ending
+tournament are performed. More specifically, the process of data generation is
+given in Algorithm~\ref{algorithm:data_generation}.
 
-For that set of parameters, four types of tournaments (as discussed above) are conducted.
-A standard one, a noisy one, a probend one and lastly a probend with noise.
+\begin{algorithm}[H]
+    \setstretch{1.35}
+    \ForEach{\text{seed} $\in [0, 12285]$}{
+        $N \gets \text{randomly select integer from }[N_{min}, N_{max}]$\;
+        $\text{players} \gets  \text{randomly select players from list of size } [N_{min}, N_{max}]$\;
+        $r \gets  \text{randomly select integer from } [r_{min}, r_{max}]$\;
+        $n \gets  \text{randomly select integer from } [n_{min}, n_{max}]$\;
+        $p \gets  \text{randomly select float from } [p_{min}, p_{max}]$\;
+        $e \gets   \text{randomly select float from } [e_{min}, e_{max}]$\;
+        \vspace{0.4cm}
+        $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, r)$\;
+        $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p, r)$\;
+        $\text{result probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, e, r)$\;
+        $\text{result noisy probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p, e, r)$\;
 
-\begin{algorithm}
-    \caption{Generating data}
-    \label{alg:tournaments}
-      \begin{algorithmic}[1]
-        \FOR{seed \textbf{in} 10000}
-            \IF{$seed \ mod \ 20 =0$}
-                \STATE size $\gets$ random  size
-                \STATE players $\gets$ random players
-             \ELSE
-                 \STATE turns $\gets$ random turns
-                 \STATE repetitions  $\gets$  random  repetitions
-                 \STATE noise  $\gets$ random  noise  probability
-                 \STATE end  $\gets$  random end probability
-                 \STATE standard results $\gets$ tournament(turns, players, repetitions) 
-                 \STATE noise results $\gets$ tournament(turns, players, repetitions, noise)
-                 \STATE probend results $\gets$ tournament(players, repetitions, end)
-                 \STATE probend noise results $\gets$ tournament(players, repetitions, noise, end)
-             \ENDIF
-             \RETURN standard, noise, probend, probend noise results
-        \ENDFOR
-      \end{algorithmic}
+    }
+    \KwRet{result standard, result noisy, result probabilistic ending,
+    result noisy probabilistic ending}\;
+    \label{algorithm:data_generation}
 \end{algorithm}
 
-Once a tournaments is performed we export a summary of the performance
-of each strategy in the tournament. In the following sections we discuss how we
-manipulate the result set exported by Axelrod and hold a data analysis.
+At each given run of Algorithm~\ref{algorithm:data_generation} the run parameters
+are randomly selected. The parameters of each run and their respective min and max
+values are given by Table~\ref{table:parameters_values}.
 
-\section{Data preparation}
-
-Each tournaments exports a summary of the results. These are separated by tournament
-type. The structure of a single row of the results set is shown in
-Table~\ref{table:result_set}. Name is the name of the strategy. Stochastic,
-Memory depth and Use of arguments are characteristics of the given strategy.
-The performance of the strategy is reflected by columns Rate, Median score, Rank and Wins.
-
-The environment and the type of tournaments are captured by columns Noise, Probend,
-Repetitions, Size and Turns. Note that when turns are non given the tournament is a
-probabilistic ending one, and vise versa. Similarly, when Noise argument in non given
-the tournament is known to be standard. Finally, when both Noise and Probend are
-non zero then the tournament is an probabilistic and noisy tournament.
-
-\begin{table}[htpb]
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{ccccccccccccccccccccccccccccccccc}
+\begin{table}
+    \begin{center}
+        \resizebox{.6\textwidth}{!}{
+        \begin{tabular}{lcccc}
     \toprule
-    % columns
-    Name & Stochastic & \multicolumn{1}{p{2cm}}{\centering Memory \\ depth} &
-    \multicolumn{1}{p{2cm}}{\centering Use of \\ game} &
-    \multicolumn{1}{p{2cm}}{\centering Use of \\ length} & CC rate &  CD rate &
-    \multicolumn{1}{p{2cm}}{\centering Cooperation \\rating} & DC rate & DD rate &
-    Median score &  Rank &  Wins &  Noise  &  Probend & Repetitions &  Seed & Size & Turns \\
+    parameter & parameter explanation &   min value & max value \\
     \midrule
-    % first row
-    Adaptive & False & inf & True & False & 0.195 &  0.214 & 0.409 & 0.279 & 0.310 &
-    2.430 & 14 &  77.0 &  0.391 & NaN & 25.0 & 0.0 & 101.0 & 148.0 \\
+    $N$ & number of strategies  & 3 & 195 \\
+    $r$ & number of repetitions  & 10 & 100 \\
+    $n$ & number of turns      & 1 & 200 \\
+    $p$ & probability of flipping action at each turn  & 0 & 1   \\
+    $e$ & probability of match ending in the next turn & 0 & 1   \\
+    \bottomrule
+        \end{tabular}}
+    \end{center}
+    \caption{Data generation parameters' values}
+    \label{table:parameters_values}
+    \end{table}
+
+The source code for the data generating process has been packaged and is
+available here. A total of 12,285 runs of
+Algorithm~\ref{algorithm:data_generation} have been performed. For each run the
+results for 4 different tournaments were collected, thus a total of 49,140
+$(12,285 \times 4)$ tournaments results have been retrieved. Each tournament
+outputs a result summary in the form of Table~\ref{table:output_result}. The
+result summary has a length \(N\) because each row contains information for each
+strategy participated in the tournament.
+
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\begin{table}[h]
+    \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccccgcgcgcgcg}
+    \toprule 
+    & & & & & &   \multicolumn{8}{g}{Rates}  \\
+    Rank & Name & Median score & Cooperation rating & Win & Initial C &
+    CC & CD & DC & DD & CC to C & CD to C & DC to C & DD to C \\
+    0 &  EvolvedLookerUp2 2 2 & 2.97 & 0.705 & 28.0 & 1.0 & 0.639 & 0.066 & 0.189 &
+    0.106 & 0.836 & 0.481 & 0.568 & 0.8 \\
+    1 &  Evolved FSM 16 Noise 05 & 2.875 & 0.697 & 21.0 & 1.0 & 0.676 & 
+    0.020 & 0.135 & 0.168 & 0.985 & 0.571 & 0.392 & 0.07 \\
+    2 & PSO Gambler 1 1 1 & 2.874 & 0.684 &  23.0 &     1.0 &    0.651 &    0.034 &    0.152 &    0.164
+    & 1.000 & 0.283 & 0.000 & 0.136 \\
+    3 &  PSO Gambler Mem1 &  2.861 &        0.706 &  23.0 &      1.0 &    0.663
+    &    0.042 &    0.145 &    0.150 &  1.000 &  0.510 &  0.000 &  0.122 \\
+    4 &          Winner12 &  2.835 &        0.682 &  20.0 &      1.0 &
+    0.651 &    0.031 &    0.141 &    0.177 &  1.000 &  0.441 &  0.000 &  0.462 \\
+    $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ &
+    $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ \\
     \bottomrule
     \end{tabular}}
-    \caption{Result Set}
-    \label{table:result_set}
+\end{center}
+\caption{Output result.}\label{table:output_result}
 \end{table}
 
-Each types is explored separately. Figure~\ref{fig:cooperation_distributions} shows
-the distributions of the cooperation rating for each type. As suggested probabilistic
-ending tournaments are the most cooperative tournaments. Standard tournaments
-appear to be most cooperative as well and any tournament which includes noise
-the cooperation rating appears to follow a normalised distribution.
+Several other measures are included in tha data set. These include the tournament
+parameters given in Table~\ref{table:parameters_values} and the measures
+described in Table~\ref{table:manual_measures}. A few of this measures are
+strategies' classifiers as given in Axelrod-Python, such as stochastic and
+memory depth. SSeeror is a measure defined in literature and the cooperation
+rating measures are calculated from the outputs of the tournaments.
+
+
+\begin{table}
+    \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcl}
+    \toprule
+    measure & measure explanation & value  \\
+    \midrule
+stochastic  &  strategy classifier from~\cite{axelrodproject}. Whether a strategy is stochastic  & True or False \\
+memory depth &  strategy classifier from~\cite{axelrodproject}. the number of turns a strategy takes into account to make a decision & 0 to inf \\
+makes use of game &  strategy classifier from~\cite{axelrodproject}. Whether a strategy makes used of the game information & \\
+SSeeror & how extortionate a strategy behaves as stated in & \\
+memory usage & & \\
+cooperation rating max & & \\
+cooperation rating min & & \\
+cooperation rating median  & & \\
+cooperation rating mean & & \\
+cooperation rating comp to max & & \\
+cooperation rating comp to min & & \\
+cooperation rating comp to median & & \\
+cooperation rating comp to mean & & \\
+    \bottomrule
+        \end{tabular}}
+    \end{center}
+    \caption{Manually calculated measures}
+    \label{table:manual_measures}
+    \end{table}
+
+
+The data collection and the output from the generated tournaments have been covered
+in this section. Several measures that will be used in the analysis of the following
+sections have been presented. These are also summarised in Table in the Appendix.
+In the following Section, the top performances at each tournament
+are overall are presented.
+
+\section{Top Performances}\label{section:top_performances}
+
+In this section the top performed strategies for each tournament type, and overall
+are presented. The strategies have been ranked based on their median normalised
+rank, which is denoted as  \(\bar{R}\).
+
+\subsubsection{Standard Tournaments}
+
+A total of $12,285$ results on standard tournaments have been collected. On
+average a standard tournament had 122 strategies, a lenght of 100 turns and
+were repeated for 55 repetitions. The tournament top 15 performances in such
+tournaments are given
+by Table~\ref{table:std_results} and their distributions are given by
+Figure~\ref{fig:std_results}.
+
+\begin{wraptable}{r}{5.5cm}
+    \resizebox{.4\textwidth}{!}{
+    \input{performance_standard_table.tex}}
+    \caption{Standard top performances}\label{table:std_results}
+\end{wraptable}
+The top 10 out of the 15 strategies, are variations of Evolved FSM, Evolved HMM,
+EvolvedLookerUp and PSO Gambler, are strategies introduced in~\cite{Harper2017}.
+These are all strategies that have be trained using reinforcement learnings
+techniques to adjust their game play. Moreover, they have been trained using the
+strategies within the library~\cite{axelrodproject}, thus their performance is
+not a surprise. DoubleCrosser, and Fool Me Once, do not exist within the
+literature but have been especially written to contribute
+to~\cite{axelrodproject}. Fool me once will forgive one defection and then
+defects for ever when DoubleCrosser will forgive the first 3 defections and then
+defect forever. Moreover DoubleCrosser is a strategy which makes use of the
+lenght of the game. Finally, Winner 12~\cite{Mathieu2017} and DBS are both from
+the the literature. DBS~\cite{Au2006} is strategy specifically trained for noisy
+enviroments, however, it ranks highly only in standard ones.
+
+In the top strategies there appears to be a mixture of 13 complex strategies, and
+2 simple strategies that are quick to turn to defection forever.
+
+The distributions of the normalised ranks of the top 15 strategies is
+given in Figure\ref{fig:std_results}. Overall there is no much variation in the
+distributions, there mainly tailed closer to 0. Thus all these strategoties
+performed well at each given tournament that the have been involved.
+In the later session that other tournaments are explored we will see that
+this is true only to standard tournaments. With stochastic uncearta
+such as noise and probabilistic ending there is more variation in the 
+performances involved.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{../images/performance_standard.pdf}
+    \caption{P.D.}\label{fig:std_results}
+\end{figure}
+
+
+\newpage
+\subsubsection{Noisy Tournaments}
+
+The noisy tournament top 14 performances, based on \(\bar{R}\) are given
+by Table~\ref{table:noisy_results}. The distributions of their \(R\) is also
+given by Figure~\ref{fig:std_results}.
+
+
+\begin{table}
+    \begin{center}
+    \input{performance_noise_table.tex}
+    \caption{Noisy top performances}\label{table:noisy_results}
+    \end{center}
+\end{table}
 
 \begin{figure}
     \centering
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/cooperation_distribution_std}
-        \caption{Standard tournament type.}
-    \end{subfigure}
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/cooperation_distribution_noise}
-        \caption{Noise tournament type.}
-    \end{subfigure}
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/cooperation_distribution_probend}
-        \caption{Probend tournament type.}
-    \end{subfigure}
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{images/cooperation_distribution_noise_probend}
-        \caption{Noise Probend tournament type.}
-    \end{subfigure}
-    \caption{Cooperation rating distribution.}\label{fig:cooperation_distributions}
+    \includegraphics[width=.9\textwidth]{../images/performance_noise.pdf}
+    \caption{\(R\) distributions for best performed strategies in noisy tournaments.}
 \end{figure}
 
-In this work each tournament type is studied individually. An individual data set
-containing the following information is constructed for each type.
+\subsubsection{Probabilistic ending Tournaments}
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item tournament index \(i\)
-        \item tournament size \(N_{i}\)
-        \item maximum cooperation rating \(C^{*}_{r}\)
-        \item minimum cooperation rating  \(\tilde{C_{r}}\)
-        \item mean cooperation rating \(\bar{C_{r}}\)
-        \item median cooperation rating \(\breve{C_{r}}\)
-        \item standard deviation of the cooperating ratio \(\sigma\)
-        \item \(C\) ratio of the winner \(C_{W}\)
-        \item \(C\) ratio of the looser \(C_{L}\)
-        \item \(C\) to \(CC\) rate of the winner
-        \item \(C\) to \(CD\) rate of the winner
-        \item \(C\) to \(DC\) rate of the winner
-        \item \(C\) to \(DD\) rate of the winner
-        \item normalised rank of maximum cooperator \(\bar{r_{C}}\)
-        \item normalised rank of minimum cooperator \(\bar{r_{D}}\)
-    \end{itemize}
-    \end{multicols}
+\begin{table}
+    \begin{center}
+    \input{performance_probend_table.tex}
+    \end{center}
+\end{table}
 
-\section{Analysis}
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../images/performance_probend.pdf}
+\end{figure}
 
+\subsubsection{Noisy \& Probabilistic ending Tournaments}
+
+\begin{table}
+    \begin{center}
+    \input{performance_probend_noise_table.tex}
+    \end{center}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../images/performance_probend_noise.pdf}
+\end{figure}
+
+\subsubsection{Overall Tournaments}
+
+\begin{table}
+    \begin{center}
+    \input{performance_merged_table.tex}
+    \end{center}
+\end{table}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../images/performance_merged.pdf}
+\end{figure}
+
+
+\section{Evaluation of performance}\label{section:evaluation_of_performance}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{../output/output/standard/feature_importance_bar_plot.pdf}
+\end{figure}
+
+\section{Conclusion and Discussion}\label{section:conclusion}
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
