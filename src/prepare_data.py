@@ -152,12 +152,16 @@ def prepare_type_dataframes(parameters_df, directory, tournament_type):
 if __name__ == "__main__":
 
     directory = sys.argv[1]
-    tournament_types = ["standard", "probend", "probend_noise"]
+    if sys.argv[2] == 'all':
+        tournament_types = ["standard", "noise", "probend", "probend_noise"]
+    else:
+        tournament_types = sys.argv[2].split(', ')
+    version = sys.argv[3]
 
-    print("Reading parameters data frames.")
+    print("Reading parameters data frame.")
     parameters_df = get_parameters_data_frame(directory)
 
     for tournament_type in tournament_types:
-        print("Creating & exporting %s data frames." % tournament_type)
+        print("Creating & exporting %s data frame." % tournament_type)
         df = prepare_type_dataframes(parameters_df, directory, tournament_type)
-        df.to_csv("data/%s.csv" % tournament_type)
+        df.to_csv("data/%s_%s.csv" % (tournament_type, version))
