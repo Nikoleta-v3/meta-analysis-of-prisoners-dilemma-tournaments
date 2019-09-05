@@ -93,6 +93,8 @@ def get_cooporation_rating_compared_to_mean(row):
 
 
 def get_cooporation_rating_compared_to_min(row):
+    if row["Cooperation_rating_min"] == 0:
+        return row["Cooperation_rating_min"]
     return row["Cooperation_rating_min"] / row["Cooperation_rating"]
 
 
