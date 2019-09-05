@@ -157,10 +157,9 @@ if __name__ == "__main__":
         "CD_to_C_rate",
         "DC_to_C_rate",
         "DD_to_C_rate",
-        "SSeeror",
+        "SSE",
         "Makes_use_of_game",
         "Makes_use_of_length",
-        "Memory_usage",
         "Stochastic",
         "Cooperation_rating",
         "Cooperation_rating_max",
@@ -195,7 +194,7 @@ if __name__ == "__main__":
     sns.heatmap(corr_data[top_corr_features].corr(), annot=True, cmap="viridis")
 
     plt.savefig(
-        "%scorrelation_plot.pdf" % output_directory, bbox_inches="tight"
+        "%s_correlation_plot.pdf" % output_directory, bbox_inches="tight"
     )
     plt.close()
 
@@ -228,7 +227,7 @@ if __name__ == "__main__":
         .mean()
         .compute(num_workers=num_of_workers)
     )
-    means.to_csv("%smean_table" % (output_directory))
+    means.to_csv("%s_mean_table" % (output_directory))
 
     print("Random Forest Analysis")
     X = da.array(ddf[features].compute(num_workers=num_of_workers))
@@ -279,7 +278,7 @@ if __name__ == "__main__":
     for i, estimator in enumerate(sample_random_forest.estimators_):
         export_random_forest_tree(estimator, i, features, output_directory)
 
-    textfile = open("%soutput.txt" % output_directory, "w")
+    textfile = open("%s_output.txt" % output_directory, "w")
     textfile.write(output)
     textfile.close()
     client.close()
