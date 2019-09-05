@@ -7,6 +7,10 @@ import pandas as pd
 import axelrod as axl
 
 
+def get_normalised_rank(row):
+    return row["Rank"] / (row["size"] - 1)
+
+
 def get_parameters_data_frame(directory):
     """
     A function for reading in the parameters data frame.
@@ -21,29 +25,6 @@ def get_parameters_data_frame(directory):
     df = df.drop_duplicates()
 
     return df.sort_values(["seed"]).reset_index()
-
-
-def get_least_squares(vector, game=axl.game.Game()):
-    """
-    Obtain the least squares directly
-    
-    Returns:
-    
-    - xstar
-    - residual
-    """
-
-    R, P, S, T = game.RPST()
-
-    C = np.array([[R - P, R - P], [S - P, T - P], [T - P, S - P], [0, 0]])
-
-    tilde_p = np.array([vector[0] - 1, vector[1] - 1, vector[2], vector[3]])
-
-    xstar = np.linalg.inv(C.transpose() @ C) @ C.transpose() @ tilde_p
-
-    SSError = tilde_p.transpose() @ tilde_p - tilde_p @ C @ xstar
-
-    return SSError
 
 
 class Reader:
@@ -101,6 +82,7 @@ class Reader:
         df["repetitions"] = self.repetitions
         df["size"] = self.size
         df["seed"] = self.seed
+        df["Normalized_Rank"] = df.apply(get_normalised_rank, axis=1)
 
         return df
 
@@ -152,10 +134,10 @@ def prepare_type_dataframes(parameters_df, directory, tournament_type):
 if __name__ == "__main__":
 
     directory = sys.argv[1]
-    if sys.argv[2] == 'all':
+    if sys.argv[2] == "all":
         tournament_types = ["standard", "noise", "probend", "probend_noise"]
     else:
-        tournament_types = sys.argv[2].split(', ')
+        tournament_types = sys.argv[2].split(", ")
     version = sys.argv[3]
 
     print("Reading parameters data frame.")
