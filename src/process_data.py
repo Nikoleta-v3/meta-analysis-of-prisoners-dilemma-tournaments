@@ -1,12 +1,33 @@
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 import axelrod as axl
 import dask_ml.cluster
-import prepare_data
+
+
+def get_least_squares(vector, game=axl.game.Game()):
+    """
+    Obtain the least squares directly
+    
+    Returns:
+    
+    - xstar
+    - residual
+    """
+
+    R, P, S, T = game.RPST()
+
+    C = np.array([[R - P, R - P], [S - P, T - P], [T - P, S - P], [0, 0]])
+
+    tilde_p = np.array([vector[0] - 1, vector[1] - 1, vector[2], vector[3]])
+
+    xstar = np.linalg.inv(C.transpose() @ C) @ C.transpose() @ tilde_p
+
+    SSError = tilde_p.transpose() @ tilde_p - tilde_p @ C @ xstar
+
+    return SSError
 
 
 def get_strategies_properties():
@@ -50,25 +71,13 @@ def get_error_for_row(row):
         "DD_to_C_rate",
     ]
     vector = [row[column] for column in columns_for_sse]
-    sse_error = prepare_data.get_least_squares(vector=vector)
+    sse_error = get_least_squares(vector=vector)
 
     return sse_error
 
 
-def get_normalised_rank(row):
-    return row["Rank"] / (row["size"] - 1)
-
-
 def fix_name(row):
     return row["Name"].split(":")[0]
-
-
-def get_memory_percentage(row):
-    if np.isinf(row["Memory_depth"]):
-        return 1
-    if row["Memory_depth"] == 0:
-        return 0
-    return row["Memory_depth"] / row["size"]
 
 
 def get_cooporation_rating_compared_to_max(row):
@@ -84,9 +93,7 @@ def get_cooporation_rating_compared_to_mean(row):
 
 
 def get_cooporation_rating_compared_to_min(row):
-    if row["Cooperation_rating_max"] == 0:
-        return row["Cooperation_rating"]
-    return row["Cooperation_rating"] / row["Cooperation_rating_max"]
+    return row["Cooperation_rating_min"] / row["Cooperation_rating"]
 
 
 if __name__ == "__main__":
@@ -103,8 +110,7 @@ if __name__ == "__main__":
 
     print("Processing")
     df = df.replace(replace)
-    df["SSeeror"] = df.apply(get_error_for_row, axis=1)
-    df["Normalized_Rank"] = df.apply(get_normalised_rank, axis=1)
+    df["SSE"] = df.apply(get_error_for_row, axis=1)
     df["Name"] = df.apply(fix_name, axis=1)
     df = pd.merge(
         df,
@@ -114,7 +120,6 @@ if __name__ == "__main__":
         how="left",
         sort=False,
     )
-    df["Memory_usage"] = df.apply(get_memory_percentage, axis=1)
 
     max_coop = pd.DataFrame(
         df.groupby("seed")["Cooperation_rating"].max()
