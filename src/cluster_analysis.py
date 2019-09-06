@@ -113,7 +113,7 @@ def draw_feature_importance_bar_plot(
         "DD_to_C_rate": "$DD$ to $C$ rate",
         "SSE": "SSE",
         "Makes_use_of_game": "Make use of game",
-        "Makes_use_of_length": "Make use of lenght",
+        "Makes_use_of_length": "Make use of length",
         "Stochastic": "stochastic",
         "Cooperation_rating": r"$C_r$",
         "Cooperation_rating_max": r"$C_{max}$",
@@ -124,6 +124,9 @@ def draw_feature_importance_bar_plot(
         "Cooperation_rating_comp_to_min": r"$C_r$ / $C_{min}$",
         "Cooperation_rating_comp_to_median": r"$C_r$ / $C_{median}$",
         "Cooperation_rating_comp_to_mean": r"$C_r$ / $C_{mean}$",
+        "turns": r"$n$",
+        "noise": r"$p$",
+        "probend": r"$e$"
     }
     plt.figure()
     plt.title("Feature importances")
@@ -170,8 +173,8 @@ if __name__ == "__main__":
     else:
         num_of_workers = 4
 
-    input_directory = "data/%s_processed.csv" % file
-    output_name = file.split("_processed")[0]
+    input_directory = "data/%s_v_3_processed.csv" % file
+    output_name = file.split("_v_3_processed")[0]
 
     output_directory = "output/%s/" % output_name
     if not os.path.exists(output_directory):
