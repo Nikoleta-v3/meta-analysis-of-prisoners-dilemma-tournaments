@@ -5,7 +5,7 @@ import pandas
 
 import axelrod
 
-prepare_data = imp.load_source('prepare_data', 'src/prepare_data.py')
+prepare_data = imp.load_source("prepare_data", "src/prepare_data.py")
 parameters_df = prepare_data.get_parameters_data_frame(
     directory="data/raw_data/"
 )
@@ -31,11 +31,13 @@ def test_parameters_data_frame():
         ]
     )
 
+
 def test_get_normalised_rank():
     row = {"Rank": 1, "size": 11}
     normalised_rank = prepare_data.get_normalised_rank(row)
 
     assert normalised_rank == 0.1
+
 
 def test_reader():
     row = parameters_df.sample(n=1)
