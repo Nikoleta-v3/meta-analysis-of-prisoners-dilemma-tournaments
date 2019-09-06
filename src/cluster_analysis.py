@@ -7,7 +7,6 @@ import dask.array as da
 import dask.dataframe as dd
 import matplotlib
 
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -25,7 +24,7 @@ import pydot
 from treeinterpreter import treeinterpreter as ti
 
 
-def cluster_analysis(data, ddf, columns, upper_n_clusters):
+def cluster_analysis(data, ddf, columns, upper_n_clusters, num_of_workers):
     num_of_clusters_to_fit = range(2, upper_n_clusters)
 
     silhouette_avgs = {}
@@ -57,6 +56,16 @@ def draw_clusters_plot(sample, upper_n_clusters, output_directory):
 
     for i, ax in enumerate(axes):
         ax.scatter(x, y, c=sample["Clusters: n = %s" % (i + 2)].compute())
+
+    fig.text(0.5, 0.04, r"$r$", ha="center", weight="bold")
+    fig.text(
+        0.075,
+        0.5,
+        "median score",
+        va="center",
+        rotation="vertical",
+        weight="bold",
+    )
 
     plt.savefig("%sclusters_plots.pdf" % output_directory, bbox_inches="tight")
     plt.close()
@@ -97,6 +106,25 @@ def random_forest_analysis(X, y, num_of_workers, n_estimators=10):
 def draw_feature_importance_bar_plot(
     X, importances, std, indices, features, output_directory
 ):
+    features_labels = {
+        "CC_to_C_rate": "$CC$ to $C$ rate",
+        "CD_to_C_rate": "$CD$ to $C$ rate",
+        "DC_to_C_rate": "$DC$ to $C$ rate",
+        "DD_to_C_rate": "$DD$ to $C$ rate",
+        "SSE": "SSE",
+        "Makes_use_of_game": "Make use of game",
+        "Makes_use_of_length": "Make use of lenght",
+        "Stochastic": "stochastic",
+        "Cooperation_rating": r"$C_r$",
+        "Cooperation_rating_max": r"$C_{max}$",
+        "Cooperation_rating_min": r"$C_{min}$",
+        "Cooperation_rating_median": r"$C_{median}$",
+        "Cooperation_rating_mean": r"$C_{mean}$",
+        "Cooperation_rating_comp_to_max": r"$C_r$ / $C_{max}$ ",
+        "Cooperation_rating_comp_to_min": r"$C_r$ / $C_{min}$",
+        "Cooperation_rating_comp_to_median": r"$C_r$ / $C_{median}$",
+        "Cooperation_rating_comp_to_mean": r"$C_r$ / $C_{mean}$",
+    }
     plt.figure()
     plt.title("Feature importances")
     plt.bar(
@@ -107,10 +135,13 @@ def draw_feature_importance_bar_plot(
         align="center",
     )
 
-    plt.xticks(range(X.shape[1]), [features[f] for f in indices], rotation=90)
+    xticks = [features[f] for f in indices]
+    labels = [features_labels[feature] for feature in xticks]
+
+    plt.xticks(range(X.shape[1]), labels, rotation=90)
     plt.xlim([-1, X.shape[1]])
     plt.savefig(
-        "%sfeature_importance_bar_plot.pdf" % output_directory,
+        "%s_feature_importance_bar_plot.pdf" % output_directory,
         bbox_inches="tight",
     )
     plt.close()
@@ -202,7 +233,7 @@ if __name__ == "__main__":
     data = ddf[clustering_on].compute(num_workers=num_of_workers)
 
     ddf, silhouette_avgs, num_of_clusters_to_fit = cluster_analysis(
-        data, ddf, clustering_on, upper_n_clusters
+        data, ddf, clustering_on, upper_n_clusters, num_of_workers
     )
 
     sample = ddf.sample(frac=sample_frac)

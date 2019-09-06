@@ -5,7 +5,8 @@ import pandas as pd
 
 import axelrod
 
-process_data = imp.load_source('processe_data', 'src/process_data.py')
+process_data = imp.load_source("processe_data", "src/process_data.py")
+
 
 def test_strategies_properties():
     df = process_data.get_strategies_properties()
@@ -46,20 +47,24 @@ def get_cooporation_rating_compared_to_max(row):
 
     assert process_data.get_cooporation_rating_compared_to_max(row) == 0.25
 
+
 def get_cooporation_rating_compared_to_median(row):
     row = {"Cooperation_rating": 0.2, "Cooperation_rating_median": 0.8}
 
     assert process_data.get_cooporation_rating_compared_to_median(row) == 0.25
+
 
 def get_cooporation_rating_compared_to_mean(row):
     row = {"Cooperation_rating": 0.2, "Cooperation_rating_mean": 0.8}
 
     assert process_data.get_cooporation_rating_compared_to_mean(row) == 0.25
 
+
 def get_cooporation_rating_compared_to_min(row):
     row = {"Cooperation_rating": 0.2, "Cooperation_rating_min": 0.4}
 
     assert process_data.get_cooporation_rating_compared_to_max(row) == 0.25
+
 
 def get_cooporation_rating_compared_to_min(row):
     row = {"Cooperation_rating": 0.2, "Cooperation_rating_min": 0.0}
