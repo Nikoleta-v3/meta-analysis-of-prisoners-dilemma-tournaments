@@ -126,7 +126,7 @@ def draw_feature_importance_bar_plot(
         "Cooperation_rating_comp_to_mean": r"$C_r$ / $C_{mean}$",
         "turns": r"$n$",
         "noise": r"$p$",
-        "probend": r"$e$"
+        "probend": r"$e$",
     }
     plt.figure()
     plt.title("Feature importances")
@@ -256,11 +256,11 @@ if __name__ == "__main__":
         num_of_clusters_to_fit, silhouette_avgs, chosen_n_cluster
     )
 
-    medians = (
-        ddf.groupby(chosen_n_cluster)[clustering_on]
-        .median()
-        .compute(num_workers=num_of_workers)
+    df = ddf[[chosen_n_cluster] + clustering_on].compute(
+        num_workers=num_of_workers
     )
+
+    medians = df.groupby(chosen_n_cluster)[clustering_on].median()
     medians.to_csv("%s_medians_table" % (output_directory))
 
     print("Random Forest Analysis")
