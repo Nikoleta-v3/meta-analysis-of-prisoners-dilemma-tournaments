@@ -256,12 +256,12 @@ if __name__ == "__main__":
         num_of_clusters_to_fit, silhouette_avgs, chosen_n_cluster
     )
 
-    means = (
+    medians = (
         ddf.groupby(chosen_n_cluster)[clustering_on]
-        .mean()
+        .median()
         .compute(num_workers=num_of_workers)
     )
-    means.to_csv("%s_mean_table" % (output_directory))
+    medians.to_csv("%s_medians_table" % (output_directory))
 
     print("Random Forest Analysis")
     X = da.array(ddf[features].compute(num_workers=num_of_workers))
