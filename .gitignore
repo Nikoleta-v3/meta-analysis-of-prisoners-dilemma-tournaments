@@ -29,3 +29,13 @@ performance_dist/
 
 output/
 dask-worker-space/
+
+# test
+*.log
+*.aux
+*.out
+
+*.DS_Store
+.coverage
+tests/__pycache__/*
+.vscode/*
