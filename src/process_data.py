@@ -30,6 +30,14 @@ def get_least_squares(vector, game=axl.game.Game()):
     return SSError
 
 
+def get_memory_percentage(row):
+    if np.isinf(row["Memory_depth"]):
+        return 1
+    if row["Memory_depth"] == 0:
+        return 0
+    return row["Memory_depth"] / row["turns"]
+
+
 def get_strategies_properties():
     """
      A function that returns a data frame with the strategies of the Axelrod
@@ -171,6 +179,9 @@ if __name__ == "__main__":
     to_drop = df[df["Normalized_Rank"] > 1]["seed"].unique()
     if len(to_drop) != 0:
         df = df[~(df["seed"].isin(to_drop))]
+
+    if "turns" in df.columns:
+        df["memory_usage"] = df.apply(get_memory_percentage, axis=1)
 
     print("Writing to file %s" % file)
     df.to_csv(output)

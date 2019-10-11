@@ -5,6 +5,32 @@ import numpy as np
 c = sns.xkcd_rgb["denim blue"]
 
 
+features_labels = {
+    "CC_to_C_rate": "$CC$ to $C$ rate",
+    "CD_to_C_rate": "$CD$ to $C$ rate",
+    "DC_to_C_rate": "$DC$ to $C$ rate",
+    "DD_to_C_rate": "$DD$ to $C$ rate",
+    "SSE": "SSE",
+    "Makes_use_of_game": "Make use of game",
+    "Makes_use_of_length": "Make use of length",
+    "Stochastic": "stochastic",
+    "Cooperation_rating": r"$C_r$",
+    "Cooperation_rating_max": r"$C_{max}$",
+    "Cooperation_rating_min": r"$C_{min}$",
+    "Cooperation_rating_median": r"$C_{median}$",
+    "Cooperation_rating_mean": r"$C_{mean}$",
+    "Cooperation_rating_comp_to_max": r"$C_r$ / $C_{max}$ ",
+    "Cooperation_rating_comp_to_min": r"$C_r$ / $C_{min}$",
+    "Cooperation_rating_comp_to_median": r"$C_r$ / $C_{median}$",
+    "Cooperation_rating_comp_to_mean": r"$C_r$ / $C_{mean}$",
+    "turns": r"$n$",
+    "noise": r"$p$",
+    "probend": r"$e$",
+    "Normalized_Rank": r"$\bar{r}$",
+    "Median_score": "Median score",
+}
+
+
 def violin_plot(df, x, y, xlabel, ylabel, title, size=10):
     join_plot = sns.jointplot(
         x=x,
