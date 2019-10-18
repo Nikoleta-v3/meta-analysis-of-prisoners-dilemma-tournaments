@@ -5,8 +5,8 @@ import sys
 
 import dask.array as da
 import dask.dataframe as dd
+import joblib
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -18,11 +18,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import export_graphviz
 
 import dask_ml.cluster
-import joblib
 import lime
 import lime.lime_tabular
 import pydot
 from treeinterpreter import treeinterpreter as ti
+
+matplotlib.use("Agg")
 
 
 def cluster_analysis(data, ddf, columns, upper_n_clusters, num_of_workers):
@@ -72,22 +73,6 @@ def draw_clusters_plot(sample, upper_n_clusters, output_directory):
     plt.close()
 
 
-def export_random_forest_tree(estimator, i, features, output_directory):
-
-    output_directory = "%s/tree_plots/" % output_directory
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
-    export_graphviz(
-        estimator,
-        out_file="%sestimator_%s.dot" % (output_directory, i),
-        feature_names=features,
-        rounded=True,
-        proportion=False,
-        precision=10,
-        filled=True,
-    )
-
-
 def random_forest_analysis(X, y, num_of_workers, n_estimators=10):
     with joblib.parallel_backend("dask", n_jobs=num_of_workers):
         forest = RandomForestClassifier(
@@ -128,7 +113,7 @@ def draw_feature_importance_bar_plot(
         "turns": r"$n$",
         "noise": r"$p$",
         "probend": r"$e$",
-        "memory_usage": "memory usage"
+        "memory_usage": "memory usage",
     }
     color = matplotlib.cm.viridis(0.4)
     plt.figure()
@@ -151,21 +136,6 @@ def draw_feature_importance_bar_plot(
         bbox_inches="tight",
     )
     plt.close()
-
-
-def get_tree_interpreter_feature_importance(random_forest, X, num_of_workers):
-    with joblib.parallel_backend("dask", n_jobs=num_of_workers):
-        prediction, bias, contributions = ti.predict(random_forest, X)
-
-    feature_dict = dict((k, []) for k in list(X))
-    for instance_contributions in contributions:
-        for c, feature in zip(instance_contributions, list(X)):
-            feature_dict[feature].append(c)
-
-    for feature in feature_dict.keys():
-        feature_dict[feature] = np.mean(feature_dict[feature], axis=0)
-
-    return feature_dict
 
 
 if __name__ == "__main__":
@@ -210,10 +180,9 @@ if __name__ == "__main__":
     ]
 
     if file == "standard":
-        features += ["turns"]
-        features += ["memory_usage"]
+        features += ["turns", "memory_usage"]
     if file == "noise":
-        features += ["noise", "turns"]
+        features += ["noise", "turns", "memory_usage"]
     if file == "probend":
         features += ["probend"]
     if file == "probend_noise":
@@ -279,6 +248,7 @@ if __name__ == "__main__":
         X_train, y_train, num_of_workers
     )
 
+    print("Random Forest Importance")
     output += """\nRandom Forest. Feature Importance:\n"""
     for f in range(X_train.shape[1]):
         output += "%d. feature %d: %s (%f) \n" % (
@@ -291,34 +261,6 @@ if __name__ == "__main__":
     draw_feature_importance_bar_plot(
         X_train, importances, std, indices, features, output_directory
     )
-
-    # print("Tree Interpeter Forest Analysis")
-
-    # sample_X = da.array(sample[features].compute(num_workers=num_of_workers))
-    # sample_y = da.array(
-    #     sample[chosen_n_cluster].compute(num_workers=num_of_workers)
-    # )
-
-    # sample_random_forest, sample_importances, sample_std, sample_indices = random_forest_analysis(
-    #     sample_X, sample_y, num_of_workers
-    # )
-
-    # tree_inter_importances = get_tree_interpreter_feature_importance(
-    #     sample_random_forest, sample_X, num_of_workers
-    # )
-
-    # output += (
-    #     """\nTree Interpeter. Feature Importance (sample_frac %f):\n"""
-    #     % sample_frac
-    # )
-    # for i, feature in enumerate(tree_inter_importances):
-    #     output += "Feature %s (%s) \n" % (
-    #         feature,
-    #         (",").join([str(v) for v in tree_inter_importances[feature]]),
-    #     )
-
-    # for i, estimator in enumerate(sample_random_forest.estimators_):
-    #     export_random_forest_tree(estimator, i, features, output_directory)
 
     with open("%sr_square_.txt" % output_directory, "w") as textfile:
         textfile.write(
