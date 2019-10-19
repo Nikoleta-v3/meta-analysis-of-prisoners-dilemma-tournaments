@@ -56,13 +56,18 @@ def get_strategies_properties():
     for i, strategy in enumerate(axl.strategies):
         use_of_game = 0
         use_of_length = 0
+        name = strategy().name
 
         if "game" in strategy().classifier["makes_use_of"]:
             use_of_game = 1
         if "length" in strategy().classifier["makes_use_of"]:
             use_of_length = 1
+        if 'Hard Go By Majority:' in name:
+            name = ''.join(name.split(':'))
+        if 'Soft Go By Majority:' in name:
+            name = ''.join(name.split(':'))
         axl_strategies.loc[i] = [
-            strategy().name,
+            name,
             int(strategy().classifier["stochastic"]),
             strategy().classifier["memory_depth"],
             use_of_game,
@@ -85,7 +90,12 @@ def get_error_for_row(row):
 
 
 def fix_name(row):
-    return row["Name"].split(":")[0]
+    name = row["Name"]
+    if 'Hard Go By Majority:' in name:
+        return ''.join(name.split(':'))
+    if 'Soft Go By Majority:' in name:
+        return ''.join(name.split(':'))
+    return name.split(":")[0]
 
 
 def get_cooporation_rating_compared_to_max(row):
