@@ -76,7 +76,7 @@ used in this work.
 
 Conceptualising strategies and understanding the best way of playing the game
 has been of interest to the scientific community since the formulation of the
-game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in
+game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in the
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
 strategies. Today more than 200 strategies exist in the literature and several
@@ -116,11 +116,13 @@ they had won the tournament as stated in~\cite{us_blog} "technically this
 strategy violates the spirit of the Prisoner's Dilemma, which assumes that the
 two prisoners cannot communicate with one another".
 
-Another set of IPD strategies that have received a lot of attention, the
-American Mathematical Society's news section stated that ``the world of game
-theory is currently on fire'', are the zero-determinants~\cite{Press2012}. By
+Another set of IPD strategies that have received a lot of attention
+are the zero-determinants~\cite{Press2012}. By
 forcing a linear relationship between the payoffs the zero-determinant
 strategies can ensure that they will never receive less than their opponents.
+The
+American Mathematical Society's news section stated that ``the world of game
+theory is currently on fire''.
 Zero-determinant strategies are indeed a set of mathematically unique strategies
 and robust in pairwise interactions, however, their simplicity and extortionate
 behaviour have been tested. In~\cite{Harper2017} a tournament containing over
@@ -129,7 +131,7 @@ strategies ranked in top spots. Instead, the top ranked strategies were a set of
 trained strategies based lookup tables~\cite{Axelrod1987}, hidden markov
 models~\cite{Harper2017} and finite state automata~\cite{Miller1996}.
 
-Though only a few selected pieces of work have been discussed, the IPD is
+Though only a select pieces of work have been discussed, the IPD is
 rich, and new strategies and competitions are being published every year.
 The question, however, still remains the same: what is the best way to play the
 game?
@@ -139,10 +141,10 @@ Axelrod-Python~\cite{axelrodproject} to simulate a large number of computer
 tournaments, using as many strategies as possible from the literature. The aim
 is to evaluate the performance of 194 strategies in IPD tournaments, and
 futhermore, explore the factors of their success. This is done not only for
-standard round robin tournaments, but also for tournaments with noisy and
+standard round robin tournaments, but also for tournaments with noise and
 tournaments with a probabilistic ending. The different tournament types as well
 as the data collection are covered in Section~\ref{section:data_collection}.
-Section~\ref{section:top_performances}, focuses on the best performed strategies
+Section~\ref{section:top_performances}, focuses on the best performing strategies
 for each type of tournament and overall.
 Section~\ref{section:evaluation_of_performance}, explores the traits which
 contribute to good performance, and finally the results are summarised in
@@ -150,7 +152,7 @@ Section~\ref{section:conclusion}.
 
 This manuscripts uses several parameters. These are introduced in the following
 sections, however, the full set of parameters and their definitions are given in
-Appendix~\ref{app:parameters}. %TODO: fix table
+Appendix~\ref{app:parameters}. All the data is available at~\cite{data}.
 
 \section{Data collection}\label{section:data_collection}
 
@@ -265,9 +267,9 @@ Table~\ref{table:output_result}.
 
 The result summary, Table~\ref{table:output_result}, has \(N\) number of rows
 because each row contains information for each strategy that participated in the
-tournament. The information include the strategy's rank, median score, the rate
-with which the strategy cooperated $(C_r)$, it's wins and the probability that
-the strategy cooperated in the opening move. Moreover, the rates of a strategy
+tournament. The information includes the strategy's rank, median score, the rate
+with which the strategy cooperated $(C_r)$, its match win count and the probability that
+the strategy cooperated in the opening move. Moreover, the probabilities of a strategy
 being in any of the four states ($CC, CD, DC, DD$), and the rate of which the
 strategy cooperated after each state.
 
@@ -295,7 +297,7 @@ strategy cooperated after each state.
     \bottomrule
     \end{tabular}}
 \end{center}
-\caption{Output result of a signle tournament.}\label{table:output_result}
+\caption{Output result of a single tournament.}\label{table:output_result}
 \end{table}
 
 A measure that has been manually included
@@ -314,11 +316,11 @@ over all the \numberofalltournaments simulated tournaments of this work.
 Each strategy participated in multiple tournaments of the same type (on average 5180).
 For example Tit For Tat has participated in a total of 5114
 tournaments of each type. The strategy's normalised rank distribution in these
-is given in Figure~\ref{fig:tit_for_tat_r_distribution}. Because of the strategies'
+is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A value of \(r =
+0\) corresponds to a strategy winning the tournament where a value of
+\(r = 1\) corresponds to the strategy coming last. Because of the strategies'
 multiple entries their performance is evaluated based on the
-\textbf{median normalised rank} denoted as \(\bar{r}\). A value of \(\bar{r} =
-0\) corresponds to a strategy winning the tournament where a a value of
-\(\bar{r} = 1\) corresponds to the strategy coming last.
+\textbf{median normalised rank} denoted as \(\bar{r}\).
 
 \begin{figure}[!htbp]
     \centering
@@ -372,7 +374,7 @@ the opponents, the turns etc.
     \caption{$r$ distributions of top 15 strategies in standard tournaments.}\label{fig:std_results}
 \end{figure}
 
-The top strategies in noisy tournaments include deterministic strategies, such
+The top strategies in noisy tournaments are shown in Figure~\ref{fig:noisy_results}. These include deterministic strategies, such
 as Tit For 2 Tats~\cite{Axelrod1980b}, Hard Tit For 2 Tats~\cite{Stewart2012}
 and Cycler CCCCCD, and strategies which decide their actions based on the
 cooperations to defections ratio, such as ShortMem~\cite{Carvalho2013}, Grumpy,
@@ -386,8 +388,8 @@ and defectors.
 
 From Figure~\ref{fig:noisy_results}, it is evident that the normalised rank
 distributions in noisy environments are more variant with higher medians
-compared to standard tournaments. The distributions are skewed both towards 0
-and 1. This indicates that although the top ranked strategies mainly performed
+compared to standard tournaments. The distributions are bimodal.
+This indicates that although the top ranked strategies mainly performed
 well, there are several tournaments that they ranked in the bottom half.
 
 \begin{figure}[!htbp]
@@ -401,7 +403,7 @@ The 15 top ranked strategies in probabilistic ending tournaments include
 Fortress 3, Fortress 4 (both introduced in~\cite{Ashlock2006}),
 Raider~\cite{Ashlock2014} and Solution B1~\cite{Ashlock2014}, which are
 strategies based on finite state automata introduced by Daniel and Wendy
-Ashlock. These strategies have been evolved using reinformed learning, however,
+Ashlock. These strategies have been evolved using reinforcement learning, however,
 there were trained to maximise their payoffs in tournaments with fixed turns
 (150 specifically) and not in probabilistic ending ones. In probabilistic ending
 tournaments it appears that the top ranks are mostly occupied by defecting
@@ -422,6 +424,7 @@ winners of the tournament.
 \end{figure}
 
 The distributions of the normalised rank in probabilistic ending tournaments,
+shown in
 Figure~\ref{fig:probend_results}, are less variant than those of noisy
 tournaments. The medians are lower than 0.1 and the distributions are skewed
 towards 0. Though the large difference between the means and the medians
@@ -431,7 +434,7 @@ probabilistic ending tournaments that they participated.
 In tournaments with both noise and an unspecified number of turns several of
 the top ranked strategies are strategies that were highly ranked in noisy
 tournaments. This demonstrates that, $e$, $\pi$,
-$\phi$ and the Retaliate family are robust in noisy environments regardless the
+$\phi$ and the Retaliate family are robust in noisy environments regardless of the
 number of turns. However, strategies from the top ranks in probabilistic
 ending tournaments did not rank highly here. The distributions of the top scored
 strategies are shown in Figure~\ref{fig:noisy_probend_results}. There is no
@@ -461,7 +464,7 @@ and their normalised rank distributions are given in Figure~\ref{fig:overall_res
     \caption{Top performances over all the tournaments}\label{table:overall_results}
 \end{table}
 
-The top ranks include strategies that have previously mentioned. The top ranks
+The top ranks include strategies that have been previously mentioned. The top ranks
 are overtaken by the set of Retaliate strategies followed by BackStabber and
 DoubleCrosser. DoubleCrosser performed well in standard tournaments and the
 strategy is just an extension of BackStabber. PSO Gambler and Evolved HMM 5 are
@@ -525,7 +528,7 @@ stochastic  &  If a strategy is stochastic & strategy classifier from~\cite{axel
 makes use of game &  If a strategy makes used of the game information & strategy classifier from~\cite{axelrodproject} & boolean  & False &  True \\
 makes use of length &  If a strategy makes used of the number of turns & strategy classifier from~\cite{axelrodproject} & boolean  & False &  True \\
 memory usage &  The memory size of a strategy divided by the number of turns & memory size from~\cite{axelrodproject} & float & 0 &  1 \\
-SSE & A measure of how far a strategy is from extortionate behaviour & method described in~\cite{Knight2019} & float & 0 & 1 \\
+SSE & A measure of how far a strategy is from ZD behaviour & method described in~\cite{Knight2019} & float & 0 & 1 \\
 max cooperating rate $(C_{\text{max}})$  & The biggest cooperating rate in the tournament  & result summary  & float & 0 & 1\\
 min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in the tournament  & result summary  & float & 0 & 1\\
 median cooperating rate $(C_{\text{median}})$ & The median cooperating rate in the tournament  & result summary  & float & 0 & 1\\
@@ -551,8 +554,7 @@ $N$ & The number of strategies in the tournament & trial summary & integer & 3 &
 \end{table}
 
 Axelrod-Python makes use of classifiers to classify strategies according to
-various dimensions. The classifiers considered in this work are the stochastic
-classifier, the make use of length and game classifiers. These determine whether
+various dimensions. These determine whether
 a strategy is stochastic or deterministic, whether it makes use of the number of
 turns or the game's payoffs. The memory usage measure is calculated as the
 memory size of strategy (which is specified in the strategies implementation
@@ -568,13 +570,12 @@ maximum, medium and median cooperating ratios of each tournament are also
 included, and finally the number of turns, the number of strategies and the
 probabilities of noise and the game ending are also included.
 
-Initially, the effect of these measures has on a strategy's success is evaluated
-based on the correlation coefficient. The correlation coefficient between them,
-the normalised rank and the median score are given by
-Table~\ref{table:correlations}. Note that the correlation for the classifiers is
-not included because they are binary variables and they will be evaluated by a
+Table~\ref{table:correlations} shows the correlation coefficients between the
+measures of Table~\ref{table:manual_measures} the median score and the median
+normalised rank. Note that the correlation for the classifiers is
+not included because they are binary variables and they will be evaluated using a
 different method. The correlation coefficients for all the measures in
-Table~\ref{table:manual_measures} against each have also been calculated and apd
+Table~\ref{table:manual_measures} against themselves have also been calculated and a
 graphical representation can be found in the Appendix~\ref{app:correlations}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
@@ -592,13 +593,13 @@ In standard tournaments the measures  $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
 and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
 have a moderate negative effect on the normalised rank, and a moderate positive
 on the median score. The SSE error and the $DD$ to $C$ have the opposite
-effects. Thus, in standard tournaments behaving cooperative corresponds to a
+effects. Thus, in standard tournaments behaving cooperatively corresponds to a
 more successful performance. Even though being nice pays off,
 that's not true against defective strategies. Cooperating after a mutual
 defection lowers a strategy's success.
 Figure~\ref{fig:rates_of_winners_in_standard_tournaments} confirms that the
 winners of standard tournaments always cooperate after a mutual cooperation and
-almost always defected after a mutual defection.
+almost always defects after a mutual defection.
 
 \begin{figure}[!htbp]
     \centering
@@ -626,7 +627,7 @@ and in probabilistic ending tournaments less than 10\%.
 \end{figure}
 
 In noisy probabilistic ending tournaments and in over all the tournaments' results,
-the pdonly measures that had a moderate affect are $C_r/C_{\text{mean}},
+the only measures that had a moderate affect are $C_r/C_{\text{mean}},
 C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished by not as much as in noisy and probabilistic ending
 tournaments.
@@ -677,14 +678,14 @@ training set of 70\% of the tournaments results. The accuracy of each model
 based on $R^2$ are given by Table~\ref{table:accuracy_random_forest}. The out of
 the bag error~\cite{hastie2005} has also been calculated. The models fit well, and
 a high value of both the accuracy measure on the test data and the
-OOB error indicate that the model ispdf not over fitting.
+OOB error indicate that the model is not over fitting.
 
 \begin{table}[!htbp]
     \begin{center}
         \resizebox{.5\textwidth}{!}{
         \begin{tabular}{lcccc}
     \toprule
-    Tournament type & $R^2$ training data &  $R^2$ test data  & $R^2$ OBB score\\
+    Tournament type & $R^2$ training data &  $R^2$ test data  & $R^2$ OOB score\\
     \midrule
     standard                   & 0.998545  & 0.989890 & 0.982331\\
     noisy                      & 0.996677  & 0.950572 & 0.935383\\
@@ -759,49 +760,49 @@ strategies prevail. This result is once again confirmed in this section.
     \centering
     \includegraphics[width=.5\textwidth]{../images/compared_to_mean_median_standard.pdf}
     \caption{Distributions of \(C_r / C_{\text{median}}\)
-    and \(C_r / C_{\text{median}}\) for standard tournaments.}\label{fig:mean_median_std}
+    and \(C_r / C_{\text{median}}\) for winners of standard tournaments.}\label{fig:mean_median_std}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=.5\textwidth]{../images/compared_to_mean_median_noisy.pdf}
     \caption{Distributions of \(C_r / C_{\text{median}}\)
-    and \(C_r / C_{\text{median}}\) for noisy tournaments.}\label{fig:mean_median_noisy}
+    and \(C_r / C_{\text{median}}\) for winners of noisy tournaments.}\label{fig:mean_median_noisy}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=.5\textwidth]{../images/compared_to_mean_median_probend.pdf}
     \caption{Distributions of \(C_r / C_{\text{median}}\)
-    and \(C_r / C_{\text{median}}\) for probabilistic ending tournaments.}\label{fig:mean_median_probend}
+    and \(C_r / C_{\text{median}}\) for winners of probabilistic ending tournaments.}\label{fig:mean_median_probend}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=.5\textwidth]{../images/compared_to_mean_median_probend_noisy.pdf}
     \caption{Distributions of \(C_r / C_{\text{median}}\)
-    and \(C_r / C_{\text{median}}\) for noisy probabilistic ending tournaments.}\label{fig:mean_median_probend_noisy}
+    and \(C_r / C_{\text{median}}\) for winners of noisy probabilistic ending tournaments.}\label{fig:mean_median_probend_noisy}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=.5\textwidth]{../images/compared_to_mean_median_overall.pdf}
     \caption{Distributions of \(C_r / C_{\text{median}}\)
-    and \(C_r / C_{\text{median}}\) for over all the tournaments.}\label{fig:mean_median_overall}
+    and \(C_r / C_{\text{median}}\) for winners of over all the tournaments.}\label{fig:mean_median_overall}
 \end{figure}
 
 In this section the effect of several measures, regarding a strategy's behaviour
 and the tournament, on it's performance were presented. This was done using
-two approaches. pCorrelation coefficients and a random forest
+two approaches. Correlation coefficients and a random forest
 analysis. The results of these are discussed in the following section.
 
 \section{Conclusion}\label{section:conclusion}
 
 This manuscript has explored the performance of 194 strategies of the Iterated
-Prisoner's Dilemma inp a large number of computer tournaments. The results of
-the analysis demonstrated that, although for specific tournament types, such as
+Prisoner's Dilemma in a large number of computer tournaments. The results of
+the analysis demonstrated that, although for specific tournament type, such as
 standard, noisy and probabilistic ending tournaments, dominant strategies exist
-there is not a single dominant strategy that is set to do if the environments
+there is not a single dominant strategy if the environments
 vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
 based on the mean and median cooperators.
 
@@ -812,19 +813,19 @@ Axelrod-Python. The software was used to generate a total of
 strategies and different participants each time. The data collection was
 described in Section~\ref{section:data_collection}. In
 Section~\ref{section:top_performances}, the tournaments results were used to
-present the top performances. This was not done only over the entire data set.
+present the top performances.
 The data set contained results from four different settings, and these were also
 studied individually. In standard tournaments complex strategies trained using
 reinforcement learning ranked in the top places. In probabilistic ending
 tournaments, several trained strategies based on finite state automata also
 performed well. The rest top strategies, in this setting, were defecting
-strategies. Finally, in tournaments with noisy, the Retaliate set of strategies
+strategies. Finally, in tournaments with noise, the Retaliate set of strategies
 demonstrated their robustness in tournaments with probabilistic ending and not.
 
 Section~\ref{section:evaluation_of_performance}, covered an analysis of
 performance based on several measures associated with a strategy and with the
 environments it was competing. The results of this analysis showed that a
-strategy's characteristics such as it's stochasticity, and the information it
+strategy's characteristics such as whether or not it's stochastic, and the information it
 used regarding the game had no effect on the strategy's success. The most
 important factors have been those that compared the strategy's behaviour to it's
 environment. The cooperating ratio of the strategy compared to the mean and
