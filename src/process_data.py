@@ -62,10 +62,10 @@ def get_strategies_properties():
             use_of_game = 1
         if "length" in strategy().classifier["makes_use_of"]:
             use_of_length = 1
-        if 'Hard Go By Majority:' in name:
-            name = ''.join(name.split(':'))
-        if 'Soft Go By Majority:' in name:
-            name = ''.join(name.split(':'))
+        if "Hard Go By Majority:" in name:
+            name = "".join(name.split(":"))
+        if "Soft Go By Majority:" in name:
+            name = "".join(name.split(":"))
         axl_strategies.loc[i] = [
             name,
             int(strategy().classifier["stochastic"]),
@@ -91,10 +91,10 @@ def get_error_for_row(row):
 
 def fix_name(row):
     name = row["Name"]
-    if 'Hard Go By Majority:' in name:
-        return ''.join(name.split(':'))
-    if 'Soft Go By Majority:' in name:
-        return ''.join(name.split(':'))
+    if "Hard Go By Majority:" in name:
+        return "".join(name.split(":"))
+    if "Soft Go By Majority:" in name:
+        return "".join(name.split(":"))
     return name.split(":")[0]
 
 
@@ -116,12 +116,17 @@ def get_cooporation_rating_compared_to_min(row):
     return row["Cooperation_rating_min"] / row["Cooperation_rating"]
 
 
+def get_cluster_on(row, percentage):
+    value = row["Normalized_Rank"] <= percentage
+    return int(value)
+
+
 if __name__ == "__main__":
 
     file = sys.argv[1]
     output = file.replace(".csv", "_processed.csv")
 
-    replace = {"Slow Tit For Two Tats": "Tit For 2 Tats"}
+    # replace = {"Slow Tit For Two Tats": "Tit For 2 Tats"}
 
     strategies_properties = get_strategies_properties()
     strategies_properties = strategies_properties.set_index("Name")
@@ -129,9 +134,15 @@ if __name__ == "__main__":
     df = pd.read_csv(file, index_col=0)
 
     print("Processing")
-    df = df.replace(replace)
+    # df = df.replace(replace)
     df["SSE"] = df.apply(get_error_for_row, axis=1)
     df["Name"] = df.apply(fix_name, axis=1)
+
+    percentages = [0.05, 0.25, 0.5]
+    for percentage in percentages:
+        df[f"cluster_on_{percentage}"] = df.apply(
+            get_cluster_on, args=(percentage,), axis=1
+        )
     df = pd.merge(
         df,
         strategies_properties,
