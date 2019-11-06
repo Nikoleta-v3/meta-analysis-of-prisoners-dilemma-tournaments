@@ -172,14 +172,15 @@ and noisy probabilistic ending tournaments.
 \textbf{Standard tournaments}, are tournaments similar to that of Axelrod's
 in~\cite{Axelrod1980a}. There are \(N\) strategies which all play an iterated
 game of \(n\) number of turns against each other. Note that self interactions
-and a match against a random strategy are not included. Similarly, \textbf{noisy
-tournaments} have \(N\) strategies and \(n\) number of turns, but at each turn
-there is a probability \(p\) that a player's action will be flipped.
+are not included. Similarly, \textbf{noisy
+tournaments} have \(N\) strategies and \(p_n\) number of turns, but at each turn
+there is a probability \(p_n\) that a player's action will be flipped.
 \textbf{Probabilistic ending tournaments}, are of size \(N\) and after each turn
-a match between strategies ends with a given probability \(e\). Finally,
+a match between strategies ends with a given probability \(p_e\). Finally,
 \textbf{noisy probabilistic ending} tournaments have both a noise probability
-\(p\) and an ending probability \(e\). For smoothing the simulated results a
-tournament is repeated for \(k\) number of times and the winner of each tournament
+\(p_n\) and an ending probability \(p_e\). For smoothing the simulated results a
+tournament is repeated for \(k\) number of times. To evaluate the effect of smoothing
+this is allowed to vary. The winner of each tournament
 is based on the average score a strategy achieved and not by number of wins.
 
 % A summary of each tournaments' parameters is given in
@@ -223,8 +224,8 @@ Table~\ref{table:parameters_values}.
     $N$ & number of strategies  & 3 & 195 \\
     $k$ & number of repetitions  & 10 & 100 \\
     $n$ & number of turns      & 1 & 200 \\
-    $p$ & probability of flipping action at each turn  & 0 & 1   \\
-    $e$ & probability of match ending in the next turn & 0 & 1   \\
+    $p_n$ & probability of flipping action at each turn  & 0 & 1   \\
+    $p_e$ & probability of match ending in the next turn & 0 & 1   \\
     \bottomrule
         \end{tabular}}
     \end{center}
@@ -244,13 +245,13 @@ and is available here. %TODO archive code
         $\text{players} \gets  \text{randomly select $N$ players}$\;
         $k \gets  \text{randomly select integer}\in [k_{min}, k_{max}]$\;
         $n \gets  \text{randomly select integer}\in [n_{min}, n_{max}]$\;
-        $p \gets  \text{randomly select float}\in [p_{min}, p_{max}]$\;
-        $e \gets   \text{randomly select float}\in [e_{min}, e_{max}]$\;
+        $p \gets  \text{randomly select float}\in [p_{n\, min}, p_{n\, max}]$\;
+        $e \gets   \text{randomly select float}\in [p_{e\, min}, p_{e\, max}]$\;
         \vspace{0.4cm}
         $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, k)$\;
-        $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p, k)$\;
-        $\text{result probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, e, k)$\;
-        $\text{result noisy probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p, e, k)$\;
+        $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p_n, k)$\;
+        $\text{result probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_e, k)$\;
+        $\text{result noisy probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_n, p_e, k)$\;
 
     }
     \KwRet{result standard, result noisy, result probabilistic ending,
@@ -306,6 +307,23 @@ calculated as a strategy's rank divided by the tournament's size ($N$). The
 normalised rank will be used in the next section to evaluate the performance of
 strategies.
 
+Table
+A summary of the number of entries each strategy
+has is given by Table.
+Each strategy participated on average in 5180 tournaments of each type. The
+strategy that participated in the most tournaments () is and the strategy
+with the minimum enties is.
+
+\begin{table}[!htbp]
+    \begin{center}
+    \resizebox{.45\textwidth}{!}{
+        \input{summary_table_of_entries.tex}
+    }
+\end{center}
+% \caption{Top performances for each tournament type based on $\bar{r}$.}
+% \label{table:top_performances}
+\end{table}
+
 \section{Top ranked strategies}\label{section:top_performances}
 
 This section evaluates the performance of 194 IPD strategies. The performance of
@@ -324,7 +342,7 @@ multiple entries their performance is evaluated based on the
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.45\textwidth]{../images/tit_for_tat_r_distributions.pdf}
+    \includegraphics[width=.55\textwidth]{../images/tit_for_tat_r_distributions.pdf}
     \caption{Tit For Tat's $r$ distribution in tournaments. The best performance
     of the strategy has been in standard tournaments where it achieved a $\bar{r}$
     of 0.339.}
@@ -436,10 +454,7 @@ the top ranked strategies are strategies that were highly ranked in noisy
 tournaments. This demonstrates that, $e$, $\pi$,
 $\phi$ and the Retaliate family are robust in noisy environments regardless of the
 number of turns. However, strategies from the top ranks in probabilistic
-ending tournaments did not rank highly here. The distributions of the top scored
-strategies are shown in Figure~\ref{fig:noisy_probend_results}. There is no
-statistical difference between the distributions (this has been tested using
-an ANOVA test). Thus, on average these strategies had the same performances.
+ending tournaments did not rank highly here.
 
 \begin{figure}[!htbp]
     \centering
@@ -542,10 +557,11 @@ $CC$ to $C$ rate & The probability a strategy will cooperate after a mutual coop
 $CD$ to $C$ rate & The probability a strategy will cooperate after being betrayed by the opponent & result summary  & float & 0 & 1 \\
 $DC$ to $C$ rate & The probability a strategy will cooperate after betraying the opponent & result summary  & float & 0 & 1 \\
 $DD$ to $C$ rate & The probability a strategy will cooperate after a mutual defection & result summary  & float & 0 & 1 \\
-$p$ & The probability of a player's action being flip at each interaction & trial summary & float & 0 & 1 \\
+$p_n$ & The probability of a player's action being flip at each interaction & trial summary & float & 0 & 1 \\
 $n$ & The number of turns & trial summary & integer & 1 & 200 \\
-$e$ & The probability of a match ending in the next turn & trial summary & float & 0 & 1 \\
+$p_e$ & The probability of a match ending in the next turn & trial summary & float & 0 & 1 \\
 $N$ & The number of strategies in the tournament & trial summary & integer & 3 & 195 \\
+$k$ & The number of repetitions of a given tournament & trial summary & integer & 10 & 100 \\
     \bottomrule
         \end{tabular}}
     \end{center}
@@ -603,7 +619,7 @@ almost always defects after a mutual defection.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.7\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
+    \includegraphics[width=.5\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
     \caption{Distributions of $CC$ to $C$ and $DD$ to $C$ for the winners in
     standard tournaments.}\label{fig:rates_of_winners_in_standard_tournaments}
 \end{figure}
@@ -621,7 +637,7 @@ and in probabilistic ending tournaments less than 10\%.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.7\textwidth]{../images/c_r_winners_tournaments.pdf}
+    \includegraphics[width=.5\textwidth]{../images/c_r_winners_tournaments.pdf}
     \caption{$C_r$ distributions of the winners in noisy and in probabilistic
     ending tournaments.}\label{fig:c_r_distributions}
 \end{figure}
