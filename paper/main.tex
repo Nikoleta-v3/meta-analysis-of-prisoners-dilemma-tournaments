@@ -29,6 +29,7 @@
 
 \newcommand{\uniquenumberofseeds}{\input{unique_number_of_seeds.tex}}
 \newcommand{\numberofalltournaments}{\input{number_of_all_tournaments.tex}}
+\newcommand{\numberofstrategies}{\input{unique_number_of_strategies.tex}}
 
 \setlength{\tabcolsep}{3pt}
 
@@ -42,17 +43,26 @@ Iterated Prisoner's Dilemma.}
 \maketitle
 
 \begin{abstract}
-
 The Iterated Prisoner's Dilemma has been used for decades as a model of
 behavioural interactions. From the celebrated performance of Tit for Tat, to the
 introduction of the zero-determinant strategies, to the use of sophisticated
 structures such as neural networks, the literature has been exploring the
-performance of strategies in the game for years. Most of these strategies are
-now accessible due to an open source package; Axelrod-Python. This manuscript
-make use of Axelrod-Python to conduct a meta analysis of Iterated Prisoner's
-Dilemma tournaments. The aim is to evaluate the performance of 194 strategies
-over \numberofalltournaments Iterated Prisoner's Dilemma tournaments and to
-explore the factors of their success.
+performance of strategies in the game for years. The results of the literature,
+however, have been relying on the performance of specific strategies in a finite
+number of tournaments, whereas this manuscript evaluates
+\numberofstrategies strategies' effectiveness in more than 40000 tournaments.
+The top ranked strategies are presented, and moreover, the impact of features on
+their success are analysed using machine learning techniques. The analysis
+determines that the cooperating ratio of a
+strategy in a given tournament compared to the mean and median cooperator is the
+most important feature. The conclusions are distinct for different types of
+tournaments. A strategy with a theory of mind would aim to be the mean/median
+cooperator in standard tournaments, whereas in tournaments with probabilistic
+ending it would aim to cooperate 10\% of the times the median cooperator did.
+In tournaments with noise and a probability of ending an effective strategy
+cooperates 60\% of the times the median/mean cooperator did, and in tourmanents
+with only noise or even in a setting that the tournament can be any of the
+above a strategy should aim to play 67\% as a median/mean cooperator.
 \end{abstract}
 
 \section{Background}
@@ -117,100 +127,80 @@ strategy violates the spirit of the Prisoner's Dilemma, which assumes that the
 two prisoners cannot communicate with one another".
 
 Another set of IPD strategies that have received a lot of attention
-are the zero-determinants~\cite{Press2012}. By
-forcing a linear relationship between the payoffs the zero-determinant
-strategies can ensure that they will never receive less than their opponents.
-The
+are the zero-determinant strategies (ZDs)~\cite{Press2012}. By
+forcing a linear relationship between the payoffs ZDs can ensure that they will
+never receive less than their opponents. The
 American Mathematical Society's news section stated that ``the world of game
 theory is currently on fire''.
-Zero-determinant strategies are indeed a set of mathematically unique strategies
+ZDs are indeed a set of mathematically unique strategies
 and robust in pairwise interactions, however, their simplicity and extortionate
 behaviour have been tested. In~\cite{Harper2017} a tournament containing over
-200 strategies, including zero-determinants, was ran. None of the zero-determinant
-strategies ranked in top spots. Instead, the top ranked strategies were a set of
-trained strategies based lookup tables~\cite{Axelrod1987}, hidden markov
+200 strategies, including ZDs, was ran and none of the them
+ranked in top spots. Instead, the top ranked strategies were a set of
+trained strategies based on lookup tables~\cite{Axelrod1987}, hidden markov
 models~\cite{Harper2017} and finite state automata~\cite{Miller1996}.
 
-Though only a select pieces of work have been discussed, the IPD is
-rich, and new strategies and competitions are being published every year.
-The question, however, still remains the same: what is the best way to play the
-game?
+Though only a select pieces of work have been discussed, the IPD literature is
+rich, and new strategies and competitions are being published every year. The
+question, however, still remains the same: what is the best way to play the
+game? Compared to other works, whereas a few selected strategies are evaluated
+on a small number of tournaments, this manuscript evaluates the performance of \numberofstrategies
+strategies in \numberofalltournaments tournaments. These tournaments do not
+consist by just standard round robin tournaments, but also by tournaments with noise
+and tournaments with a probabilistic ending. The later part of the paper, evaluates
+the impact of features on the performance of the strategies using modern
+machine learning techniques. These features include measures regarding a
+strategy's behaviour and measures regarding the tournaments. The data set used
+in this work has been made publicly available~\cite{data} and can be used
+for further analysis and insights.
 
-This manuscript uses an open source package called
-Axelrod-Python~\cite{axelrodproject} to simulate a large number of computer
-tournaments, using as many strategies as possible from the literature. The aim
-is to evaluate the performance of 194 strategies in IPD tournaments, and
-futhermore, explore the factors of their success. This is done not only for
-standard round robin tournaments, but also for tournaments with noise and
-tournaments with a probabilistic ending. The different tournament types as well
-as the data collection are covered in Section~\ref{section:data_collection}.
-Section~\ref{section:top_performances}, focuses on the best performing strategies
-for each type of tournament and overall.
+The different tournament types as well as the data collection, which is made
+possible due an open source package called Axelrod-Python~\cite{axelrodproject},
+are covered in Section~\ref{section:data_collection}.
+Section~\ref{section:top_performances}, focuses on the best performing
+strategies for each type of tournament and overall.
 Section~\ref{section:evaluation_of_performance}, explores the traits which
 contribute to good performance, and finally the results are summarised in
-Section~\ref{section:conclusion}.
-
-This manuscripts uses several parameters. These are introduced in the following
-sections, however, the full set of parameters and their definitions are given in
-Appendix~\ref{app:parameters}. All the data is available at~\cite{data}.
+Section~\ref{section:conclusion}. This manuscripts uses several parameters.
+These are introduced in the following sections, however, the full set of
+parameters and their definitions are given in Appendix~\ref{app:parameters}.
 
 \section{Data collection}\label{section:data_collection}
 
-For the purposes of this manuscript a data set containing results of IPD tournaments
-has been generated and is available at~\cite{data}. This
-was done using the open source package Axelrod-Python~\cite{axelrodproject}, and
-more specifically, version 3.0.0. Axelrod-Python allows for different types of
-IPD computer tournaments to be simulated whilst
-containing a list of over 180 strategies. Most of these are strategies described
-in the literature with a few exceptions being strategies that have been
-contributed specifically to the package. This paper make use of 194 strategies
-implemented in version 3.0.0. A list of the strategies is given in the
-Appendix~\ref{app:list_of_players}. Though Axelrod-Python features several
-tournament types, this work considers only standard, noisy, probabilistic ending
-and noisy probabilistic ending tournaments.
+For the purposes of this manuscript a data set containing results of IPD
+tournaments has been generated and is available at~\cite{data}. This was done using the
+open source package Axelrod-Python~\cite{axelrodproject}, and more specifically,
+version 3.0.0. Axelrod-Python allows for different types of IPD computer
+tournaments to be simulated whilst containing a list of over 180 strategies.
+Most of these are strategies described in the literature with a few exceptions
+being strategies that have been contributed specifically to the package. This
+paper make use of \numberofstrategies strategies implemented in version 3.0.0. A
+list of the strategies is given in the Appendix~\ref{app:list_of_players}.
+Though Axelrod-Python features several tournament types, this work considers
+only standard, noisy, probabilistic ending and noisy probabilistic ending
+tournaments.
 
 \textbf{Standard tournaments}, are tournaments similar to that of Axelrod's
 in~\cite{Axelrod1980a}. There are \(N\) strategies which all play an iterated
 game of \(n\) number of turns against each other. Note that self interactions
 are not included. Similarly, \textbf{noisy
-tournaments} have \(N\) strategies and \(p_n\) number of turns, but at each turn
+tournaments} have \(N\) strategies and \(n\) number of turns, but at each turn
 there is a probability \(p_n\) that a player's action will be flipped.
 \textbf{Probabilistic ending tournaments}, are of size \(N\) and after each turn
 a match between strategies ends with a given probability \(p_e\). Finally,
 \textbf{noisy probabilistic ending} tournaments have both a noise probability
 \(p_n\) and an ending probability \(p_e\). For smoothing the simulated results a
-tournament is repeated for \(k\) number of times. To evaluate the effect of smoothing
-this is allowed to vary. The winner of each tournament
-is based on the average score a strategy achieved and not by number of wins.
-
-% A summary of each tournaments' parameters is given in
-% Table~\ref{table:tournaments_parameters}.
-
-% \begin{table}[!htbp]
-%     \begin{center}
-%         \resizebox{.85\textwidth}{!}{
-%         \begin{tabular}{lcccccc}
-%     \toprule
-%     tournament type & number of strategies & repetitions & turns & noise probability & probability of match ending \\
-%     \midrule
-%     standard & $N$ & k & $n$ & - & - \\
-%     noisy & $N$  & k & $n$ & $p$ & - \\
-%     probabilistic ending & $N$ & k & - & - & $e$ \\
-%     noisy probabilistic ending & $N$ & k & - & $p$ & $e$ \\
-%     \bottomrule
-%         \end{tabular}}
-%     \end{center}
-%     \caption{Tournament types' parameters.}
-%     \label{table:tournaments_parameters}
-% \end{table}
+tournament is repeated for \(k\) number of times. This was allowed to vary 
+in order to evaluate the effect of smoothing. The winner of each tournament
+is based on the average score a strategy achieved and not by the number of wins.
 
 The process of collecting tournament results implemented in this manuscript is described by
 Algorithm~\ref{algorithm:data_generation}. For each trial a random size \(N\) is
-selected, and from the 194 strategies a random list of \(N\) strategies is
+selected, and from the \numberofstrategies strategies a random list of \(N\) strategies is
 chosen. For the given list of strategies a standard, a noisy, a probabilistic
 ending and a noisy probabilistic ending tournament are performed and repeated
-\(k\) times. The parameters for the tournaments as well as the number of
-repetitions are selected once for each trial. The parameters and their
+\(k\) times. The parameters for the tournaments, as well as the number of
+repetitions, are selected once for each trial. The parameters and their
 respective minimum and maximum values are given by
 Table~\ref{table:parameters_values}.
 
@@ -233,7 +223,7 @@ Table~\ref{table:parameters_values}.
     \label{table:parameters_values}
 \end{table}
 
-The source code for the data collection as well as the source code for
+The source code for the data collection, as well as the source code for
 the analysis, which will be discussed in the following sections, have been written
 following best practices~\cite{Aberdour2007, Benureau2018}. It has been packaged
 and is available here. %TODO archive code
@@ -245,8 +235,8 @@ and is available here. %TODO archive code
         $\text{players} \gets  \text{randomly select $N$ players}$\;
         $k \gets  \text{randomly select integer}\in [k_{min}, k_{max}]$\;
         $n \gets  \text{randomly select integer}\in [n_{min}, n_{max}]$\;
-        $p \gets  \text{randomly select float}\in [p_{n\, min}, p_{n\, max}]$\;
-        $e \gets   \text{randomly select float}\in [p_{e\, min}, p_{e\, max}]$\;
+        $p_n \gets  \text{randomly select float}\in [p_{n\, min}, p_{n\, max}]$\;
+        $p_e \gets   \text{randomly select float}\in [p_{e\, min}, p_{e\, max}]$\;
         \vspace{0.4cm}
         $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, k)$\;
         $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p_n, k)$\;
@@ -264,18 +254,25 @@ A total of \uniquenumberofseeds trials of Algorithm~\ref{algorithm:data_generati
 run. For each trial the results for 4 different tournaments were collected,
 thus a total of \numberofalltournaments $(\uniquenumberofseeds \times 4)$ tournament results have been
 retrieved. Each tournament outputs a result summary in the form of
-Table~\ref{table:output_result}.
+Table~\ref{table:output_result}. Each strategy have participated on average in
+5154 tournaments of each type. The strategy with the maximum participation in each
+tournament type is Inverse Punisher with 5639 entries. The strategy with the
+minimum entries is EvolvedLookerUp 1 1 1 which was selected in 4693 trials.
 
 The result summary, Table~\ref{table:output_result}, has \(N\) number of rows
 because each row contains information for each strategy that participated in the
 tournament. The information includes the strategy's rank, median score, the rate
-with which the strategy cooperated $(C_r)$, its match win count and the probability that
-the strategy cooperated in the opening move. Moreover, the probabilities of a strategy
-being in any of the four states ($CC, CD, DC, DD$), and the rate of which the
-strategy cooperated after each state.
+with which the strategy cooperated $(C_r)$, its match win count and the
+probability that the strategy cooperated in the opening move. Moreover, the
+probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
+and the rate of which the strategy cooperated after each state. A measure that
+has been manually included is the \textbf{normalised rank}. The normalised rank,
+denoted as $r$, is calculated as a strategy's rank divided by the tournament's
+size ($N$). In the next section the performance of these strategies is evaluated
+based on their normalised rank.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
-\begin{table}[h!]
+\begin{table}[!htbp]
     \begin{center}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{ccccccgcgcgcgcg}
@@ -301,37 +298,14 @@ strategy cooperated after each state.
 \caption{Output result of a single tournament.}\label{table:output_result}
 \end{table}
 
-A measure that has been manually included
-is the \textbf{normalised rank}. The normalised rank, denoted as $r$, is
-calculated as a strategy's rank divided by the tournament's size ($N$). The
-normalised rank will be used in the next section to evaluate the performance of
-strategies.
-
-Table
-A summary of the number of entries each strategy
-has is given by Table.
-Each strategy participated on average in 5180 tournaments of each type. The
-strategy that participated in the most tournaments () is and the strategy
-with the minimum enties is.
-
-\begin{table}[!htbp]
-    \begin{center}
-    \resizebox{.45\textwidth}{!}{
-        \input{summary_table_of_entries.tex}
-    }
-\end{center}
-% \caption{Top performances for each tournament type based on $\bar{r}$.}
-% \label{table:top_performances}
-\end{table}
-
 \section{Top ranked strategies}\label{section:top_performances}
 
-This section evaluates the performance of 194 IPD strategies. The performance of
+This section evaluates the performance of \numberofstrategies IPD strategies. The performance of
 each strategy is evaluated in four tournament types, which were presented in Section
 \ref{section:data_collection}, followed by an evaluation of their performance
 over all the \numberofalltournaments simulated tournaments of this work.
 
-Each strategy participated in multiple tournaments of the same type (on average 5180).
+Each strategy participated in multiple tournaments of the same type (on average 5154).
 For example Tit For Tat has participated in a total of 5114
 tournaments of each type. The strategy's normalised rank distribution in these
 is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A value of \(r =
@@ -342,7 +316,7 @@ multiple entries their performance is evaluated based on the
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/tit_for_tat_r_distributions.pdf}
+    \includegraphics[width=.6\textwidth]{../images/tit_for_tat_r_distributions.pdf}
     \caption{Tit For Tat's $r$ distribution in tournaments. The best performance
     of the strategy has been in standard tournaments where it achieved a $\bar{r}$
     of 0.339.}
@@ -382,40 +356,70 @@ highly only in standard ones.
 
 Figure~\ref{fig:std_results} gives the distributions of $r$ for the top
 ranked strategies. The distributions are skewed towards zero and the highest
-median is at 0.075. This indicates that the top ranked strategies are very
-likely to perform well in a standard tournament despite the tournament size,
-the opponents, the turns etc.
+median, of the top 15 strategies, is at 0.075. This indicates that the top ranked
+strategies perform well in any given standard tournament, despite the opponents and
+the number of turns.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/performance_standard.pdf}
+    \includegraphics[width=.7\textwidth]{../images/performance_standard.pdf}
     \caption{$r$ distributions of top 15 strategies in standard tournaments.}\label{fig:std_results}
 \end{figure}
 
 The top strategies in noisy tournaments are shown in Figure~\ref{fig:noisy_results}. These include deterministic strategies, such
-as Tit For 2 Tats~\cite{Axelrod1980b}, Hard Tit For 2 Tats~\cite{Stewart2012}
+as Tit For 2 Tats~\cite{Axelrod1980b}, Slow Tit For Tats~\cite{axelrodproject}, Hard Tit For 2 Tats~\cite{Stewart2012}
 and Cycler CCCCCD, and strategies which decide their actions based on the
-cooperations to defections ratio, such as ShortMem~\cite{Carvalho2013}, Grumpy,
-$e$, $\pi$ and $\phi$ (all from~\cite{axelrodproject}). The Retaliate and
+cooperations to defections ratio, such as ShortMem~\cite{Carvalho2013}, Grumpy
+and $e$~\cite{axelrodproject}. The Retaliate and
 Limited Retaliate strategies are implemented in~\cite{axelrodproject} by the
-same contributor. The strategies are designed to defect if the opponent has
-tricked the strategy more often than \(x\%\) of the times that the strategy has
-done the same. Finally, in $4^{\text{th}}$ and $9^{\text{th}}$ are Hunter
+same contributor. They are strategies designed to defect if the opponent has
+tricked them more often than \(x\%\) of the times that they have
+done the same. Finally, in $4^{\text{th}}$ and $9^{\text{th}}$ place are Hunter
 strategies which trying to extort, equivalently, strategies that play cyclically
 and defectors.
 
 From Figure~\ref{fig:noisy_results}, it is evident that the normalised rank
 distributions in noisy environments are more variant with higher medians
-compared to standard tournaments. The distributions are bimodal.
-This indicates that although the top ranked strategies mainly performed
-well, there are several tournaments that they ranked in the bottom half.
+compared to standard tournaments. The distributions are bimodal. This indicates
+that although the top ranked strategies mainly performed well, there are several
+tournaments that they ranked in the bottom half. To gain a better understanding
+of behaviour in noisy tournaments, the \(r\) distribution over the noise
+probability \(p_n\) for the top 6 strategies of Figure~\ref{fig:noisy_results},
+are given in Figure~\ref{fig:effect_of_noise}.
+
+For \(p_n\) strictly lower than 0.5, Grumpy, Tit For 2 Tats and Slow Tit For Two Tat
+have a moderate performing, whereas \(e\), Cycle Hunter and Ricky QLearner are
+behaving poorly. At \(p_n=0.5\), all the distributions are bimodal because
+with a 0.5 probability of noise any strategies corresponds to a random player.
+Interestedly, for a \(p_n\) larger than 0.5 all of the 6 strategies become
+successful. Note that a value \(p_n=1\) corresponds to a strategy playing the
+exact opposite from what they intended. Thus, the successful strategies in
+noisy tournaments presented here, are effective when they are not playing as
+themselves. If \(p_n\) was strictly less 0.5 then the top ranked strategies
+are different, Table~\ref{table:subset_noise_result}. The top spots are mainly
+overtaken by the Meta strategies which are based on teams.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/performance_noise.pdf}
+    \includegraphics[width=.7\textwidth]{../images/performance_noise.pdf}
     \caption{\(r\) distributions for best performed strategies in noisy tournaments.}
     \label{fig:noisy_results}
 \end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{../images/noise_effect.pdf}
+    \caption{\(r\) distributions for top 6 strategies in noisy tournaments over
+    the probability of noisy ($p_n$).}
+    \label{fig:effect_of_noise}
+\end{figure}
+
+\begin{table}[!htbp]
+    \centering
+    \resizebox{.30\textwidth}{!}{
+    \input{performance_noise_subset_table.tex}}
+    \caption{Top performances in noisy tournaments where \(p_n<0.5\).}\label{table:subset_noise_result}
+\end{table}
 
 The 15 top ranked strategies in probabilistic ending tournaments include
 Fortress 3, Fortress 4 (both introduced in~\cite{Ashlock2006}),
@@ -427,16 +431,18 @@ there were trained to maximise their payoffs in tournaments with fixed turns
 tournaments it appears that the top ranks are mostly occupied by defecting
 strategies. These include Better and Better, Gradual Killer, Hard Prober (all
 from ~\cite{prison}), Bully (Reverse Tit For Tat)~\cite{Nachbar1992} and
-Defector. Thus, it's surprisingly that EasyGo and Fool Me Forever are ranked
-$14^{\text{th}}$ and $15^{\text{th}}$. These strategies are actually the same;
-they will defect until their opponent defect, then they will cooperate until the
-end. Both strategies have repeatedly ranked highly as shown in
-Figure~\ref{fig:probend_results}, and there are cases for which they were the
-winners of the tournament.
+Defector. Thus, it's surprisingly that EasyGo and Fool Me Forever which are
+strategies that will defect until their opponent defect, then they will cooperate
+until the end, ranked $14^{\text{th}}$ and $15^{\text{th}}$. Upon inspection,
+it was concluded that they are actually the same strategy. This was not known to
+the authors at the time of data collection. Figure~\ref{fig:probend_results}
+verifies that their perfomance is the same. Both strategies have repeatedly
+ranked highly and there are cases for which they were the winners of the
+tournament.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/performance_probend.pdf}
+    \includegraphics[width=.7\textwidth]{../images/performance_probend.pdf}
     \caption{\(r\) distributions for best performed strategies in probabilistic ending tournaments.}
     \label{fig:probend_results}
 \end{figure}
@@ -444,27 +450,67 @@ winners of the tournament.
 The distributions of the normalised rank in probabilistic ending tournaments,
 shown in
 Figure~\ref{fig:probend_results}, are less variant than those of noisy
-tournaments. The medians are lower than 0.1 and the distributions are skewed
+tournaments. The medians of the top 15 strategies are lower than 0.1 and the distributions are skewed
 towards 0. Though the large difference between the means and the medians
 indicates some outliers, the strategies have overall performed well in the
 probabilistic ending tournaments that they participated.
 
-In tournaments with both noise and an unspecified number of turns several of
-the top ranked strategies are strategies that were highly ranked in noisy
-tournaments. This demonstrates that, $e$, $\pi$,
-$\phi$ and the Retaliate family are robust in noisy environments regardless of the
-number of turns. However, strategies from the top ranks in probabilistic
-ending tournaments did not rank highly here.
+The distributions of \(r\) over \(p_e\) for the top 6 strategies are also given
+by Figure~\ref{fig:effect_of_probend}. It is shown that the rank of the
+strategies is decreasing as the probability of the game ending increases and at
+the point of \(p_e=0.1\) the strategies become dominant. All the top ranked
+strategies in this setting are defecting strategies, and what is exhibited is
+that they do better as the probability of the game ending in the next turn
+increases, which is inline with the Folk Theorem~\cite{Fudenberg2009}. Consider
+tournaments where the probability of the game ending was less than 0.1, the top
+ranked strategies based on \(\bar{r}\) are given
+by~Table~\ref{table:subset_probend_result}. The top ranked strategies include
+strategies based on teams, trained strategies, Grudger and Spiteful Tit for Tat.
+
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/performance_probend_noise.pdf}
+    \includegraphics[width=\textwidth]{../images/folk_theorem.pdf}
+    \caption{\(r\) distributions for top 6 strategies in probabilistic ending tournaments
+    over $p_e$.}
+    \label{fig:effect_of_probend}
+\end{figure}
+
+\begin{table}[!htbp]
+    \centering
+    \resizebox{.30\textwidth}{!}{
+    \input{performance_probend_subset_table.tex}}
+    \caption{Top performances in probabilistic ending tournaments with \(p_e < 0.1\)}
+    \label{table:subset_probend_result}
+\end{table}
+
+In tournaments with both noise and an unspecified number of turns several of
+the top ranked strategies are strategies that were highly ranked in noisy
+tournaments. This demonstrates that, $e$, $\pi$,
+$\phi$ ($\pi$, $\phi$ are based on the same approach as $e$) and the Retaliate
+family are robust in noisy environments regardless of the
+number of turns. However, strategies from the top ranks in probabilistic
+ending tournaments did not rank highly here. The distributions of
+\(r\) shown in Figure~\ref{fig:noisy_probend_results} have the largest
+median values compared to the top rank strategies of the other tournament
+types.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.7\textwidth]{../images/performance_probend_noise.pdf}
     \caption{\(r\) distributions for best performed strategies in noisy
     probabilistic ending tournaments.}
     \label{fig:noisy_probend_results}
 \end{figure}
 
-Up till now, the performances of the 194 strategies have been evaluated for
+The distributions of \(r\) for the tournament types indicate that
+for probabilistic ending and standard tournaments successful strategies do exist.
+For these settings, the top 15 strategies have frequently ranked in
+the top spots with only a few exceptions. Contrarily, it appears that noise
+cause variation in the normalised ranks, and the strategies can always guarantee
+a spot in the top ranks.
+
+Up till now, the performances of the \numberofstrategies strategies have been evaluated for
 individual tournament types. The data set considered in this work, described in
 Section~\ref{section:data_collection}, contains a total of \numberofalltournaments
 tournament results. For this part of the manuscript the strategies are ranked
@@ -479,23 +525,28 @@ and their normalised rank distributions are given in Figure~\ref{fig:overall_res
     \caption{Top performances over all the tournaments}\label{table:overall_results}
 \end{table}
 
-The top ranks include strategies that have been previously mentioned. The top ranks
-are overtaken by the set of Retaliate strategies followed by BackStabber and
-DoubleCrosser. DoubleCrosser performed well in standard tournaments and the
-strategy is just an extension of BackStabber. PSO Gambler and Evolved HMM 5 are
-trained strategies introduced in~\cite{Harper2017} and Nice Meta Winner and NMWE
-Memory One are strategies based on teams. Grudger is a strategy from Axelrod's
-original tournament and Forgetful Fool Me Once is based on the same approach as
-Grudger.
-
-Figure~\ref{fig:overall_results} gives the normalised rank distributions of
+The top ranks include strategies that have been previously mentioned. The
+set of Retaliate strategies occupy the top spots followed by BackStabber
+and DoubleCrosser. Figure~\ref{fig:overall_results} gives the normalised rank distributions of
 these strategies. The distributions of the Retaliate strategies have no
 statistical difference. Thus, in an IPD tournament where the type is not
 specified, playing as any of the Retaliate strategies will have the result.
+DoubleCrosser performed well in standard tournaments and the
+strategy is just an extension of BackStabber. It should be noted that these
+strategies can be characterised as "cheaters". The source code of the strategies
+allows them to known the number of turns in a match (if they are specified).
+PSO Gambler and Evolved HMM 5 are
+trained strategies introduced in~\cite{Harper2017} and Nice Meta Winner and NMWE
+Memory One are strategies based on teams. Grudger is a strategy from Axelrod's
+original tournament and Forgetful Fool Me Once is based on the same approach as
+Grudger. All the top 15 strategies are fundamentally different. Some are cheaters,
+some are complex, others are simple deterministic strategies and strategies based
+on teams. The results of \numberofalltournaments tournaments used in this work imply the following:
+they is not a single type of strategy which can performance well in any IPD interaction.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.55\textwidth]{../images/performance_merged.pdf}
+    \includegraphics[width=.7\textwidth]{../images/performance_merged.pdf}
     \caption{\(r\) distributions for best performed strategies in the data set~\cite{data}.}
     \label{fig:overall_results}
 \end{figure}
@@ -507,8 +558,8 @@ whether the number of turns was fixed or not, the winning strategies were
 deterministic strategies designed to defect if the opponent tricked them more
 than a current amount of the times that they had tricked their opponent. In
 probabilistic ending tournaments most of the winning strategies were defecting
-strategies. A few trained finite state automata, designed by the same authors,
-also performed well in this setting. Finally the performance of all 194
+strategies and trained finite state automata, designed by the same authors.
+Finally the performance of all \numberofstrategies
 strategies over the \numberofalltournaments tournaments in this manuscript was
 assessed on \(\bar{r}\). The top ranked strategies were a mixture of behaviours
 that did well in standard tournaments and tournaments with noise, as well as a
@@ -517,18 +568,18 @@ few strategies based on teams.
 The results of this section imply that successful strategies for specific
 settings exist for an IPD tournament. The top ranked strategies in both standard
 tournaments and tournaments with probabilistic ending, managed to rank in the
-top 10\% of the tournament most of the times. Strategies successful in noisy
-environments demonstrated that they were not affected by the number of turns.
-However, there has been not a single strategy that has shown to perform well in
+top 10\% of the tournament most of the times. Strategies in noisy
+environments demonstrated that no strategy can be consistently
+successful. Overall, there has been not a single strategy that has shown to perform well in
 more than one setting. The aim of the next section is to understand which are
-the factors that made these strategies successful. In each setting separately
+the factors that made these strategies successful, in each setting separately
 but also overall.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
 The aim of this section is to explore the factors that contribute to a
 strategy's successful performance. The factors explored are measures regarding a
-strategy's behaviour, alogn with measures regarding the tournaments the
+strategy's behaviour, along with measures regarding the tournaments the
 strategies competed in. These are given in Table~\ref{table:manual_measures}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
@@ -539,15 +590,15 @@ strategies competed in. These are given in Table~\ref{table:manual_measures}.
     \toprule
     measure & measure explanation &  source & value type & min value & max value \\
     \midrule
-stochastic  &  If a strategy is stochastic & strategy classifier from~\cite{axelrodproject} & boolean  & False &  True \\
-makes use of game &  If a strategy makes used of the game information & strategy classifier from~\cite{axelrodproject} & boolean  & False &  True \\
-makes use of length &  If a strategy makes used of the number of turns & strategy classifier from~\cite{axelrodproject} & boolean  & False &  True \\
+stochastic  &  If a strategy is stochastic & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
+makes use of game &  If a strategy makes used of the game information & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
+makes use of length &  If a strategy makes used of the number of turns & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
 memory usage &  The memory size of a strategy divided by the number of turns & memory size from~\cite{axelrodproject} & float & 0 &  1 \\
 SSE & A measure of how far a strategy is from ZD behaviour & method described in~\cite{Knight2019} & float & 0 & 1 \\
-max cooperating rate $(C_{\text{max}})$  & The biggest cooperating rate in the tournament  & result summary  & float & 0 & 1\\
-min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in the tournament  & result summary  & float & 0 & 1\\
-median cooperating rate $(C_{\text{median}})$ & The median cooperating rate in the tournament  & result summary  & float & 0 & 1\\
-mean cooperating rate $(C_{\text{mean}})$ & The mean cooperating rate in the tournament  & result summary  & float & 0 & 1 \\
+max cooperating rate $(C_{\text{max}})$  & The biggest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
+min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
+median cooperating rate $(C_{\text{median}})$ & The median cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
+mean cooperating rate $(C_{\text{mean}})$ & The mean cooperating rate in a given tournament  & result summary  & float & 0 & 1 \\
 $C_r$ / $C_{\text{max}}$ & A strategy's cooperating rate divided by the maximum & result summary  & float & 0 & 1 \\
 $C_r$ / $C_{\text{min}}$ & A strategy's cooperating rate divided by the minimum & result summary  & float & 0 & 1 \\
 $C_r$ / $C_{\text{median}}$ & A strategy's cooperating rate divided by the median  & result summary  & float & 0 & 1\\
@@ -574,17 +625,22 @@ various dimensions. These determine whether
 a strategy is stochastic or deterministic, whether it makes use of the number of
 turns or the game's payoffs. The memory usage measure is calculated as the
 memory size of strategy (which is specified in the strategies implementation
-in~\cite{axelrodproject}) divide by the number of turns. For tournaments with a
-probabilistic ending the number of turns has been not collected, so the memory
-usage measure is not used for probabilistic ending tournaments.
-The SSE is a measure of extortionate behaviour introduced in~\cite{Knight2019}.
-A value of 1 indicates no extortionate behaviour at all whereas a value of 0
-indicates that a strategy is always trying to extortion it's opponent. The rest
-of the factors considered are the $CC$ to $C$, $CD$ to $C$, $DC$ to $C$, and
-$DD$ to $C$ rates as well as cooperating ratio of a strategy. The minimum,
-maximum, medium and median cooperating ratios of each tournament are also
-included, and finally the number of turns, the number of strategies and the
-probabilities of noise and the game ending are also included.
+in~\cite{axelrodproject}) divide by the number of turns. For example, Evolved
+FSM 16 Noise 05 has a memory size of 16 and participated in a tournament where
+$n$ was 134. In the given tournament Evolved FSM 16 Noise 05 has a memory usage
+of 0.119. For tournaments with a probabilistic ending the number of turns was
+not collected, so the memory usage measure is not used for probabilistic ending
+tournaments. The SSE is a measure introduced in~\cite{Knight2019} which shows
+how close a strategy is to behaving as a ZDs, and subsequently, in an
+extortionate way. The method identifies the ZDs closest to a given strategy and
+calculates the algebraic distance between them, defined as SSE. A SSE value of 1
+indicates no extortionate behaviour at all whereas a value of 0 indicates that a
+strategy is behaving a ZDs. The rest of the factors considered are the $CC$ to
+$C$, $CD$ to $C$, $DC$ to $C$, and $DD$ to $C$ rates as well as cooperating
+ratio of a strategy. The minimum, maximum, medium and median cooperating ratios
+of each tournament are also included, and finally the number of turns, the
+number of strategies, the number of repetitions and the probabilities of noise
+and the game ending are also included.
 
 Table~\ref{table:correlations} shows the correlation coefficients between the
 measures of Table~\ref{table:manual_measures} the median score and the median
@@ -619,7 +675,7 @@ almost always defects after a mutual defection.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.5\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
+    \includegraphics[width=.65\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
     \caption{Distributions of $CC$ to $C$ and $DD$ to $C$ for the winners in
     standard tournaments.}\label{fig:rates_of_winners_in_standard_tournaments}
 \end{figure}
@@ -630,84 +686,75 @@ and median score. A strategy would want to cooperate less than both
 the mean and median cooperator in such settings. In probabilistic ending
 tournaments the correlations coefficients have a larger values, indicating a
 stronger effect. Thus a strategy will be punished more by it's cooperative
-behaviour in probabilistic ending environments. The distributions of the $C_r$ of the winners in
+behaviour in probabilistic ending environments, this was seen in Section~\ref{section:evaluation_of_performance}
+as well. The distributions of the $C_r$ of the winners in
 both tournaments is given by Figure~\ref{fig:c_r_distributions}. It confirms
 that the winners in noisy tournaments cooperated less than 35\% of the times
 and in probabilistic ending tournaments less than 10\%.
-
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=.5\textwidth]{../images/c_r_winners_tournaments.pdf}
-    \caption{$C_r$ distributions of the winners in noisy and in probabilistic
-    ending tournaments.}\label{fig:c_r_distributions}
-\end{figure}
-
 In noisy probabilistic ending tournaments and in over all the tournaments' results,
 the only measures that had a moderate affect are $C_r/C_{\text{mean}},
 C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished by not as much as in noisy and probabilistic ending
 tournaments.
 
-The effect of the measures on performances is further tested using a random forest
-classification~\cite{breiman2001} approach. Initially, the performances are
-clustered based on their normalised rank and the median score by a \(k-\)means
-algorithm~\cite{Arthur2007}. The number of clusters is not deterministically
-chosen but it is based on the silhouette coefficients~\cite{Rousseeuw1987}.
-Consider the case of standard tournaments, the chosen number of clusters is
-2 and Figure~\ref{fig:standard_clusters} illustrates the trials of clustering the
-performances in 2, 3 and 4 clusters respectively. The number of chosen clusters
-for each type and overall are given in Table~\ref{table:number_of_clusters}.
-
 \begin{figure}[!htbp]
-\centering
-\includegraphics[width=.55\textwidth]{../output/standard/clusters_plots.png}
-\caption{Clustering trials for standard tournaments. A number of 2 clusters has
-been chosen with a silhouette score of  0.66 against 0.511 and 0.50
-respectively.}\label{fig:standard_clusters}
+    \centering
+    \includegraphics[width=.65\textwidth]{../images/c_r_winners_tournaments.pdf}
+    \caption{$C_r$ distributions of the winners in noisy and in probabilistic
+    ending tournaments.}\label{fig:c_r_distributions}
 \end{figure}
 
-\begin{table}[!htbp]
-    \begin{center}
-        \resizebox{.5\textwidth}{!}{
-        \begin{tabular}{lcccc}
-    \toprule
-    Tournament type & Number of clusters &  Silhouette coefficient\\
-    \midrule
-    standard                   & 2 & 0.648 \\
-    noisy                      & 3 & 0.493 \\
-    probabilistic ending       & 2 & 0.680 \\
-    noisy probabilistic ending & 4 & 0.415\\
-    over \numberofalltournaments tournaments         & 3 & 0.443\\
-    \bottomrule
-        \end{tabular}}
-    \end{center}
-    \caption{Number of clusters for each type and over all the tournament results
-    and the respective silhouette coefficients.}
-    \label{table:number_of_clusters}
-\end{table}
-
-A random forest approach is applied to the data to predict the cluster to which
-a strategy's performance has been assigned to. The random forest method
+The performances are clustered in two clusters based on the nornalised rank.
+More specifically, there are clustered based on whether the normalised rank was
+in the top 5\%, the 25\% and the 50\%. A random forest
+approach~\cite{breiman2001} is applied to the data to predict the cluster to
+which a strategy's performance has been assigned to. The random forest method
 constructs many individual decision trees and the predictions from all trees are
 pooled to make the final prediction. The random forest models are trained on a
 training set of 70\% of the tournaments results. The accuracy of each model
 based on $R^2$ are given by Table~\ref{table:accuracy_random_forest}. The out of
-the bag error~\cite{hastie2005} has also been calculated. The models fit well, and
-a high value of both the accuracy measure on the test data and the
-OOB error indicate that the model is not over fitting.
+the bag error~\cite{hastie2005} has also been calculated. The models fit well,
+and a high value of both the accuracy measure on the test data and the OOB error
+indicate that the model is not over fitting.
+
+The performances have also been clustered   based on their normalised rank and
+their median score by a \(k-\)means algorithm~\cite{Arthur2007}. The number of
+clusters is not deterministically chosen but it is based on the silhouette
+coefficients~\cite{Rousseeuw1987}. The chosen cluster for each tournament type,
+as well as the accuracy for random forest models, are given in
+Table~\ref{table:accuracy_random_forest}.
 
 \begin{table}[!htbp]
     \begin{center}
-        \resizebox{.5\textwidth}{!}{
-        \begin{tabular}{lcccc}
+        \resizebox{.9\textwidth}{!}{
+        \begin{tabular}{lccccc}
     \toprule
-    Tournament type & $R^2$ training data &  $R^2$ test data  & $R^2$ OOB score\\
+    Tournament type & Clustering on & Number of clusters & $R^2$ training data &  $R^2$ test data  & $R^2$ OOB score\\
     \midrule
-    standard                   & 0.998545  & 0.989890 & 0.982331\\
-    noisy                      & 0.996677  & 0.950572 & 0.935383\\
-    probabilistic ending       & 0.999592  & 0.995128 & 0.992819 \\
-    noisy probabilistic ending & 0.990490  & 0.813905 & 0.791418\\
-    over \numberofalltournaments tournaments & 0.993396 & 0.913409 & 0.898059 \\
+    standard  & top 5\% $r$              & 2  & 0.998831  & 0.987041 & 0.983708 \\
+              & top 25\% $r$             & 2  & 0.998643  & 0.978626 & 0.969202 \\
+              & top 50\% $r$             & 2  & 0.998417  & 0.985217 & 0.976538 \\
+              & $r$  \& normalised score & 2  & 0.998794  & 0.990677 & 0.982959 \\
+    \midrule
+    noisy     & top 5\% $r$              & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & top 25\% $r$             & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & top 50\% $r$             & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & $r$  \& normalised score & 3 & 0.996677  & 0.950572 & 0.935383\\
+    \midrule
+    probabilistic ending & top 5\% $r$              & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & top 25\% $r$             & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & top 50\% $r$             & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & $r$  \& normalised score & 2 & 0.999592  & 0.995128 & 0.992819 \\
+    \midrule
+    noisy probabilistic ending & top 5\% $r$              & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & top 25\% $r$             & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & top 50\% $r$             & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & $r$  \& normalised score & 4 & 0.990490  & 0.813905 & 0.791418\\
+    \midrule
+    over \numberofalltournaments tournaments & top 5\% $r$               & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & top 25\% $r$              & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & top 50\% $r$              & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & $r$  \& normalised score  & 3 & 0.993396 & 0.913409 & 0.898059 \\
     \bottomrule
         \end{tabular}}
     \end{center}
@@ -716,61 +763,179 @@ OOB error indicate that the model is not over fitting.
 \end{table}
 
 The importance that the measures of Table~\ref{table:manual_measures} had on the
-classification task; to which cluster a performance was assigned to, have been
-calculated and are given by Figure~\ref{fig:importance}. The classifiers which
-where not included in the previous analysis appear to have no effect, and
-several of the measures that are highted by the importance are inline with the
+classification tasks; to which cluster a performance was assigned to, have been
+calculated and are given by Figures~\ref{fig:clustering_importance_standard},
+\ref{fig:clustering_importance_noise},~\ref{fig:clustering_importance_probend},
+\ref{fig:clustering_importance_probend_noise}
+and~\ref{fig:clustering_importance_overall}. These show that the classifiers
+stochastic, make use of game and make use of length have no significant effect,
+and several of the measures that are highted by the importance are inline with the
 correlation results. The most important measures based on the random forest
 analysis were $C_r / C_{median}$ and $C_r / C_{mean}$.
 
 \begin{figure}[!htbp]
-    \begin{minipage}{0.5\textwidth}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/standard/_feature_importance_bar_plot_cluster_on_0_05.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 5\% performance.}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/standard/_feature_importance_bar_plot_cluster_on_0_25.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 25\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/standard/_feature_importance_bar_plot_cluster_on_0_5.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 50\% performance.}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.5\textwidth}
         \begin{center}
             \includegraphics[width=.75\linewidth]{../output/standard/_feature_importance_bar_plot.pdf}
         \end{center}
-        \caption{Standard tournaments}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.5\textwidth}
+        \caption{Importance of features for clusters based on \(k\)means algorithm.}
+    \end{subfigure}
+    \caption{Importance of features in standard tournaments for different
+    clustering methods.}\label{fig:clustering_importance_standard}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \begin{subfigure}{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/noise/_feature_importance_bar_plot_cluster_on_0_05.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 5\% performance.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/noise/_feature_importance_bar_plot_cluster_on_0_25.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 25\% performance.}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/noise/_feature_importance_bar_plot_cluster_on_0_5.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 50\% performance.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.5\textwidth}
         \begin{center}
             \includegraphics[width=.75\linewidth]{../output/noise/_feature_importance_bar_plot.pdf}
         \end{center}
-        \caption{Noisy tournaments}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.5\textwidth}
+        \caption{Importance of features for clusters based on \(k\)means algorithm.}
+    \end{subfigure}
+    \caption{Importance of features in noisy tournaments for different
+    clustering methods.}\label{fig:clustering_importance_noise}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend/_feature_importance_bar_plot_cluster_on_0_05.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 5\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend/_feature_importance_bar_plot_cluster_on_0_25.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 25\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend/_feature_importance_bar_plot_cluster_on_0_5.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 50\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
         \begin{center}
             \includegraphics[width=.75\linewidth]{../output/probend/_feature_importance_bar_plot.pdf}
         \end{center}
-        \caption{Probabilistic ending tournaments}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.5\textwidth}
+        \caption{Importance of features for clusters based on \(k\)means algorithm.}
+    \end{subfigure}
+    \caption{Importance of features in probabilistic ending tournaments for different
+    clustering methods.}\label{fig:clustering_importance_probend}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend_noise/_feature_importance_bar_plot_cluster_on_0_05.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 5\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend_noise/_feature_importance_bar_plot_cluster_on_0_25.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 25\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/probend_noise/_feature_importance_bar_plot_cluster_on_0_5.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 50\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
         \begin{center}
             \includegraphics[width=.75\linewidth]{../output/probend_noise/_feature_importance_bar_plot.pdf}
         \end{center}
-        \caption{Noisy probabilistic ending tournaments}
-    \end{minipage}
-    \begin{minipage}{0.5\textwidth}
-    \end{minipage}\hspace{4.5cm}
-    \begin{minipage}{0.5\textwidth}
+        \caption{Importance of features for clusters based on \(k\)means algorithm.}
+    \end{subfigure}
+    \caption{Importance of features in noisy probabilistic ending tournaments for different
+    clustering methods.}\label{fig:clustering_importance_probend_noise}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/merged/_feature_importance_bar_plot_cluster_on_0_05.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 5\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/merged/_feature_importance_bar_plot_cluster_on_0_25.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 25\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=.75\linewidth]{../new_output/merged/_feature_importance_bar_plot_cluster_on_0_5.pdf}
+        \end{center}
+        \caption{Importance of features for clusters on 50\% performance.}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.5\textwidth}
         \begin{center}
             \includegraphics[width=.75\linewidth]{../output/merged/_feature_importance_bar_plot.pdf}
         \end{center}
-        \caption{overall ending tournaments}
-    \end{minipage}
-    \caption{Importance of features in IPD tournaments.}\label{fig:importance}
+        \caption{Importance of features for clusters based on \(k\)means algorithm.}
+    \end{subfigure}
+    \caption{Importance of features over all the tournaments for different
+    clustering methods.}\label{fig:clustering_importance_overall}
 \end{figure}
 
-The effect of both these measures can be further explored. Their distributions
-for the winners of the tournaments are given by
-Figures~\ref{fig:mean_median_std},~\ref{fig:mean_median_noisy},
-\ref{fig:mean_median_probend}, \ref{fig:mean_median_probend_noisy} and
-\ref{fig:mean_median_overall}. The results suggest that if a strategy with
-a theory of mind competed in a standard tournament, then the strategy would
-want to be the mean/median cooperator of that tournament. In comparison, if the
-same strategy competed in a tournament with noisy or the strategy had no
-information regarding the setting of the tournament, then it would
-want to cooperate 67\% of the times the mean or median cooperator did.
-In probabilistic ending tournament it has already been mentioned that defecting
-strategies prevail. This result is once again confirmed in this section.
+The effect of both these measures can be further explored. In
+Figure~\ref{fig:mean_median_std} the distributions of \(C_ / C_{\text{mean}}\)
+and \(C_ / C_{\text{median}}\) are given for the winners. A value of \(C_ /
+C_{\text{mean}} = 1\) imply that the cooperating ratio of the winner was the
+same as the mean / median cooperating ratio. In standard tournaments, the mean
+for both ratios is 1. Therefore, an effective strategy in standard tournaments
+was the mean / median cooperator of its respective tournament. In comparison,
+Figure \ref{fig:mean_median_noisy} shows the distributions of the measure for
+the winners in noisy tournaments. The mean is at 0.67, thereupon the winners
+cooperated 67\% of the times the mean / median cooperator did. This analysis is
+applied to the rest of the tournaments and the distributions are given by
+Figures \ref{fig:mean_median_probend}, \ref{fig:mean_median_probend_noisy} and
+\ref{fig:mean_median_overall}. In a tournament with noisy and a probabilistic
+ending the winners cooperated 60\%, whereas in settings that the type of the
+tournament can vary between the types considered in this work the winners
+cooperated 67\% of the times the mean or median cooperator did. Finally, in
+probabilistic ending tournament it has already been mentioned that defecting
+strategies prevail and this result is once again confirmed in this section.
 
 \begin{figure}[!htbp]
     \centering
@@ -855,6 +1020,9 @@ setting on the tournament, a strategy would be more likely to be successful if
 it were to identify the median cooperator and cooperated 67\% of the times that
 they did.
 
+Further data mining could be applied to the data set of this work, available
+at~\cite{data}.
+
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
@@ -886,10 +1054,10 @@ makes use of game           & If a strategy makes used of the game information  
 makes use of length         & If a strategy makes used of the number of turns \\
 memory usage                & The memory size of a strategy divided by the number of turns \\
 SSE                         & A measure of how far a strategy is from extortionate behaviour \\
-$(C_{\text{max}})$          & The biggest cooperating rate in the tournament \\
-$(C_{\text{min}})$          & The smallest cooperating rate in the tournament \\
-$(C_{\text{median}})$       & The median cooperating rate in the tournament \\
-$(C_{\text{mean}})$         & The mean cooperating rate in the tournament \\
+$C_{\text{max}}$          & The biggest cooperating rate in the tournament \\
+$C_{\text{min}}$          & The smallest cooperating rate in the tournament \\
+$C_{\text{median}}$       & The median cooperating rate in the tournament \\
+$C_{\text{mean}}$         & The mean cooperating rate in the tournament \\
 $C_r$ / $C_{\text{max}}$    & A strategy's cooperating rate divided by the maximum \\
 $C_r$ / $C_{\text{min}}$    & A strategy's cooperating rate divided by the minimum \\
 $C_r$ / $C_{\text{median}}$ & A strategy's cooperating rate divided by the median \\
@@ -899,10 +1067,11 @@ $CC$ to $C$ rate            & The probability a strategy will cooperate after a 
 $CD$ to $C$ rate            & The probability a strategy will cooperate after being betrayed by the opponent \\
 $DC$ to $C$ rate            & The probability a strategy will cooperate after betraying the opponent\\
 $DD$ to $C$ rate            & The probability a strategy will cooperate after a mutual defection\\
-$p$                         & The probability of a player's action being flip at each interaction \\
+$p_n$                       & The probability of a player's action being flip at each interaction \\
 $n$                         & The number of turns \\
-$e$                         & The probability of a match ending in the next turn \\
+$p_e$                       & The probability of a match ending in the next turn \\
 $N$                         & The number of strategies in the tournament \\
+$k$                         & The number that a given tournament is repeated \\
     \bottomrule
         \end{tabular}}
     \end{center}
@@ -955,6 +1124,13 @@ Table~\ref{table:manual_measures}.
     \end{center}
     \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
     for noisy probabilistic ending tournaments}
+\end{figure}
+\begin{figure}[!htbp]
+    \begin{center}
+        \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
+    \end{center}
+    \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+    for data set}
 \end{figure}
 
 \end{document}
