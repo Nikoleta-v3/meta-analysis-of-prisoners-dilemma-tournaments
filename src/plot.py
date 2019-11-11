@@ -26,7 +26,7 @@ features_labels = {
     "turns": r"$n$",
     "noise": r"$p_n$",
     "probend": r"$p_e$",
-    "Normalized_Rank": r"$\bar{r}$",
+    "Normalized_Rank": r"$r$",
     "Median_score": "Median score",
     "size": r"$N$",
     "memory_usage": "memory usage",

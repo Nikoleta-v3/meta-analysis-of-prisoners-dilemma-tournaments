@@ -114,7 +114,9 @@ def draw_feature_importance_bar_plot(
         "noise": r"$p$",
         "probend": r"$e$",
         "memory_usage": "memory usage",
-        "repetitions": r"$k$"
+        "repetitions": r"$k$",
+        "size": r"$N$",
+
     }
     color = matplotlib.cm.viridis(0.4)
     plt.figure()
@@ -147,8 +149,8 @@ if __name__ == "__main__":
     else:
         num_of_workers = 4
 
-    input_directory = "data/%s_v_3_processed.csv" % file
-    output_name = file.split("_v_3_processed")[0]
+    input_directory = "data/%s_3_processed.csv" % file
+    output_name = file.split("_3_processed")[0]
 
     output_directory = "output/%s/" % output_name
     if not os.path.exists(output_directory):
@@ -178,7 +180,8 @@ if __name__ == "__main__":
         "Cooperation_rating_comp_to_min",
         "Cooperation_rating_comp_to_median",
         "Cooperation_rating_comp_to_mean",
-        "repetitions"
+        "repetitions",
+        "size"
     ]
 
     if file == "standard":
