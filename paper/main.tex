@@ -49,11 +49,11 @@ introduction of the zero-determinant strategies, to the use of sophisticated
 structures such as neural networks, the literature has been exploring the
 performance of strategies in the game for years. The results of the literature,
 however, have been relying on the performance of specific strategies in a finite
-number of tournaments, whereas this manuscript evaluates
+number of tournaments. This manuscript evaluates
 \numberofstrategies strategies' effectiveness in more than 40000 tournaments.
 The top ranked strategies are presented, and moreover, the impact of features on
 their success are analysed using machine learning techniques. The analysis
-determines that the cooperating ratio of a
+determines that the cooperation ratio of a
 strategy in a given tournament compared to the mean and median cooperator is the
 most important feature. The conclusions are distinct for different types of
 tournaments. For instance a strategy with a theory of mind would aim to be the mean/median
@@ -86,7 +86,7 @@ game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in 
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
 strategies. Today more than 200 strategies exist in the literature and several
-tournaments, excluding Axelrod's, have been undertaken~\cite{Bendor1991,
+tournaments, following on from Axelrod's, have been undertaken~\cite{Bendor1991,
 Harper2017, Kendall2007, Stephens2002, Stewart2012}.
 
 In the 80's, Axelrod performed two computer tournaments~\cite{Axelrod1980a,
@@ -99,7 +99,7 @@ Due to the strategy's strong performance in both tournaments, and moreover in a
 series of evolutionary experiments~\cite{Axelrod1981}, Tit For Tat was thought
 to be the most robust basic strategy in the IPD.
 
-However, further research proved that the strategy had weakness, and more
+However, further research proved that the strategy had weaknesses, and more
 specifically, it was shown that the strategy suffered in environments with
 noise~\cite{Bendor1991, Donninger1986, Molander1985, Hammerstein1984}. This was
 mainly due to the strategy's lack of generosity and contrition. The strategy was
@@ -115,7 +115,7 @@ a reciprocity based approach but on a mechanism of
 teams~\cite{J.P.Delahaye1993Lp, J.P.Delahaye1995LIeP, A.Rogers2007Ctpw}. A team
 from Southampton University took advantage of the fact that a participant was
 allowed to submit multiple strategies. They submitted a total of 60 strategies
-that could recognised each other and colluded to increase one members score.
+that could recognise each other and colluded to increase one members score.
 This resulted with three of the strategies to be ranked in the top spots. The
 performance of the Southampton University team received mixed attention, though
 they had won the tournament as stated in~\cite{us_blog} "technically this
@@ -142,7 +142,7 @@ question, however, still remains the same: what is the best way to play the
 game? Compared to other works, whereas a few selected strategies are evaluated
 on a small number of tournaments, this manuscript evaluates the performance of \numberofstrategies
 strategies in \numberofalltournaments tournaments. These tournaments do not
-consist by just standard round robin tournaments, but also by tournaments with noise
+consist of just standard round robin tournaments, but also tournaments with noise
 and tournaments with a probabilistic ending. The later part of the paper, evaluates
 the impact of features on the performance of the strategies using modern
 machine learning techniques. These features include measures regarding a
@@ -151,7 +151,7 @@ in this work has been made publicly available~\cite{data} and can be used
 for further analysis and insights.
 
 The different tournament types as well as the data collection, which is made
-possible due an open source package called Axelrod-Python~\cite{axelrodproject},
+possible due to an open source package called Axelrod-Python~\cite{axelrodproject},
 are covered in Section~\ref{section:data_collection}.
 Section~\ref{section:top_performances}, focuses on the best performing
 strategies for each type of tournament and overall.
@@ -160,6 +160,8 @@ contribute to good performance, and finally the results are summarised in
 Section~\ref{section:conclusion}. This manuscripts uses several parameters.
 These are introduced in the following sections, however, the full set of
 parameters and their definitions are given in Appendix~\ref{app:parameters}.
+A list of all strategies including citations of their origins is given in
+Appendix~\ref{app:list_of_players}.
 
 \section{Data collection}\label{section:data_collection}
 
@@ -173,7 +175,7 @@ being strategies that have been contributed specifically to the package. This
 paper make use of \numberofstrategies strategies implemented in version 3.0.0. A
 list of the strategies is given in the Appendix~\ref{app:list_of_players}.
 Though Axelrod-Python features several tournament types, this work considers
-only standard, noisy, probabilistic ending and noisy probabilistic ending
+standard, noisy, probabilistic ending and noisy probabilistic ending
 tournaments.
 
 \textbf{Standard tournaments}, are tournaments similar to that of Axelrod's
@@ -255,7 +257,7 @@ Table~\ref{table:output_result}. Each strategy have participated on average in
 tournament type is Inverse Punisher with 5639 entries. The strategy with the
 minimum entries is EvolvedLookerUp 1 1 1 which was selected in 4693 trials.
 
-The result summary, Table~\ref{table:output_result}, has \(N\) number of rows
+The result summary, Table~\ref{table:output_result}, has \(N\) rows
 because each row contains information for each strategy that participated in the
 tournament. The information includes the strategy's rank, median score, the rate
 with which the strategy cooperated $(C_r)$, its match win count and the
@@ -302,7 +304,7 @@ each strategy is evaluated in four tournament types, which were presented in Sec
 over all the \numberofalltournaments simulated tournaments of this work.
 
 Each strategy participated in multiple tournaments of the same type (on average 5154).
-For example Tit For Tat has participated in a total of 5114
+For example Tit For Tat participated in a total of 5114
 tournaments of each type. The strategy's normalised rank distribution in these
 is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A value of \(r =
 0\) corresponds to a strategy winning the tournament where a value of
@@ -342,7 +344,7 @@ They have been trained to perform well against the strategies
 in~\cite{axelrodproject} in a standard tournament, thus their performance in the
 specific setting was anticipated. DoubleCrosser, and Fool Me Once, are
 strategies not from the literature but from~\cite{axelrodproject}. DoubleCrosser
-is a strategy that makes use of the number of turns because is set to defect on
+is a strategy that makes use of the number of turns because it is set to defect on
 the last two rounds. The strategy was expected to not perform as well in
 tournaments where the number of turns is not specified, but the strategy did not
 perform well in tournaments with noise either. Finally, Winner
@@ -353,7 +355,7 @@ highly only in standard ones.
 Figure~\ref{fig:std_results} gives the distributions of $r$ for the top
 ranked strategies. The distributions are skewed towards zero and the highest
 median, of the top 15 strategies, is at 0.075. This indicates that the top ranked
-strategies perform well in any given standard tournament, despite the opponents and
+strategies perform well in any given standard tournament, regardless of the opponents and
 the number of turns.
 
 \begin{figure}[!htbp]
@@ -375,7 +377,7 @@ Limited Retaliate strategies are implemented in~\cite{axelrodproject} by the
 same contributor. They are strategies designed to defect if the opponent has
 tricked them more often than \(x\%\) of the times that they have
 done the same. Finally, in $4^{\text{th}}$ and $9^{\text{th}}$ place are Hunter
-strategies which trying to extort, equivalently, strategies that play cyclically
+strategies which try to extort strategies that play cyclically
 and defectors.
 
 From Figure~\ref{fig:noisy_results}, it is evident that the normalised rank
@@ -472,7 +474,7 @@ that defecting strategies did better when the likelihood of the game ending in
 the next turn increased, which is inline with the Folk
 Theorem~\cite{Fudenberg2009}. If tournaments where the probability of the game
 ending was less than 0.1 were considered then the the top ranked spots are not
-dominated by just defecting strategies anymore,
+dominated by just defecting strategies anymore, as shown in
 Table~\ref{table:subset_probend_result}. Instead the effective strategies are
 now the Meta strategies, trained strategies, Grudger~\cite{axelrodproject} and
 Spiteful Tit for Tat~\cite{prison}.
@@ -550,10 +552,10 @@ The top ranks include strategies that have been previously mentioned. The
 set of Retaliate strategies occupy the top spots followed by BackStabber
 and DoubleCrosser. The distributions of the Retaliate strategies have no
 statistical difference. Thus, in an IPD tournament where the type is not
-specified, playing as any of the Retaliate strategies will have the result.
+specified, playing as any of the Retaliate strategies seems like a good approach.
 DoubleCrosser performed well in standard tournaments and the
 strategy is just an extension of BackStabber. It should be noted that these
-strategies can be characterised as "cheaters". The source code of the strategies
+strategies can be characterised as ``cheaters". The source code of the strategies
 allows them to known the number of turns in a match (if they are specified).
 PSO Gambler and Evolved HMM 5 are
 trained strategies introduced in~\cite{Harper2017} and Nice Meta Winner and NMWE
@@ -562,7 +564,7 @@ original tournament and Forgetful Fool Me Once is based on the same approach as
 Grudger. Overall the top 15 strategies are fundamentally different. Some are cheaters,
 some are complex, others are simple deterministic strategies and strategies based
 on teams. The results of \numberofalltournaments tournaments used in this work imply the following:
-they is not a single type of strategy which can performance well in any IPD interaction.
+there is not a single type of strategy which can performance well in any IPD interaction.
 
 \begin{figure}[!htbp]
     \centering
@@ -595,10 +597,10 @@ tournaments and tournaments with probabilistic ending, managed to rank in the
 top 10\% of the tournament most of the times.
 Strategies in noisy
 environments demonstrated that no strategy can be consistently
-successful, expected if the value of noise is constrained to less than a half.
+successful, except if the value of noise is constrained to less than a half.
 Overall, there has been not a single strategy that has shown to perform well in
-more than one setting. The aim of the next section is to understand which are
-the factors that made these strategies successful, in each setting separately
+more than one setting. The aim of the next section is to understand the features
+that made these strategies successful, in each setting separately
 but also overall.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
@@ -642,7 +644,7 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     \bottomrule
         \end{tabular}}
     \end{center}
-    \caption{The measures which are included in the performance evaluation analysis.}
+    \caption{The features which are included in the performance evaluation analysis.}
     \label{table:manual_measures}
 \end{table}
 
@@ -739,7 +741,7 @@ constructs many individual decision trees and the predictions from all trees are
 pooled to make the final prediction. The random forest models are trained on a
 training set of 70\% of the tournaments results. The accuracy of each model
 based on $R^2$ are given by Table~\ref{table:accuracy_random_forest}. The out of
-the bag error~\cite{hastie2005} has also been calculated. The models fit well,
+the bag error (OOB)~\cite{hastie2005} has also been calculated. The models fit well,
 and a high value of both the accuracy measure on the test data and the OOB error
 indicate that the model is not over fitting.
 
@@ -1015,9 +1017,9 @@ there is not a single dominant type of strategies if the environments
 vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
 based on the mean and median cooperators.
 
-The \numberofstrategies strategies used in this manuscript have been mainly for
+The \numberofstrategies strategies used in this manuscript have been mainly from
 the literature, and they have been accessible due to an open source software
-called Axelrod-Python. The software was used to generate a total of
+called Axelrod-Python~\cite{axelrodproject}. The software was used to generate a total of
 \numberofalltournaments computer tournaments results with different number of
 strategies and different participants each time. The data collection was
 described in Section~\ref{section:data_collection}. In
@@ -1050,15 +1052,15 @@ environment. The cooperating ratio of the strategy compared to the mean and
 median cooperator was highlighted as the most important feature in the analysis.
 More specifically, if a strategy were to enter a tournament with a theory of
 mind of its environment it would choose to be the median cooperator in standard
-tournaments, to cooperate 10\% in probabilistic ending tournaments and 
+tournaments, to cooperate 10\% of the times the median cooperator did in probabilistic ending tournaments and 
 60\% in noisy and noisy probabilistic
-tournaments of the times the median cooperator did. Lastly, if a strategy was aware of the opponents but not of the
+tournaments. Lastly, if a strategy was aware of the opponents but not of the
 setting on the tournament, a strategy would be more likely to be successful if
 it were to identify the median cooperator and cooperated 67\% of the times that
 they did.
 
 The data set described in this work contains the largest number of IPD tournaments,
-to the authors knowledge, and it available at~\cite{data}. Further data mining
+to the authors knowledge, and available at~\cite{data}. Further data mining
 could be applied and provide new insights in the field.
 
 \bibliographystyle{plain}
@@ -1078,6 +1080,9 @@ A variety of software have been used in this work:
 \appendix
 
 \section{A summary of parameters}\label{app:parameters}
+
+A summary of the parameters and features used in this work are given
+by Table~\ref{table:parameters_summary}.
 
 
 \begin{table}[h]
@@ -1113,7 +1118,7 @@ $k$                         & The number that a given tournament is repeated \\
     \bottomrule
         \end{tabular}}
     \end{center}
-    \caption{The measures which are included in the performance evaluation analysis.}
+    \caption{The measures which are included in the performance evaluation analysis.}\label{table:parameters_summary}
 \end{table}
 
 
