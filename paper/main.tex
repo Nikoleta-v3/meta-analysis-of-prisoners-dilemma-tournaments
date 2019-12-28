@@ -603,8 +603,8 @@ but also overall.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
-The aim of this section is to explore the factors that contribute to a
-strategy's successful performance. The factors explored are measures regarding a
+The aim of this section is to explore the features that contribute to a
+strategy's successful performance. The features explored are measures regarding a
 strategy's behaviour, along with measures regarding the tournaments the
 strategies competed in. These are given in Table~\ref{table:manual_measures}.
 
@@ -661,7 +661,7 @@ how close a strategy is to behaving as a ZDs, and subsequently, in an
 extortionate way. The method identifies the ZDs closest to a given strategy and
 calculates the algebraic distance between them, defined as SSE. A SSE value of 1
 indicates no extortionate behaviour at all whereas a value of 0 indicates that a
-strategy is behaving a ZDs. The rest of the factors considered are the $CC$ to
+strategy is behaving a ZDs. The rest of the features considered are the $CC$ to
 $C$, $CD$ to $C$, $DC$ to $C$, and $DD$ to $C$ rates as well as cooperating
 ratio of a strategy. The minimum, maximum, medium and median cooperating ratios
 of each tournament are also included, and finally the number of turns, the
@@ -669,10 +669,10 @@ number of strategies, the number of repetitions and the probabilities of noise
 and the game ending are also included.
 
 Table~\ref{table:correlations} shows the correlation coefficients between the
-measures of Table~\ref{table:manual_measures} the median score and the median
+features of Table~\ref{table:manual_measures} the median score and the median
 normalised rank. Note that the correlation for the classifiers is
 not included because they are binary variables and they will be evaluated using a
-different method. The correlation coefficients for all the measures in
+different method. The correlation coefficients for all the features in
 Table~\ref{table:manual_measures} against themselves have also been calculated and a
 graphical representation can be found in the Appendix~\ref{app:correlations}.
 
@@ -683,11 +683,11 @@ graphical representation can be found in the Appendix~\ref{app:correlations}.
         \input{correlations_table.tex}
     }
 \end{center}
-\caption{Correlations table between the measures of Table~\ref{table:manual_measures}
+\caption{Correlations table between the features of Table~\ref{table:manual_measures}
 the normalised rank and the median score.}\label{table:correlations}
 \end{table}
 
-In standard tournaments the measures  $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
+In standard tournaments the features  $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
 and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
 have a moderate negative effect on the normalised rank, and a moderate positive
 on the median score. The SSE error and the $DD$ to $C$ have the opposite
@@ -718,7 +718,7 @@ both tournaments is given by Figure~\ref{fig:c_r_distributions}. It confirms
 that the winners in noisy tournaments cooperated less than 35\% of the times
 and in probabilistic ending tournaments less than 10\%.
 In noisy probabilistic ending tournaments and in over all the tournaments' results,
-the only measures that had a moderate affect are $C_r/C_{\text{mean}},
+the only features that had a moderate affect are $C_r/C_{\text{mean}},
 C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished by not as much as in noisy and probabilistic ending
 tournaments.
@@ -788,7 +788,7 @@ Table~\ref{table:accuracy_random_forest}.
     \label{table:accuracy_random_forest}
 \end{table}
 
-The importance that the measures of Table~\ref{table:manual_measures} had on
+The importance that the features of Table~\ref{table:manual_measures} had on
 each classification task; to which cluster a performance was assigned to based
 on the normalised rank, and their normalised rank and median score have been
 calculated and are given by Figures~\ref{fig:clustering_importance_standard},
@@ -796,9 +796,9 @@ calculated and are given by Figures~\ref{fig:clustering_importance_standard},
 \ref{fig:clustering_importance_probend_noise}
 and~\ref{fig:clustering_importance_overall}. These show that the classifiers
 stochastic, make use of game and make use of length have no significant effect,
-and several of the measures that are highted by the importance are inline with
+and several of the features that are highted by the importance are inline with
 the correlation results. Moreover, the smoothing parameter \(k\) appears to no
-have a significant effect either. The most important measures based on the
+have a significant effect either. The most important features based on the
 random forest analysis were $C_{r} / C_{median}$ and $C_r / C_{mean}$.
 
 \begin{figure}[!htbp]
@@ -946,14 +946,14 @@ random forest analysis were $C_{r} / C_{median}$ and $C_r / C_{mean}$.
     clustering methods.}\label{fig:clustering_importance_overall}
 \end{figure}
 
-The effect of both these measures can be further explored. In
+The effect of both these features can be further explored. In
 Figure~\ref{fig:mean_median_std} the distributions of \(C_r / C_{\text{mean}}\)
 and \(C_r / C_{\text{median}}\) are given for the winners in standard tournaments. A value of \(C_r /
 C_{\text{mean}} = 1\) imply that the cooperating ratio of the winner was the
 same as the mean/median cooperating ratio of the tournament. In standard tournaments, the mean
 for both ratios is 1. Therefore, an effective strategy in standard tournaments
 was the mean/median cooperator of its respective tournament. In comparison,
-Figure~\ref{fig:mean_median_noisy} shows the distributions of the measures for
+Figure~\ref{fig:mean_median_noisy} shows the distributions of the features for
 the winners in noisy tournaments where the mean is at 0.67. Thereupon the winners
 cooperated 67\% of the times the mean/median cooperator did. This analysis is
 applied to the rest of the tournaments and the distributions are given by
@@ -1000,7 +1000,7 @@ strategies prevail and this result is once again confirmed in this section.
     and \(C_r / C_{\text{median}}\) for winners of over all the tournaments.}\label{fig:mean_median_overall}
 \end{figure}
 
-In this section the effect of several measures, regarding a strategy's behaviour
+In this section the effect of several features, regarding a strategy's behaviour
 and the tournament in which it participated on its performance were presented.
 This was done using two approaches. Correlation coefficients and a random forest
 analysis. The results of these are summarised in the following section.
@@ -1041,11 +1041,11 @@ On the whole ... (the ipd interactions are unique and there is no winning
 strategy) %TODO help from Vince
 
 Section~\ref{section:evaluation_of_performance}, covered an analysis of
-performance based on several measures associated with a strategy and with the
+performance based on several features associated with a strategy and with the
 environments it was competing. The results of this analysis showed that a
 strategy's characteristics such as whether or not it's stochastic, and the information it
 used regarding the game had no effect on the strategy's success. The most
-important factors have been those that compared the strategy's behaviour to it's
+important features have been those that compared the strategy's behaviour to it's
 environment. The cooperating ratio of the strategy compared to the mean and
 median cooperator was highlighted as the most important feature in the analysis.
 More specifically, if a strategy were to enter a tournament with a theory of
@@ -1113,7 +1113,7 @@ $k$                         & The number that a given tournament is repeated \\
     \bottomrule
         \end{tabular}}
     \end{center}
-    \caption{The measures which are included in the performance evaluation analysis.}
+    \caption{The features which are included in the performance evaluation analysis.}\label{table:parameters_summary}
 \end{table}
 
 
@@ -1131,42 +1131,42 @@ The strategies used in this study which are from Axelrod-Python library version 
 
 \section{Correlation coefficients}\label{app:correlations}
 
-A graphical representation of the correlation coefficients for the measures in
+A graphical representation of the correlation coefficients for the features in
 Table~\ref{table:manual_measures}.
 
 \begin{figure}[!htbp]
         \begin{center}
             \includegraphics[width=.75\linewidth]{../images/standard_correlation_plot.pdf}
         \end{center}
-        \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+        \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
         for standard tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
     for noisy tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
     for probabilistic ending tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
     for noisy probabilistic ending tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of measures in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
     for data set}
 \end{figure}
 
