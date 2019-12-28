@@ -151,7 +151,7 @@ in this work has been made publicly available~\cite{data} and can be used
 for further analysis and insights.
 
 The different tournament types as well as the data collection, which is made
-possible due to an open source package called Axelrod-Python~\cite{axelrodproject},
+possible due to an open source package called Axelrod-Python,
 are covered in Section~\ref{section:data_collection}.
 Section~\ref{section:top_performances}, focuses on the best performing
 strategies for each type of tournament and overall.
@@ -167,14 +167,14 @@ Appendix~\ref{app:list_of_players}.
 
 For the purposes of this manuscript a data set containing results of IPD
 tournaments has been generated and is available at~\cite{data}. This was done using the
-open source package Axelrod-Python~\cite{axelrodproject}, and more specifically,
-version 3.0.0. Axelrod-Python allows for different types of IPD computer
+open source package Axelrod-Python library~\cite{axelrodproject} (APL), and more specifically,
+version 3.0.0. APL allows for different types of IPD computer
 tournaments to be simulated whilst containing a list of over 180 strategies.
 Most of these are strategies described in the literature with a few exceptions
 being strategies that have been contributed specifically to the package. This
 paper make use of \numberofstrategies strategies implemented in version 3.0.0. A
 list of the strategies is given in the Appendix~\ref{app:list_of_players}.
-Though Axelrod-Python features several tournament types, this work considers
+Though APL features several tournament types, this work considers
 standard, noisy, probabilistic ending and noisy probabilistic ending
 tournaments.
 
@@ -341,9 +341,9 @@ hidden markov models (HMM), artificial neural networks (ANN), lookup tables
 (LookerUp) and stochastic lookup tables (Gambler) that have been trained using
 reinforcement learning algorithms (evolutionary and particle swarm algorithms).
 They have been trained to perform well against the strategies
-in~\cite{axelrodproject} in a standard tournament, thus their performance in the
+in APL in a standard tournament, thus their performance in the
 specific setting was anticipated. DoubleCrosser, and Fool Me Once, are
-strategies not from the literature but from~\cite{axelrodproject}. DoubleCrosser
+strategies not from the literature but from the APL. DoubleCrosser
 is a strategy that makes use of the number of turns because it is set to defect on
 the last two rounds. The strategy was expected to not perform as well in
 tournaments where the number of turns is not specified, but the strategy did not
@@ -373,7 +373,7 @@ Tit For 2 Tats, and at the time of writing this manuscript the
 contributors of~\cite{axelrodproject} made a new release where the strategy
 has been removed. However, for the purpose of this work the strategy is kept.
 The Retaliate and
-Limited Retaliate strategies are implemented in~\cite{axelrodproject} by the
+Limited Retaliate strategies are implemented in APL by the
 same contributor. They are strategies designed to defect if the opponent has
 tricked them more often than \(x\%\) of the times that they have
 done the same. Finally, in $4^{\text{th}}$ and $9^{\text{th}}$ place are Hunter
@@ -618,10 +618,10 @@ strategies competed in. These are given in Table~\ref{table:manual_measures}.
     \toprule
     measure & measure explanation &  source & value type & min value & max value \\
     \midrule
-stochastic  &  If a strategy is stochastic & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
-makes use of game &  If a strategy makes used of the game information & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
-makes use of length &  If a strategy makes used of the number of turns & strategy classifier from~\cite{axelrodproject} & boolean  & Na &  Na \\
-memory usage &  The memory size of a strategy divided by the number of turns & memory size from~\cite{axelrodproject} & float & 0 &  1 \\
+stochastic  &  If a strategy is stochastic & strategy classifier from APL & boolean  & Na &  Na \\
+makes use of game &  If a strategy makes used of the game information & strategy classifier from APL & boolean  & Na &  Na \\
+makes use of length &  If a strategy makes used of the number of turns & strategy classifier from APL & boolean  & Na &  Na \\
+memory usage &  The memory size of a strategy divided by the number of turns & memory size from APL & float & 0 &  1 \\
 SSE & A measure of how far a strategy is from ZD behaviour & method described in~\cite{Knight2019} & float & 0 & 1 \\
 max cooperating rate $(C_{\text{max}})$  & The biggest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
 min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
@@ -648,12 +648,12 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     \label{table:manual_measures}
 \end{table}
 
-Axelrod-Python makes use of classifiers to classify strategies according to
+APL makes use of classifiers to classify strategies according to
 various dimensions. These determine whether
 a strategy is stochastic or deterministic, whether it makes use of the number of
 turns or the game's payoffs. The memory usage measure is calculated as the
 memory size of strategy (which is specified in the strategies implementation
-in~\cite{axelrodproject}) divide by the number of turns. For example, Evolved
+in the APL) divide by the number of turns. For example, Evolved
 FSM 16 Noise 05 has a memory size of 16 and participated in a tournament where
 $n$ was 134. In the given tournament Evolved FSM 16 Noise 05 has a memory usage
 of 0.119. For tournaments with a probabilistic ending the number of turns was
@@ -1019,7 +1019,7 @@ based on the mean and median cooperators.
 
 The \numberofstrategies strategies used in this manuscript have been mainly from
 the literature, and they have been accessible due to an open source software
-called Axelrod-Python~\cite{axelrodproject}. The software was used to generate a total of
+called Axelrod-Python library. The software was used to generate a total of
 \numberofalltournaments computer tournaments results with different number of
 strategies and different participants each time. The data collection was
 described in Section~\ref{section:data_collection}. In
@@ -1071,7 +1071,7 @@ could be applied and provide new insights in the field.
 A variety of software have been used in this work:
 
 \begin{itemize}
-    \item The Axelrod library for IPD simulations~\cite{axelrodproject}.
+    \item The Axelrod-Python library for IPD simulations~\cite{axelrodproject}.
     \item The Matplotlib library for visualisation~\cite{hunter2007matplotlib}.
     \item The Numpy library for data manipulation~\cite{walt2011numpy}.
     \item The scikit-learn library for data analysis~\cite{scikit-learn}.
@@ -1125,8 +1125,7 @@ $k$                         & The number that a given tournament is repeated \\
 
 \section{List of strategies}\label{app:list_of_players}
 
-The strategies used in this study which are from Axelrod version 3.0.0
-\cite{axelrodproject}.
+The strategies used in this study which are from Axelrod-Python library version 3.0.0.
 
 \begin{multicols}{3}
 	\begin{enumerate}
