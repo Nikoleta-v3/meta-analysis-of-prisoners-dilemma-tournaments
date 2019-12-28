@@ -261,7 +261,7 @@ tournament. The information includes the strategy's rank, median score, the rate
 with which the strategy cooperated $(C_r)$, its match win count and the
 probability that the strategy cooperated in the opening move. Moreover, the
 probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
-and the rate of which the strategy cooperated after each state. A measure that
+and the rate of which the strategy cooperated after each state. A feature that
 has been manually included is the \textbf{normalised rank}. The normalised rank,
 denoted as $r$, is calculated as a strategy's rank divided by the tournament's
 size ($N$). In the next section the performance of these strategies is evaluated
@@ -606,7 +606,7 @@ but also overall.
 The aim of this section is to explore the features that contribute to a
 strategy's successful performance. The features explored are measures regarding a
 strategy's behaviour, along with measures regarding the tournaments the
-strategies competed in. These are given in Table~\ref{table:manual_measures}.
+strategies competed in. These are given in Table~\ref{table:manual_features}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[h]
@@ -614,7 +614,7 @@ strategies competed in. These are given in Table~\ref{table:manual_measures}.
     \resizebox{\textwidth}{!}{
     \begin{tabular}{gcgcgc}
     \toprule
-    measure & measure explanation &  source & value type & min value & max value \\
+    feature & feature explanation &  source & value type & min value & max value \\
     \midrule
 stochastic  &  If a strategy is stochastic & strategy classifier from APL & boolean  & Na &  Na \\
 makes use of game &  If a strategy makes used of the game information & strategy classifier from APL & boolean  & Na &  Na \\
@@ -642,21 +642,21 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     \bottomrule
         \end{tabular}}
     \end{center}
-    \caption{The measures which are included in the performance evaluation analysis.}
-    \label{table:manual_measures}
+    \caption{The features which are included in the performance evaluation analysis.}
+    \label{table:manual_features}
 \end{table}
 
 APL makes use of classifiers to classify strategies according to
 various dimensions. These determine whether
 a strategy is stochastic or deterministic, whether it makes use of the number of
-turns or the game's payoffs. The memory usage measure is calculated as the
+turns or the game's payoffs. The memory usage feature is calculated as the
 memory size of strategy (which is specified in the strategies implementation
 in the APL) divide by the number of turns. For example, Evolved
 FSM 16 Noise 05 has a memory size of 16 and participated in a tournament where
 $n$ was 134. In the given tournament Evolved FSM 16 Noise 05 has a memory usage
 of 0.119. For tournaments with a probabilistic ending the number of turns was
-not collected, so the memory usage measure is not used for probabilistic ending
-tournaments. The SSE is a measure introduced in~\cite{Knight2019} which shows
+not collected, so the memory usage feature is not used for probabilistic ending
+tournaments. The SSE is a feature introduced in~\cite{Knight2019} which shows
 how close a strategy is to behaving as a ZDs, and subsequently, in an
 extortionate way. The method identifies the ZDs closest to a given strategy and
 calculates the algebraic distance between them, defined as SSE. A SSE value of 1
@@ -669,11 +669,11 @@ number of strategies, the number of repetitions and the probabilities of noise
 and the game ending are also included.
 
 Table~\ref{table:correlations} shows the correlation coefficients between the
-features of Table~\ref{table:manual_measures} the median score and the median
+features of Table~\ref{table:manual_features} the median score and the median
 normalised rank. Note that the correlation for the classifiers is
 not included because they are binary variables and they will be evaluated using a
 different method. The correlation coefficients for all the features in
-Table~\ref{table:manual_measures} against themselves have also been calculated and a
+Table~\ref{table:manual_features} against themselves have also been calculated and a
 graphical representation can be found in the Appendix~\ref{app:correlations}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
@@ -683,7 +683,7 @@ graphical representation can be found in the Appendix~\ref{app:correlations}.
         \input{correlations_table.tex}
     }
 \end{center}
-\caption{Correlations table between the features of Table~\ref{table:manual_measures}
+\caption{Correlations table between the features of Table~\ref{table:manual_features}
 the normalised rank and the median score.}\label{table:correlations}
 \end{table}
 
@@ -788,7 +788,7 @@ Table~\ref{table:accuracy_random_forest}.
     \label{table:accuracy_random_forest}
 \end{table}
 
-The importance that the features of Table~\ref{table:manual_measures} had on
+The importance that the features of Table~\ref{table:manual_features} had on
 each classification task; to which cluster a performance was assigned to based
 on the normalised rank, and their normalised rank and median score have been
 calculated and are given by Figures~\ref{fig:clustering_importance_standard},
@@ -1085,7 +1085,7 @@ A variety of software have been used in this work:
     \resizebox{.7\textwidth}{!}{
     \begin{tabular}{llc}
     \toprule
-measure & measure explanation \\
+feature & feature explanation \\
  \midrule
 stochastic                  & If a strategy is stochastic \\
 makes use of game           & If a strategy makes used of the game information  \\
@@ -1132,41 +1132,41 @@ The strategies used in this study which are from Axelrod-Python library version 
 \section{Correlation coefficients}\label{app:correlations}
 
 A graphical representation of the correlation coefficients for the features in
-Table~\ref{table:manual_measures}.
+Table~\ref{table:manual_features}.
 
 \begin{figure}[!htbp]
         \begin{center}
             \includegraphics[width=.75\linewidth]{../images/standard_correlation_plot.pdf}
         \end{center}
-        \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
+        \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
         for standard tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
     for noisy tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
     for probabilistic ending tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
     for noisy probabilistic ending tournaments}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_measures}
+    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
     for data set}
 \end{figure}
 
