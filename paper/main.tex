@@ -385,10 +385,11 @@ From Figure~\ref{fig:noisy_results}, it is evident that the normalised rank
 distributions in noisy environments are more variant with higher medians
 compared to standard tournaments. The distributions are bimodal. This indicates
 that although the top ranked strategies mainly performed well, there are several
-tournaments that they ranked in the bottom half. To gain a better understanding
-of the behaviour in noisy tournaments, the \(r\) distributions for the top 6
-of Figure~\ref{fig:noisy_results} strategies over the noise probability \(p_n\),
-are given in Figure~\ref{fig:effect_of_noise}.
+tournaments that they ranked in the bottom half. The bimodality of the \(r\)
+distributions can be explained by Figure~\ref{fig:noisy_results} which gives the
+\(r\) distributions for the top 6 strategies over the noise probability \(p_n\).
+Note that for \(p_n=0.5\) a strategy corresponds to a random player and for
+\(p_n=1\) a strategy is behaving in the exact opposite way than its design.
 
 \begin{figure}[!htbp]
     \centering
@@ -397,17 +398,11 @@ are given in Figure~\ref{fig:effect_of_noise}.
     \label{fig:noisy_results}
 \end{figure}
 
-Figure~\ref{fig:effect_of_noise} shows that for \(p_n\) values lower than 0.5
-Grumpy, Tit For 2 Tats and Slow Tit For Two Tat perform moderately, and \(e\),
-Cycle Hunter and Ricky QLearner perform poorly. At \(p_n=0.5\) all the
-distributions become bimodal. This is because with a noise probability of 0.5,
-all strategies correspond to a random player. Interestedly, for a \(p_n\) larger
-than 0.5 all of the 6 strategies become successful. Note that a value \(p_n=1\)
-corresponds to a strategy playing opposite from what it intended to. Thus, it is
-demonstrated that the successful strategies is noisy tournaments are sometimes
-effective when \(p_n=0.5\) but overall they are very successful whn they are
-playing opposite from their original design. If during the data collection a
-\(p_n\) strictly less 0.5 was considered then the top ranked strategies would be
+From Figure~\ref{fig:effect_of_noise} it is evident that the strategies highly
+ranked in noisy environments did so because of their performance in tournaments
+with \(p_n>0.5\). In tournaments with a noise probability lower than \(0.5\) the
+strategies performed poorly which is why their \(r\) distributions are bimodal.
+If during the data collection a \(p_n\) strictly less 0.5 was considered then the top ranked strategies would be
 different. There are a total of 5661 trials where \(p_n<0.5\) and the top ranked
 strategies are given in Table~\ref{table:subset_noise_result}. The median ranks
 are lower than before and the top spots are mainly overtaken by Meta strategies
@@ -581,11 +576,11 @@ whether the number of turns was fixed or not, the winning strategies were
 deterministic strategies designed to defect if the opponent tricked them more
 than a current amount of the times that they had tricked their opponent. However,
 if a value of noise strictly less than 0.5 was considered, then the successful
-strategies were strategies based on teams. In
-probabilistic ending tournaments most of the winning strategies were defecting
-strategies and trained finite state automata, designed by the same authors.
-These strategies only did better when the probability of the game ending after
-each turn was increased.
+strategies were strategies based on the behaviour of many strategies. In
+probabilistic ending tournaments most of the highly ranked strategies were defecting
+strategies and trained finite state automata, all by the authors of~\cite{Ashlock2006, Ashlock2014}.
+These strategies ranked high due to their performance in tournaments where the probability of the game ending after
+each turn was bigger than 0.1.
 Finally the performance of all \numberofstrategies
 strategies over the \numberofalltournaments tournaments in this manuscript was
 assessed on \(\bar{r}\). The top ranked strategies were a mixture of behaviours
@@ -733,57 +728,74 @@ tournaments.
     ending tournaments.}\label{fig:c_r_distributions}
 \end{figure}
 
-The performances are clustered based on the normalised rank. More specifically,
-they are clustered 3 times into 2 different clusters based on  on whether their
-normalised rank was in the top 5\%, 25\% or 50\% respectively. A random forest
-approach~\cite{breiman2001} is then applied to each performance to predict the cluster to
-which it has been assigned to. The random forest method
-constructs many individual decision trees and the predictions from all trees are
-pooled to make the final prediction. The random forest models are trained on a
-training set of 70\% of the tournaments results. The accuracy of each model
-based on $R^2$ are given by Table~\ref{table:accuracy_random_forest}. The out of
-the bag error (OOB)~\cite{hastie2005} has also been calculated. The models fit well,
-and a high value of both the accuracy measure on the test data and the OOB error
-indicate that the model is not over fitting.
+To further explore the features that contribute to a strategy's success the
+performances are divided into clusters based on whether they were successful or
+not. A random forest approach~\cite{breiman2001} is then applied to each
+performance to predict the cluster to which it has been assigned to. This allows
+for the importance of each feature in the classification to be calculated. In
+essence, to calculate which are the important features when one is trying to
+predict whether a performance was successful or not.
 
-The performances have also been clustered based on their normalised rank and
-their median score by a \(k-\)means algorithm~\cite{Arthur2007}. The number of
-clusters is not deterministically chosen but it is based on the silhouette
-coefficients~\cite{Rousseeuw1987}. The chosen cluster for each tournament type,
-as well as the accuracy for random forest models are also given in
-Table~\ref{table:accuracy_random_forest}.
+The performances are clustered into successful and unsuccessful clusters based on
+4 different approaches. More specifically:
+
+\begin{itemize}
+    \item \textbf{Approach 1:} The performances are divided into two clusters based
+    on whether their performance was in the top \(5\%\) of their respective tournaments.
+    Thus, whether \(r\) was smaller or larger than 0.05.
+    \item \textbf{Approach 2:} The performances are divided into two clusters based
+    on whether their performance was in the top \(25\%\) of their respective tournaments.
+    Thus, whether \(r\) was smaller or larger than 0.25.
+    \item \textbf{Approach 3:} The performances are divided into two clusters based
+    on whether their performance was in the top \(50\%\) of their respective tournaments.
+    Thus, whether \(r\) was smaller or larger than 0.50.
+    \item \textbf{Approach 4:} The performances are clustered based on their normalised rank and
+    their median score by a \(k-\)means algorithm~\cite{Arthur2007}. The number of
+    clusters is not deterministically chosen but it is based on the silhouette
+    coefficients~\cite{Rousseeuw1987}.
+\end{itemize}
+
+The random forest method constructs many individual decision trees and the
+predictions from all trees are pooled to make the final prediction. The random
+forest models are trained on a training set of 70\% of the tournaments results.
+The accuracy of each model based on $R^2$ and the number of clusters for each
+tournament type (because in the case of Approach 4 it is not
+deterministically chosen) are given by Table~\ref{table:accuracy_random_forest}.
+The out of the bag error (OOB)~\cite{hastie2005} has also been calculated. The
+models fit well, and a high value of both the accuracy measure on the test data
+and the OOB error indicate that the model is not over fitting.
 
 \begin{table}[!htbp]
     \begin{center}
         \resizebox{.9\textwidth}{!}{
         \begin{tabular}{lccccc}
     \toprule
-    Tournament type & Clustering on & Number of clusters & $R^2$ training data &  $R^2$ test data  & $R^2$ OOB score\\
+    Tournament type & Clustering Approach & Number of clusters & $R^2$ training data &  $R^2$ test data  & $R^2$ OOB score\\
     \midrule
-    standard  & top 5\% $r$              & 2  & 0.998831  & 0.987041 & 0.983708 \\
-              & top 25\% $r$             & 2  & 0.998643  & 0.978626 & 0.969202 \\
-              & top 50\% $r$             & 2  & 0.998417  & 0.985217 & 0.976538 \\
-              & $r$  \& normalised score & 2  & 0.998794  & 0.990677 & 0.982959 \\
+    standard  & Approach 1 & 2  & 0.998831  & 0.987041 & 0.983708 \\
+              & Approach 2 & 2  & 0.998643  & 0.978626 & 0.969202 \\
+              & Approach 3 & 2  & 0.998417  & 0.985217 & 0.976538 \\
+              & Approach 4 & 2  & 0.998794  & 0.990677 & 0.982959 \\
     \midrule
-    noisy     & top 5\% $r$              & 2 & 0.996677  & 0.950572 & 0.935383\\
-              & top 25\% $r$             & 2 & 0.996677  & 0.950572 & 0.935383\\
-              & top 50\% $r$             & 2 & 0.996677  & 0.950572 & 0.935383\\
-              & $r$  \& normalised score & 3 & 0.996677  & 0.950572 & 0.935383\\
+    noisy     & Approach 1  & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & Approach 2  & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & Approach 3  & 2 & 0.996677  & 0.950572 & 0.935383\\
+              & Approach 4  & 3 & 0.996677  & 0.950572 & 0.935383\\
     \midrule
-    probabilistic ending & top 5\% $r$              & 2 & 0.999592  & 0.995128 & 0.992819 \\
-                         & top 25\% $r$             & 2 & 0.999592  & 0.995128 & 0.992819 \\
-                         & top 50\% $r$             & 2 & 0.999592  & 0.995128 & 0.992819 \\
-                         & $r$  \& normalised score & 2 & 0.999592  & 0.995128 & 0.992819 \\
+    probabilistic ending & Approach 1  & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & Approach 2  & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & Approach 3  & 2 & 0.999592  & 0.995128 & 0.992819 \\
+                         & Approach 4  & 2 & 0.999592  & 0.995128 & 0.992819 \\
     \midrule
-    noisy probabilistic ending & top 5\% $r$              & 2 & 0.990490  & 0.813905 & 0.791418\\
-                               & top 25\% $r$             & 2 & 0.990490  & 0.813905 & 0.791418\\
-                               & top 50\% $r$             & 2 & 0.990490  & 0.813905 & 0.791418\\
-                               & $r$  \& normalised score & 4 & 0.990490  & 0.813905 & 0.791418\\
+    noisy probabilistic ending & Approach 1  & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & Approach 2  & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & Approach 3  & 2 & 0.990490  & 0.813905 & 0.791418\\
+                               & Approach 4  & 4 & 0.990490  & 0.813905 & 0.791418\\
     \midrule
-    over \numberofalltournaments tournaments & top 5\% $r$               & 2 & 0.993396 & 0.913409 & 0.898059 \\
-                                             & top 25\% $r$              & 2 & 0.993396 & 0.913409 & 0.898059 \\
-                                             & top 50\% $r$              & 2 & 0.993396 & 0.913409 & 0.898059 \\
-                                             & $r$  \& normalised score  & 3 & 0.993396 & 0.913409 & 0.898059 \\
+    over \numberofalltournaments tournaments & Approach 1  & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & Approach 2  & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & Approach 3  & 2 & 0.993396 & 0.913409 & 0.898059 \\
+                                             & Approach 4  & 3 & 0.993396 & 0.913409 & 0.898059 \\
     \bottomrule
         \end{tabular}}
     \end{center}
@@ -792,8 +804,8 @@ Table~\ref{table:accuracy_random_forest}.
 \end{table}
 
 The importance that the features of Table~\ref{table:manual_features} had on
-each classification task; to which cluster a performance was assigned to based
-on the normalised rank, and their normalised rank and median score have been
+each random forest model while the perfomances were clustered based on the
+different approaches have been
 calculated and are given by Figures~\ref{fig:clustering_importance_standard},
 \ref{fig:clustering_importance_noise},~\ref{fig:clustering_importance_probend},
 \ref{fig:clustering_importance_probend_noise}
