@@ -172,7 +172,7 @@ Most of these are strategies described in the literature with a few exceptions
 being strategies that have been contributed specifically to the package. This
 paper make use of \numberofstrategies strategies implemented in version 3.0.0. A
 list of the strategies is given in the Appendix~\ref{app:list_of_players}.
-Though APL features several tournament types, this work considers
+Although APL features several tournament types, this work considers
 standard, noisy, probabilistic ending and noisy probabilistic ending
 tournaments.
 
@@ -265,7 +265,7 @@ and the rate of which the strategy cooperated after each state. A feature that
 has been manually included is the \textbf{normalised rank}. The rank of a given
 strategy, denoted as \(R\), can vary between 0 and \(N-1\). Thus, the normalised rank,
 denoted as $r$, is calculated as a strategy's rank divided by the tournament's
-size $N$ minus 1. In the next section the performance of these strategies is evaluated
+size \(N - 1\). In the next section the performance of these strategies is evaluated
 based on their normalised rank.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
@@ -760,7 +760,7 @@ The accuracy of each model based on $R^2$ and the number of clusters for each
 tournament type (because in the case of Approach 4 it is not
 deterministically chosen) are given by Table~\ref{table:accuracy_random_forest}.
 The out of the bag error (OOB)~\cite{hastie2005} has also been calculated. The
-models fit well, and a high value of both the accuracy measure on the test data
+models fit well, and a high value of both the accuracy measures on the test data
 and the OOB error indicate that the model is not over fitting.
 
 \begin{table}[!htbp]
@@ -809,7 +809,7 @@ calculated and are given by Figures~\ref{fig:clustering_importance_standard},
 \ref{fig:clustering_importance_probend_noise}
 and~\ref{fig:clustering_importance_overall}. These show that the classifiers
 stochastic, make use of game and make use of length have no significant effect,
-and several of the features that are highted by the importance are inline with
+and several of the features that are highlighted by the importance are inline with
 the correlation results. Moreover, the smoothing parameter \(k\) appears to no
 have a significant effect either. The most important features based on the
 random forest analysis were $C_{r} / C_{median}$ and $C_r / C_{mean}$.
@@ -1031,7 +1031,7 @@ cooperative.
 
 The \numberofstrategies strategies used in this manuscript have been mainly for
 the literature, and they have been accessible due to an open source software
-called Axelrod-Python library. The software was used to generate a total of
+called the Axelrod-Python library. The software was used to generate a total of
 \numberofalltournaments computer tournaments results with different number of
 strategies and different participants each time. The data collection was
 described in Section~\ref{section:data_collection}. In
@@ -1064,10 +1064,10 @@ environment. The cooperating ratio of the strategy compared to the mean and
 median cooperator was highlighted as the most important feature in the analysis.
 More specifically, if a strategy were to enter a tournament with a theory of
 mind of its environment it would choose to be the median cooperator in standard
-tournaments, to cooperate 10\% in probabilistic ending tournaments and 
+tournaments, to cooperate 10\% of the time the median cooperator did in probabilistic ending tournaments and 
 60\% in noisy and noisy probabilistic
-tournaments of the times the median cooperator did. Lastly, if a strategy was aware of the opponents but not of the
-setting on the tournament, a strategy would be more likely to be successful if
+tournaments. Lastly, if a strategy was aware of the opponents but not of the
+setting of the tournament, a strategy would be more likely to be successful if
 it were to identify the median cooperator and cooperated 67\% of the times that
 they did.
 
