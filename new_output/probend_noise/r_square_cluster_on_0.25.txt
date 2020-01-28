@@ -1,0 +1,3 @@
+Score on train is: 0.992813
+Score on test is: 0.909346
+OBB score: 0.898613

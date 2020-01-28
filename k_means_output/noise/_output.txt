@@ -1,0 +1,31 @@
+Analysis Output:
+
+    number of cluster fitted: range(2, 5)
+
+    silhouette averages: {'Clusters: n = 3': 0.49952219597312636, 'Clusters: n = 4': 0.4418216197774102, 'Clusters: n = 2': 0.48214390886916775}
+
+    chosen number of clusters: Clusters: n = 3
+    
+Random Forest. Feature Importance:
+1. feature 15: Cooperation_rating_comp_to_median (0.187323) 
+2. feature 16: Cooperation_rating_comp_to_mean (0.179443) 
+3. feature 8: Cooperation_rating (0.108106) 
+4. feature 0: CC_to_C_rate (0.070346) 
+5. feature 19: noise (0.057942) 
+6. feature 2: DC_to_C_rate (0.053255) 
+7. feature 13: Cooperation_rating_comp_to_max (0.048500) 
+8. feature 4: SSE (0.043561) 
+9. feature 12: Cooperation_rating_mean (0.036303) 
+10. feature 3: DD_to_C_rate (0.036207) 
+11. feature 1: CD_to_C_rate (0.035943) 
+12. feature 11: Cooperation_rating_median (0.032998) 
+13. feature 14: Cooperation_rating_comp_to_min (0.025618) 
+14. feature 10: Cooperation_rating_min (0.018554) 
+15. feature 9: Cooperation_rating_max (0.017054) 
+16. feature 20: turns (0.012800) 
+17. feature 21: memory_usage (0.012422) 
+18. feature 18: size (0.007212) 
+19. feature 17: repetitions (0.005605) 
+20. feature 6: Makes_use_of_length (0.004339) 
+21. feature 7: Stochastic (0.003913) 
+22. feature 5: Makes_use_of_game (0.002558) 
