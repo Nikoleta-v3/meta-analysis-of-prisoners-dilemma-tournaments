@@ -1,4 +1,5 @@
 import pandas as pd
+import glob
 import axelrod as axl
 
 
@@ -15,26 +16,28 @@ def strategies_properties():
         use_of_game = False
         use_of_length = False
 
-        if 'game' in strategy.classifier['makes_use_of']:
+        if 'game' in strategy().classifier['makes_use_of']:
             use_of_game = True
-        if 'length' in strategy.classifier['makes_use_of']:
+        if 'length' in strategy().classifier['makes_use_of']:
             use_of_length = True
-        axl_strategies.loc[i] = [strategy.name,
-                                 strategy.classifier['stochastic'],
-                                 strategy.classifier['memory_depth'],
+        axl_strategies.loc[i] = [strategy().name,
+                                 strategy().classifier['stochastic'],
+                                 strategy().classifier['memory_depth'],
                                  use_of_game,
                                  use_of_length]
     return axl_strategies
 
 
-def parameters_data_frame():
+def parameters_data_frame(directory):
     """
     A function for reading in the parameters data frame.
     """
-    df = pd.read_csv("../data/parameters.csv")
+    csv_files = glob.glob("{}parameters_*-*.csv".format(directory))
+    dfs = (pd.read_csv(f) for f in csv_files)
+    df = pd.concat(dfs)
     df = df[['noise', 'probend', 'repetitions', 'seed', 'size', 'turns']]
 
-    return df
+    return df.sort_values(['seed']).reset_index()
 
 
 class Reader():
@@ -43,7 +46,11 @@ class Reader():
     row of the parameters csv file.
     """
 
-    def __init__(self, row):
+    def __init__(self, row, directory):
+        if directory:
+            self.directory = directory
+        else:
+            self.directory = "../data/"
         self.seed = row.seed
         self.size = row['size']
         self.repetitions = row.repetitions
@@ -52,29 +59,30 @@ class Reader():
         self.turns_param = row.turns
 
     def get_noise_df(self):
-        noise = pd.read_csv('../data/noise-data/{}.csv'.format(int(self.seed)))
+        noise = pd.read_csv('{}noise-data/{}.csv'.format(self.directory,
+                                                         int(self.seed)))
         noise['noise'] = self.noise_param
         noise['turns'] = self.turns_param
 
         return noise
 
     def get_probend_noise_df(self):
-        probend_noise = pd.read_csv('../data/noise-probend-data/{}.csv'.format(
-                                                                int(self.seed)))
+        probend_noise = pd.read_csv('{}noise-probend-data/{}.csv'.format(
+                                                self.directory, int(self.seed)))
         probend_noise['noise'] = self.noise_param
         probend_noise['probend'] = self.probend_param
-
 
         return probend_noise
 
     def get_standar_df(self):
-        std = pd.read_csv('../data/std-data/{}.csv'.format(int(self.seed)))
+        std = pd.read_csv('{}std-data/{}.csv'.format(self.directory,
+                                                     int(self.seed)))
         std['turns'] = self.turns_param
         return std
 
     def get_proend_df(self):
-        probend = pd.read_csv('../data/probend-data/{}.csv'.format(int(
-                                                                    self.seed)))
+        probend = pd.read_csv('{}probend-data/{}.csv'.format(self.directory,
+                                                             int(self.seed)))
         probend['probend'] = self.probend_param
 
         return probend
@@ -87,14 +95,14 @@ class Reader():
         return df
 
 
-def reading_in_data(parameters_df):
+def reading_in_data(parameters_df, directory):
     """
     A function for reading in each of the 4 data sets for a given parameters
     row. It concats everything together and returns a pandas Data Frame.
     """
     list_frames = []
     for _, row in parameters_df.iterrows():
-        reader = Reader(row)
+        reader = Reader(row, directory)
 
         # get noise
         noise = reader.get_noise_df()
