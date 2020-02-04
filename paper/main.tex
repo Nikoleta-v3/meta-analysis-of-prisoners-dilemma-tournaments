@@ -1006,8 +1006,8 @@ analysis and a linear regression. The results of these are summarised in the fol
 This manuscript has explored the performance of \numberofstrategies strategies of the Iterated
 Prisoner's Dilemma in a large number of computer tournaments. The results of
 the analysis demonstrated that, although for specific tournament types such as
-standard and probabilistic ending tournaments, dominant strategies exist
-there is not a single dominant type of strategies if the environments
+standard and probabilistic ending tournaments, dominant types of strategies exist
+there is not a single dominant strategy in an IPD competition if the environments
 vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
 based on the mean and median cooperators and should in general not be too
 cooperative.
@@ -1023,7 +1023,8 @@ present the top performances. The data set contained results from four different
 settings, and these were also studied individually. In standard tournaments
 complex strategies trained using reinforcement learning ranked in the top spots.
 Some of these strategies ranked again in the top spots in probabilistic
-ending tournaments when a \(p_e\) of less 0.1 was considered. In probabilistic
+ending tournaments when a \(p_e\) of less 0.1 was considered and in noisy tournaments
+when \(p_n\) was less than 0.1. In probabilistic
 ending tournaments \(p_e\) was designed to vary between 0 and 1. It was demonstrated
 that for values larger than 0.1, as stated in the Folk Theorem, defecting strategies
 were winning the tournaments because there was a high likelihood of the game
@@ -1031,6 +1032,8 @@ ending in the next turn. In tournaments with noise the median ranks of the top
 15 strategies had the highest values and the \(r\) distributions were bimodal.
 The top rank strategies were performing both well and bad, and this indicates
 that in noisy tournaments there are not strategies that can guarantee winning.
+However, if the probability of noisy was constrained at 0.1 then strategies
+designed for noisy tournaments indeed performed well.
 Overall, the top ranked strategies differed from one tournament type to
 another and the mechanism behind the winning strategies were all different.
 Even strategies designed to perform well in one setting were demonstrated to be
