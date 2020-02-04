@@ -319,12 +319,16 @@ multiple entries their performance is evaluated based on the
 \end{figure}
 
 The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
-Table~\ref{table:top_performances}.
+Table~\ref{table:top_performances}. Table~\ref{table:top_performances} includes
+the top 15 strategies in noisy tournaments with \(p_n < 0.1\) and probabilistic
+ending tournaments with \(p_e < 0.1\). These are included because the most common
+values in the literature for the probabilities of noise and a match ending are
+less than 0.1.
 
 \newcolumntype{g}{>{\columncolor{Gray}}l}
 \begin{table}[!htbp]
     \begin{center}
-    \resizebox{.9\textwidth}{!}{
+    \resizebox{\textwidth}{!}{
         \input{top_perfomances.tex}
     }
 \end{center}
@@ -347,7 +351,7 @@ tournaments where the number of turns is not specified, but the strategy did not
 perform well in tournaments with noise either. Finally, Winner
 12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the the literature.
 DBS is strategy specifically designed for noisy environments, however, it ranks
-highly only in standard ones.
+highly in standard tournaments as well.
 
 Figure~\ref{fig:std_results} gives the distributions of $r$ for the top
 ranked strategies. The distributions are skewed towards zero and the highest
@@ -415,12 +419,12 @@ opponent.
     \label{fig:effect_of_noise}
 \end{figure}
 
-\begin{table}[!htbp]
-    \centering
-    \resizebox{.30\textwidth}{!}{
-    \input{performance_noise_subset_table.tex}}
-    \caption{Top performances in 5661 noisy tournaments where \(p_n<0.5\).}\label{table:subset_noise_result}
-\end{table}
+% \begin{table}[!htbp]
+%     \centering
+%     \resizebox{.30\textwidth}{!}{
+%     \input{performance_noise_subset_table.tex}}
+%     \caption{Top performances in 5661 noisy tournaments where \(p_n<0.5\).}\label{table:subset_noise_result}
+% \end{table}
 
 The 15 top ranked strategies in probabilistic ending tournaments include
 Fortress 3, Fortress 4 (both introduced in~\cite{Ashlock2006}),
@@ -479,13 +483,13 @@ Spiteful Tit for Tat~\cite{prison}.
     \label{fig:effect_of_probend}
 \end{figure}
 
-\begin{table}[!htbp]
-    \centering
-    \resizebox{.30\textwidth}{!}{
-    \input{performance_probend_subset_table.tex}}
-    \caption{Top performances in 1139 probabilistic ending tournaments with \(p_e < 0.1\)}
-    \label{table:subset_probend_result}
-\end{table}
+% \begin{table}[!htbp]
+%     \centering
+%     \resizebox{.30\textwidth}{!}{
+%     \input{performance_probend_subset_table.tex}}
+%     \caption{Top performances in 1139 probabilistic ending tournaments with \(p_e < 0.1\)}
+%     \label{table:subset_probend_result}
+% \end{table}
 
 In tournaments with both noise and an unspecified number of turns several of the
 top ranked strategies are strategies that were highly ranked in noisy
@@ -723,6 +727,14 @@ tournaments.
     \caption{$C_r$ distributions of the winners in noisy and in probabilistic
     ending tournaments.}\label{fig:c_r_distributions}
 \end{figure}
+
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\begin{table}[h]
+    \begin{center}
+\resizebox{.8\textwidth}{!}{
+    \input{regression_table.tex}}
+    \end{center}
+\end{table}
 
 To further explore the features that contribute to a strategy's success the
 performances are divided into clusters based on whether they were successful or
@@ -1075,110 +1087,110 @@ could be applied and provide new insights in the field.
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
-\section{Acknowledgements}
+% \section{Acknowledgements}
 
-A variety of software have been used in this work:
+% A variety of software have been used in this work:
 
-\begin{itemize}
-    \item The Axelrod-Python library for IPD simulations~\cite{axelrodproject}.
-    \item The Matplotlib library for visualisation~\cite{hunter2007matplotlib}.
-    \item The Numpy library for data manipulation~\cite{walt2011numpy}.
-    \item The scikit-learn library for data analysis~\cite{scikit-learn}.
-\end{itemize}
+% \begin{itemize}
+%     \item The Axelrod-Python library for IPD simulations~\cite{axelrodproject}.
+%     \item The Matplotlib library for visualisation~\cite{hunter2007matplotlib}.
+%     \item The Numpy library for data manipulation~\cite{walt2011numpy}.
+%     \item The scikit-learn library for data analysis~\cite{scikit-learn}.
+% \end{itemize}
 
-\appendix
+% \appendix
 
-\section{A summary of parameters}\label{app:parameters}
-
-
-\begin{table}[h]
-    \begin{center}
-    \resizebox{.7\textwidth}{!}{
-    \begin{tabular}{llc}
-    \toprule
-feature & feature explanation \\
- \midrule
-stochastic                  & If a strategy is stochastic \\
-makes use of game           & If a strategy makes used of the game information  \\
-makes use of length         & If a strategy makes used of the number of turns \\
-memory usage                & The memory size of a strategy divided by the number of turns \\
-SSE                         & A measure of how far a strategy is from extortionate behaviour \\
-$C_{\text{max}}$          & The biggest cooperating rate in the tournament \\
-$C_{\text{min}}$          & The smallest cooperating rate in the tournament \\
-$C_{\text{median}}$       & The median cooperating rate in the tournament \\
-$C_{\text{mean}}$         & The mean cooperating rate in the tournament \\
-$C_r$ / $C_{\text{max}}$    & A strategy's cooperating rate divided by the maximum \\
-$C_r$ / $C_{\text{min}}$    & A strategy's cooperating rate divided by the minimum \\
-$C_r$ / $C_{\text{median}}$ & A strategy's cooperating rate divided by the median \\
-$C_r$ / $C_{\text{mean}}$   & A strategy's cooperating rate divided by the mean \\
-$C_r$                       & The cooperating ratio of a strategy \\
-$CC$ to $C$ rate            & The probability a strategy will cooperate after a mutual cooperation \\
-$CD$ to $C$ rate            & The probability a strategy will cooperate after being betrayed by the opponent \\
-$DC$ to $C$ rate            & The probability a strategy will cooperate after betraying the opponent\\
-$DD$ to $C$ rate            & The probability a strategy will cooperate after a mutual defection\\
-$p_n$                       & The probability of a player's action being flipped at each interaction \\
-$n$                         & The number of turns \\
-$p_e$                       & The probability of a match ending in the next turn \\
-$N$                         & The number of strategies in the tournament \\
-$k$                         & The number that a given tournament is repeated \\
-    \bottomrule
-        \end{tabular}}
-    \end{center}
-    \caption{The features which are included in the performance evaluation analysis.}\label{table:parameters_summary}
-\end{table}
+% \section{A summary of parameters}\label{app:parameters}
 
 
+% \begin{table}[h]
+%     \begin{center}
+%     \resizebox{.7\textwidth}{!}{
+%     \begin{tabular}{llc}
+%     \toprule
+% feature & feature explanation \\
+%  \midrule
+% stochastic                  & If a strategy is stochastic \\
+% makes use of game           & If a strategy makes used of the game information  \\
+% makes use of length         & If a strategy makes used of the number of turns \\
+% memory usage                & The memory size of a strategy divided by the number of turns \\
+% SSE                         & A measure of how far a strategy is from extortionate behaviour \\
+% $C_{\text{max}}$          & The biggest cooperating rate in the tournament \\
+% $C_{\text{min}}$          & The smallest cooperating rate in the tournament \\
+% $C_{\text{median}}$       & The median cooperating rate in the tournament \\
+% $C_{\text{mean}}$         & The mean cooperating rate in the tournament \\
+% $C_r$ / $C_{\text{max}}$    & A strategy's cooperating rate divided by the maximum \\
+% $C_r$ / $C_{\text{min}}$    & A strategy's cooperating rate divided by the minimum \\
+% $C_r$ / $C_{\text{median}}$ & A strategy's cooperating rate divided by the median \\
+% $C_r$ / $C_{\text{mean}}$   & A strategy's cooperating rate divided by the mean \\
+% $C_r$                       & The cooperating ratio of a strategy \\
+% $CC$ to $C$ rate            & The probability a strategy will cooperate after a mutual cooperation \\
+% $CD$ to $C$ rate            & The probability a strategy will cooperate after being betrayed by the opponent \\
+% $DC$ to $C$ rate            & The probability a strategy will cooperate after betraying the opponent\\
+% $DD$ to $C$ rate            & The probability a strategy will cooperate after a mutual defection\\
+% $p_n$                       & The probability of a player's action being flipped at each interaction \\
+% $n$                         & The number of turns \\
+% $p_e$                       & The probability of a match ending in the next turn \\
+% $N$                         & The number of strategies in the tournament \\
+% $k$                         & The number that a given tournament is repeated \\
+%     \bottomrule
+%         \end{tabular}}
+%     \end{center}
+%     \caption{The features which are included in the performance evaluation analysis.}\label{table:parameters_summary}
+% \end{table}
 
-\section{List of strategies}\label{app:list_of_players}
-
-The strategies used in this study which are from Axelrod-Python library version 3.0.0.
-
-\begin{multicols}{3}
-	\begin{enumerate}
-		\input{list_of_strategies.tex}
-	\end{enumerate}
-\end{multicols}
 
 
-\section{Correlation coefficients}\label{app:correlations}
+% \section{List of strategies}\label{app:list_of_players}
 
-A graphical representation of the correlation coefficients for the features in
-Table~\ref{table:manual_features}.
+% The strategies used in this study which are from Axelrod-Python library version 3.0.0.
 
-\begin{figure}[!htbp]
-        \begin{center}
-            \includegraphics[width=.75\linewidth]{../images/standard_correlation_plot.pdf}
-        \end{center}
-        \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-        for standard tournaments}
-\end{figure}
-\begin{figure}[!htbp]
-    \begin{center}
-        \includegraphics[width=.75\linewidth]{../images/noise_correlation_plot.pdf}
-    \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for noisy tournaments}
-\end{figure}
-\begin{figure}[!htbp]
-    \begin{center}
-        \includegraphics[width=.75\linewidth]{../images/probend_correlation_plot.pdf}
-    \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for probabilistic ending tournaments}
-\end{figure}
-\begin{figure}[!htbp]
-    \begin{center}
-        \includegraphics[width=.75\linewidth]{../images/probend_noise_correlation_plot.pdf}
-    \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for noisy probabilistic ending tournaments}
-\end{figure}
-\begin{figure}[!htbp]
-    \begin{center}
-        \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
-    \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for data set}
-\end{figure}
+% \begin{multicols}{3}
+% 	\begin{enumerate}
+% 		\input{list_of_strategies.tex}
+% 	\end{enumerate}
+% \end{multicols}
+
+
+% \section{Correlation coefficients}\label{app:correlations}
+
+% A graphical representation of the correlation coefficients for the features in
+% Table~\ref{table:manual_features}.
+
+% \begin{figure}[!htbp]
+%         \begin{center}
+%             \includegraphics[width=.75\linewidth]{../images/standard_correlation_plot.pdf}
+%         \end{center}
+%         \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
+%         for standard tournaments}
+% \end{figure}
+% \begin{figure}[!htbp]
+%     \begin{center}
+%         \includegraphics[width=.75\linewidth]{../images/noise_correlation_plot.pdf}
+%     \end{center}
+%     \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
+%     for noisy tournaments}
+% \end{figure}
+% \begin{figure}[!htbp]
+%     \begin{center}
+%         \includegraphics[width=.75\linewidth]{../images/probend_correlation_plot.pdf}
+%     \end{center}
+%     \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
+%     for probabilistic ending tournaments}
+% \end{figure}
+% \begin{figure}[!htbp]
+%     \begin{center}
+%         \includegraphics[width=.75\linewidth]{../images/probend_noise_correlation_plot.pdf}
+%     \end{center}
+%     \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
+%     for noisy probabilistic ending tournaments}
+% \end{figure}
+% \begin{figure}[!htbp]
+%     \begin{center}
+%         \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
+%     \end{center}
+%     \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
+%     for data set}
+% \end{figure}
 
 \end{document}
