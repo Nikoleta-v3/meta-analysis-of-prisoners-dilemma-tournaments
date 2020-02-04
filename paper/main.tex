@@ -528,17 +528,19 @@ been trained using reinforcement learning techniques. In noisy environments,
 whether the number of turns was fixed or not, the winning strategies were
 deterministic strategies designed to defect if the opponent tricked them more
 than a current amount of the times that they had tricked their opponent. However,
-if a value of noise strictly less than 0.5 was considered, then the successful
-strategies were strategies based on the behaviour of many strategies. In
+if a value of noise strictly less than 0.1 was considered, then the successful
+strategies were strategies based on the behaviour of many strategies and strategies
+specifically designed for noisy tournaments. In
 probabilistic ending tournaments most of the highly ranked strategies were defecting
 strategies and trained finite state automata, all by the authors of~\cite{Ashlock2006, Ashlock2014}.
 These strategies ranked high due to their performance in tournaments where the probability of the game ending after
-each turn was bigger than 0.1.
+each turn was bigger than 0.1. In probabilistic tournaments with \(p_e\) less than 0.1
+the highly ranked strategies were trained and Meta strategies.
 Finally the performance of all \numberofstrategies
 strategies over the \numberofalltournaments tournaments in this manuscript was
 assessed on \(\bar{r}\). The top ranked strategies were a mixture of behaviours
-that did well in standard tournaments and tournaments with noise, as well as a
-few strategies based on teams.
+that did well in standard tournaments, tournaments with noise and a
+few Meta strategies.
 
 The results of this section imply that successful strategies for specific
 settings exist for an IPD tournament. The top ranked strategies in both standard
@@ -546,9 +548,11 @@ tournaments and tournaments with probabilistic ending, managed to rank in the
 top 10\% of the tournament most of the times.
 Strategies in noisy
 environments demonstrated that no strategy can be consistently
-successful, expected if the value of noise is constrained to less than a half.
-Overall, there has been not a single strategy that has shown to perform well in
-more than one setting. The aim of the next section is to understand which are
+successful, expected if the value of noise is constrained to less than a 0.1.
+Trained strategies, meta strategies and some deterministic defecting strategies
+have demonstrated good performance over several tournament types, however,
+there exists no one single strategy which appears to be dominant in an IPD
+competition. The aim of the next section is to understand which are
 the factors that made these strategies successful, in each setting separately
 but also overall.
 
