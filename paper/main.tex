@@ -578,7 +578,8 @@ but also overall.
 The aim of this section is to explore the features that contribute to a
 strategy's successful performance. The features explored are measures regarding a
 strategy's behaviour, along with measures regarding the tournaments the
-strategies competed in. These are given in Table~\ref{table:manual_features}.
+strategies competed in. A summary of the features is given in
+Table~\ref{table:manual_features}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[h]
@@ -626,7 +627,8 @@ memory size of strategy (which is specified in the strategies implementation
 in the APL) divide by the number of turns. For example, Evolved
 FSM 16 Noise 05 has a memory size of 16 and participated in a tournament where
 $n$ was 134. In the given tournament Evolved FSM 16 Noise 05 has a memory usage
-of 0.119. For tournaments with a probabilistic ending the number of turns was
+of 0.119. If the memory size of a strategy is infinite then memory usage is 1.
+For tournaments with a probabilistic ending the number of turns was
 not collected, so the memory usage feature is not used for probabilistic ending
 tournaments. The SSE is a feature introduced in~\cite{Knight2019} which shows
 how close a strategy is to behaving as a ZDs, and subsequently, in an
@@ -639,6 +641,8 @@ ratio of a strategy. The minimum, maximum, medium and median cooperating ratios
 of each tournament are also included, and finally the number of turns, the
 number of strategies, the number of repetitions and the probabilities of noise
 and the game ending are also included.
+
+The performances are evaluated based on different methods.
 
 \textbf{Evaluation based on correlation.}
 
@@ -706,10 +710,12 @@ tournaments.
 
 \textbf{Evaluation based on clustering and random forest.}
 
-A second approach for evaluating the features importance in a strategy's success
-is a combination of clustering and a random forest algorithm. Initially,
-the strategies performances are clustered four different time based on the
-following approaches:
+The second method to evaluate the features importance in a strategy's success
+is a combination of a clustering task and a random forest algorithm.
+Initially the performances are clustered into different clusters
+based on them being successful or not. The performances are clustered into
+successful and unsuccessful clusters based on 4 different approaches.
+More specifically:
 
 \begin{itemize}
     \item \textbf{Approach 1:} The performances are divided into two clusters based
@@ -779,9 +785,7 @@ and the OOB error indicate that the model is not over fitting.
 \end{table}
 
 The importance that the features of Table~\ref{table:manual_features} had on
-each random forest model while the performances were clustered based on the
-different approaches have been
-calculated and are given by Figures~\ref{fig:clustering_importance_standard},
+each random forest model are given by Figures~\ref{fig:clustering_importance_standard},
 \ref{fig:clustering_importance_noise},~\ref{fig:clustering_importance_probend},
 \ref{fig:clustering_importance_probend_noise}
 and~\ref{fig:clustering_importance_overall}. These show that the classifiers
@@ -938,12 +942,11 @@ random forest analysis were $C_{r} / C_{median}$ and $C_r / C_{mean}$.
 
 \textbf{Evaluation based on linear regression.}
 
-A multivariate linear regression is also fitted to model the relationship of the
-features and the normalised rank. The \(p-\)values of each feature as well as
-their coefficients are given by Table~\ref{table:linear_regression}. The
-coefficient of determination \(R\) squared fo each model is also report in
-Table~\ref{table:linear_regression}. Based on \(R\) square the model explain 90\% of
-the variability of the response data around its mean.
+Finally, a multivariate linear regression is fitted to model the relationship of
+Table's~\ref{table:manual_features} and the normalised rank. The \(p-\)values of
+each feature as well as their coefficients are given by
+Table~\ref{table:linear_regression}. The coefficient of determination, \(R\)
+squared, for each model is also reported in Table~\ref{table:linear_regression}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[h]
@@ -951,15 +954,20 @@ the variability of the response data around its mean.
 \resizebox{.8\textwidth}{!}{
     \input{regression_table.tex}}
     \end{center}
-    \caption{Multivariate linear regression with \(r\) as the depended variable results.}
+    \caption{Results of multivariate linear regressions with \(r\) as the depended variable.}
     \label{table:linear_regression}
 \end{table}
 
-The results of the linear regression verify the results of the previous approaches.
+The results of the linear regression verify the results of the previous
+approaches. The only features that do no have a significant effect on the
+models are the number of repetitions and memory usage in noisy tournaments,
+and the number of turns, number of repetitions and thr probability \(p_e\) in
+probabilistic ending tournaments. Over all the models, the features that are the
+most important predictors are $C_r$, $C_r$ / $C_{max}$ and $C_r$ / $C_{mean}$.
 
 The features $C_{r} / C_{median}$ and $C_r / C_{mean}$ have been repeatably
-highlighted as importance feature in explaining the variability of the performances.
-Thus the effect of these tow measures is further explored.In
+highlighted as importance features in explaining the variability of the performances.
+Thus, the effect of these two measures is further explored. In
 Figure~\ref{fig:mean_median_std} the distributions of \(C_r / C_{\text{mean}}\)
 and \(C_r / C_{\text{median}}\) are given for the winners in standard tournaments. A value of \(C_r /
 C_{\text{mean}} = 1\) imply that the cooperating ratio of the winner was the
@@ -1015,7 +1023,7 @@ strategies prevail and this result is once again confirmed in this section.
 
 In this section the effect of several features, regarding a strategy's behaviour
 and the tournament in which it participated on its performance were presented.
-This was done using three approaches. Correlation coefficients, a random forest
+This was done using three methods. Correlation coefficients, a random forest
 analysis and a linear regression. The results of these are summarised in the following section.
 
 \section{Conclusion}\label{section:conclusion}
@@ -1023,7 +1031,7 @@ analysis and a linear regression. The results of these are summarised in the fol
 This manuscript has explored the performance of \numberofstrategies strategies of the Iterated
 Prisoner's Dilemma in a large number of computer tournaments. The results of
 the analysis demonstrated that, although for specific tournament types such as
-standard and probabilistic ending tournaments, dominant types of strategies exist
+standard, probabilistic ending tournaments and noisy tournaments with \(p_n <0.1\), dominant types of strategies exist
 there is not a single dominant strategy in an IPD competition if the environments
 vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
 based on the mean and median cooperators and should in general not be too
@@ -1052,9 +1060,8 @@ that in noisy tournaments there are not strategies that can guarantee winning.
 However, if the probability of noisy was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
 Overall, the top ranked strategies differed from one tournament type to
-another and the mechanism behind the winning strategies were all different.
-Even strategies designed to perform well in one setting were demonstrated to be
-better in others.
+another and the mechanism behind the winning strategies were all different, with some
+exceptions which include trained (Evolved) and Meta strategies.
 
 Section~\ref{section:evaluation_of_performance} covered an analysis of
 performance based on several features associated with a strategy and with the
