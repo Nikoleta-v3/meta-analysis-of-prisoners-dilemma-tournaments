@@ -47,14 +47,14 @@ The Iterated Prisoner's Dilemma has been used for decades as a model of
 behavioural interactions. From the celebrated performance of Tit for Tat, to the
 introduction of the zero-determinant strategies, to the use of sophisticated
 structures such as neural networks, the literature has been exploring the
-performance of strategies in the game for years. The results of the literature,
+performance of strategies in the game for decades. The results of the literature,
 however, have been relying on a small number of somewhat arbitrarily selected
 strategies in a very small number of tournaments,
 casting doubt on the generalizability of results from statistical perspective.
 This manuscript evaluates \numberofstrategies strategies in more than 40000
 tournaments, presents the top performing strategies, and analyzes their
 salient features.
-The outcomes support that a strategy with a theory of mind should adjust it’s
+The outcomes support that a strategy with a theory of mind should adjust its
 cooperations based on the mean/median cooperator of its environment to be
 successful; the adjustments are distinct for different tournament types.
 \end{abstract}
@@ -83,19 +83,19 @@ has been of interest to the scientific community since the formulation of the
 game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in the
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
-strategies. Today more than 200 strategies exist in the literature and several
-tournaments, excluding Axelrod's, have been undertaken~\cite{Bendor1991,
-Harper2017, Kendall2007, Stephens2002, Stewart2012}.
+strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991,
+Harper2017, Kendall2007, Stephens2002, Stewart2012} and today more than 200
+strategies exist in the literature.
 
 In the 80's, Axelrod performed two computer tournaments~\cite{Axelrod1980a,
 Axelrod1980b}. The contestants were strategies submitted in the form of computer
 code. They competed against all other entries, a copy of themselves and a random
 strategy. The winner was decided on the average score a strategy achieved. The
 winner of both tournaments was the simple strategy Tit For Tat which cooperated
-on the first turn and then simply copied the previous action of it's opponent.
+on the first turn and then simply copied the previous action of its opponent.
 Due to the strategy's strong performance in both tournaments, and moreover in a
-series of evolutionary experiments~\cite{Axelrod1981}, Tit For Tat was thought
-to be the most robust basic strategy in the IPD.
+series of evolutionary experiments~\cite{Axelrod1981}, Tit For Tat was often
+claimed to be the most robust basic strategy in the IPD.
 
 However, further research proved that the strategy had weakness, and more
 specifically, it was shown that the strategy suffered in environments with
@@ -113,8 +113,8 @@ a reciprocity based approach but on a mechanism of
 teams~\cite{J.P.Delahaye1993Lp, J.P.Delahaye1995LIeP, A.Rogers2007Ctpw}. A team
 from Southampton University took advantage of the fact that a participant was
 allowed to submit multiple strategies. They submitted a total of 60 strategies
-that could recognised each other and colluded to increase one members score.
-This resulted with three of the strategies to be ranked in the top spots. The
+that could recognise each other and collude to increase one members score.
+This resulted in three of the strategies ranking in the top spots. The
 performance of the Southampton University team received mixed attention, though
 they had won the tournament as stated in~\cite{us_blog} "technically this
 strategy violates the spirit of the Prisoner's Dilemma, which assumes that the
@@ -127,21 +127,22 @@ never receive less than their opponents. The
 American Mathematical Society's news section stated that ``the world of game
 theory is currently on fire''.
 ZDs are indeed a set of mathematically unique strategies
-and robust in pairwise interactions, however, their simplicity and extortionate
-behaviour have been tested. In~\cite{Harper2017} a tournament containing over
+and robust in pairwise interactions, however, their superiority in tournament settings
+have been tested. In~\cite{Harper2017} a tournament containing over
 200 strategies, including ZDs, was ran and none of them
 ranked in top spots. Instead, the top ranked strategies were a set of
 trained strategies based on lookup tables~\cite{Axelrod1987}, hidden markov
 models~\cite{Harper2017} and finite state automata~\cite{Miller1996}.
 
-Though only a select pieces of work have been discussed, the IPD literature is
+Though only select pieces of work have been discussed, the IPD literature is
 rich, and new strategies and competitions are being published every year~\cite{Glynatsi2019}. The
 question, however, still remains the same: what is the best way to play the
 game? Compared to other works, whereas a few selected strategies are evaluated
 on a small number of tournaments, this manuscript evaluates the performance of \numberofstrategies
-strategies in \numberofalltournaments tournaments. These tournaments do not
-consist by just standard round robin tournaments, but also by tournaments with noise
-and tournaments with a probabilistic ending. The later part of the paper, evaluates
+strategies in \numberofalltournaments tournaments. These tournaments come in a
+number of variations including tournaments with noise, probabilistic match
+length and both noise and probabilistic match length.
+The later part of the paper, evaluates
 the impact of features on the performance of the strategies using modern
 machine learning techniques. These features include measures regarding a
 strategy's behaviour and measures regarding the tournaments. The data set used
@@ -389,7 +390,7 @@ Grumpy~\cite{axelrodproject} and e~\cite{axelrodproject}, and the Retaliate
 strategies which are designed to defect if the opponent has tricked them more
 often than x\% of the times that they have done the same. The overall
 performance of these strategies is bimodal,
-Figure~\ref{fig:noise_overall_results}. This indicates that although the top
+Figure~\ref{fig:noise_overall_results}, indicating that although the top
 ranked strategies mainly performed well, there are several tournaments that they
 ranked in the bottom half. The bimodality of the \(r\) distributions can be
 explained by Figure~\ref{fig:effect_of_noise} which gives the \(r\)
@@ -494,9 +495,9 @@ exceptions. The behaviour of the winning strategies in probabilistic ending
 tournaments varied when \(p_e\) was restricted to 0.1. For larger values of
 \(p_e\) the dominant strategies were defecting ones and for smaller values the
 dominant strategies were evolved strategies and strategies based on teams.
-In noisy tournaments Similarly the behaviour
-of the dominant strategies varied when the probability of noisy was restricted
-to. In noise tournaments with \(p_n < 0.1\) the dominant strategies were strategies
+Similarly the behaviour
+of the dominant strategies varied when the probability of noisy was restricted.
+In noisy tournaments with \(p_n < 0.1\) the dominant strategies were strategies
 specifically trained for noise tournaments, and the performed well in most of the
 tournaments they participated. However, in noisy tournaments with \(p_n \in [0, 1]\)
 the performances of the top ranked strategies were bimodal. Indicating that with
@@ -521,7 +522,7 @@ The top ranks include strategies that have been previously mentioned. The
 set of Retaliate strategies occupy the top spots followed by BackStabber
 and DoubleCrosser. The distributions of the Retaliate strategies have no
 statistical difference. Thus, in an IPD tournament where the type is not
-specified, playing as any of the Retaliate strategies will have the result.
+specified, playing as any of the Retaliate strategies will have same the result.
 DoubleCrosser performed well in standard tournaments and the
 strategy is just an extension of BackStabber. It should be noted that these
 strategies can be characterised as "cheaters". The source code of the strategies
@@ -619,8 +620,7 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     \label{table:manual_features}
 \end{table}
 
-APL makes use of classifiers to classify strategies according to
-various dimensions. These determine whether
+APL classifies strategies along several dimensions. These determine whether
 a strategy is stochastic or deterministic, whether it makes use of the number of
 turns or the game's payoffs. The memory usage feature is calculated as the
 memory size of strategy (which is specified in the strategies implementation
@@ -688,7 +688,7 @@ Compared to standard tournaments, in both noisy and in probabilistic ending
 tournaments the higher the rates of cooperation the lower a strategy's success
 and median score. A strategy would want to cooperate less than both
 the mean and median cooperator in such settings. In probabilistic ending
-tournaments the correlations coefficients have a larger values, indicating a
+tournaments the correlation coefficients have a larger values, indicating a
 stronger effect. Thus a strategy will be punished more by its cooperative
 behaviour in probabilistic ending environments, this was seen in Section~\ref{section:evaluation_of_performance}
 as well. The distributions of the $C_r$ of the winners in
@@ -1032,7 +1032,7 @@ This manuscript has explored the performance of \numberofstrategies strategies o
 Prisoner's Dilemma in a large number of computer tournaments. The results of
 the analysis demonstrated that, although for specific tournament types such as
 standard, probabilistic ending tournaments and noisy tournaments with \(p_n <0.1\), dominant types of strategies exist
-there is not a single dominant strategy in an IPD competition if the environments
+there is not a single dominant strategy, from the collection on strategies considered in this work, in an IPD competition if the environments
 vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
 based on the mean and median cooperators and should in general not be too
 cooperative.
@@ -1057,7 +1057,7 @@ ending in the next turn. In tournaments with noise the median ranks of the top
 15 strategies had the highest values and the \(r\) distributions were bimodal.
 The top rank strategies were performing both well and bad, and this indicates
 that in noisy tournaments there are not strategies that can guarantee winning.
-However, if the probability of noisy was constrained at 0.1 then strategies
+However, if the probability of noise was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
 Overall, the top ranked strategies differed from one tournament type to
 another and the mechanism behind the winning strategies were all different, with some
