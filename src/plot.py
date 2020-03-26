@@ -20,7 +20,7 @@ features_labels = {
     "Cooperation_rating_median": r"$C_{median}$",
     "Cooperation_rating_mean": r"$C_{mean}$",
     "Cooperation_rating_comp_to_max": r"$C_r$ / $C_{max}$ ",
-    "Cooperation_rating_comp_to_min": r"$C_r$ / $C_{min}$",
+    "Cooperation_rating_comp_to_min": r"$C_{min}$ / $C_r$",
     "Cooperation_rating_comp_to_median": r"$C_r$ / $C_{median}$",
     "Cooperation_rating_comp_to_mean": r"$C_r$ / $C_{mean}$",
     "turns": r"$n$",
