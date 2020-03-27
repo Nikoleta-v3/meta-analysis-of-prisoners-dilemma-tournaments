@@ -37,6 +37,11 @@ def get_memory_percentage(row):
         return 0
     return row["Memory_depth"] / row["turns"]
 
+def fix_fsm_memory(row):
+    if 'FSM' in row['Name']:
+        return np.inf
+    else:
+        return row['Memory_depth']
 
 def get_strategies_properties():
     """
@@ -126,15 +131,12 @@ if __name__ == "__main__":
     file = sys.argv[1]
     output = file.replace(".csv", "_processed.csv")
 
-    # replace = {"Slow Tit For Two Tats": "Tit For 2 Tats"}
-
     strategies_properties = get_strategies_properties()
     strategies_properties = strategies_properties.set_index("Name")
 
     df = pd.read_csv(file, index_col=0)
 
     print("Processing")
-    # df = df.replace(replace)
     df["SSE"] = df.apply(get_error_for_row, axis=1)
     df["Name"] = df.apply(fix_name, axis=1)
 
@@ -200,6 +202,8 @@ if __name__ == "__main__":
     to_drop = df[df["Normalized_Rank"] > 1]["seed"].unique()
     if len(to_drop) != 0:
         df = df[~(df["seed"].isin(to_drop))]
+
+    df["Memory_depth"] = df.apply(get_memory_percentage, axis=1)
 
     if "turns" in df.columns:
         df["memory_usage"] = df.apply(get_memory_percentage, axis=1)
