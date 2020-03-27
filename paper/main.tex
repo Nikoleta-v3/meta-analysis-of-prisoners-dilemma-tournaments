@@ -313,18 +313,16 @@ evaluated based on their normalised rank.
 
 \section{Top ranked strategies}\label{section:top_performances}
 
-This section evaluates the performance of \numberofstrategies IPD strategies. The performance of
-each strategy is evaluated in four tournament types, which were presented in Section
-\ref{section:data_collection}, followed by an evaluation of their performance
-over all the \numberofalltournaments simulated tournaments of this work.
-
-Each strategy participated in multiple tournaments of the same type (on average 5154).
-For example Tit For Tat has participated in a total of 5114
-tournaments of each type. The strategy's normalised rank distribution in these
-is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A value of \(r =
-0\) corresponds to a strategy winning the tournament where a value of
-\(r = 1\) corresponds to the strategy coming last. Because of the strategies'
-multiple entries their performance is evaluated based on the
+The performance of each strategy is evaluated in four tournament types, which
+were presented in Section \ref{section:data_collection}, followed by an
+evaluation of their performance over all the \numberofalltournaments simulated
+tournaments of this work. Each strategy participated in multiple tournaments of
+the same type (on average 5154). For example Tit For Tat has participated in a
+total of 5114 tournaments of each type. The strategy's normalised rank
+distribution in these is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A
+value of \(r = 0\) corresponds to a strategy winning the tournament where a
+value of \(r = 1\) corresponds to the strategy coming last. Because of the
+strategies' multiple entries their performance is evaluated based on the
 \textbf{median normalised rank} denoted as \(\bar{r}\).
 
 \begin{figure}[!htbp]
@@ -339,7 +337,7 @@ multiple entries their performance is evaluated based on the
 
 The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
 Table~\ref{table:top_performances}. The data collection process was design such
-as that the probabilities of noise and ending of the match to vary between 0 and
+as that the probabilities of noise and ending of the match varied between 0 and
 1. However, commonly used values of these probabilities are
 values less than 0.1. Thus,
 Table~\ref{table:top_performances} also includes the top 15 strategies in noisy
@@ -353,52 +351,70 @@ tournaments with \(p_n < 0.1\) and probabilistic ending tournaments with \(p_e <
         \input{top_perfomances.tex}
     }
 \end{center}
-\caption{Top performances for each tournament type based on $\bar{r}$. The results
-of each type are based on 11420 unique tournaments of each type. The results
-for noisy tournaments with \(p_n < 0.1\) are based on 1151 tournaments, and 
-for probabilistic ending tournaments with \(p_e < 0.1\) on 1139. The top ranks
-indicate that trained strategies perform well in a variety of environments,
-but so do simple deterministic strategies. The normalised medians are close to 0
-for most environments, except environments with noise not restricted to 0.1.
-These two tournaments have the highest medians, implying that strategies from
-the collection of this work can not perform well in environments with such high
-values of noise.}
+\caption{Top performances for each tournament type based on $\bar{r}$. The
+results of each type are based on 11420 unique tournaments of each type. The
+results for noisy tournaments with \(p_n < 0.1\) are based on 1151 tournaments,
+and for probabilistic ending tournaments with \(p_e < 0.1\) on 1139. The top
+ranks indicate that trained strategies perform well in a variety of
+environments, but so do simple deterministic strategies. The normalised medians
+are close to 0 for most environments, except environments with noise not
+restricted to 0.1 regardless the number of turns. Noisy and noisy probabilistic
+ending tournaments have the highest medians. This implies that strategies from
+the collection of this work do not perform well in environments with high values
+of noise.}
 \label{table:top_performances}
 \end{table}
 
-Distributions of these top ranked strategies are given by Figure~\ref{fig:r_distributions}.
-\newpage
+The \(r\) distributions for the top ranked strategies of Table~\ref{table:top_performances}
+are given by Figure~\ref{fig:r_distributions}.
 
 \begin{figure*}[!htbp]
     \centering
-    \begin{subfigure}{0.475\textwidth}
+    \begin{subfigure}{0.485\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../images/performance_standard.pdf}
-        \caption{$r$ distributions in standard tournaments.}\label{fig:std_results}
+        \includegraphics[width=\textwidth]{../images/r_distribution_standard.pdf}
+        \caption{$r$ distributions of top 15 strategies in standard tournaments.}\label{fig:std_results}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.475\textwidth}
+    \begin{subfigure}{0.485\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../images/noise_performance_subset.pdf}
-        \caption{$r$ distributions of top 15 strategies in 1151 noisy tournaments with \(p_n < 0.1\).}\label{fig:noise_results}
+        \includegraphics[width=\textwidth]{../images/r_distribution_noise_subset.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy tournaments with \(p_n < 0.1\).}\label{fig:noise_subset_results}
     \end{subfigure}
     \vskip\baselineskip
-    \begin{subfigure}{0.475\textwidth}
+    \begin{subfigure}{0.485\textwidth}
         \centering 
-        \includegraphics[width=\textwidth]{../images/performance_noise.pdf}
-        \caption{$r$ distributions of top 15 strategies in noisy tournaments.}\label{fig:noise_overall_results}
+        \includegraphics[width=\textwidth]{../images/r_distribution_noise.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy tournaments.}\label{fig:noise_results}
     \end{subfigure}
     \quad
-    \begin{subfigure}{0.475\textwidth}
+    \begin{subfigure}{0.485\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../images/probend_performance_subset.pdf}
-        \caption{\(r\) distributions for best performed strategies in 1139 probabilistic ending
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend_subset.pdf}
+        \caption{\(r\) distributions of top 15 strategies in 1139 probabilistic ending
         tournaments with \(p_e < 0.1\).}
-        \label{fig:probend_results}
+        \label{fig:probend_subset_results}
     \end{subfigure}
-    \caption{\(r\) distributions of the top 15 strategies in different environments. A lower value of
-    \(\bar{r}\) corresponds to a more successful performance. A strategy's \(r\) distribution skewed towards zero
-    indicates that the strategy ranked highly in most tournaments it participated in.}\label{fig:r_distributions}
+    \vskip\baselineskip
+    \begin{subfigure}{0.485\textwidth}
+        \centering 
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend.pdf}
+        \caption{$r$ distributions of top 15 strategies in probabilistic ending tournaments.}\label{fig:probend_results}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend_noise.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy probabilistic ending tournaments.}
+        \label{fig:probend_noise_results}
+    \end{subfigure}
+    \caption{\(r\) distributions of the top 15 strategies in different
+    environments. A lower value of \(\bar{r}\) corresponds to a more successful
+    performance. A strategy's \(r\) distribution skewed towards zero indicates
+    that the strategy ranked highly in most tournaments it participated in. Most
+    distributions are skewed towards zero except the distributions with
+    unrestricted noise, supporting the conclusions from
+    Table~\ref{table:top_performances}.}\label{fig:r_distributions}
 \end{figure*}
 
 In standard tournaments 10 out of the 15 top strategies are introduced
@@ -412,64 +428,54 @@ specific setting was anticipated. DoubleCrosser, BackStabber and Fool Me Once, a
 strategies not from the literature but from the APL. DoubleCrosser is an extension
 of BackStabber and both strategies make use of the number of turns because they are
 set to defect on the last two rounds. It should be noted that these
-strategies can be characterised as "cheaters". The source code of the strategies
+strategies can be characterised as "cheaters" because the source code of the strategies
 allows them to known the number of turns in a match (if they are specified).
 These strategies were expected to not perform as well in
 tournaments where the number of turns is not specified. Finally, Winner
-12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the the literature.
-DBS is a strategy specifically designed for noisy environments and it ranks
+12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the literature.
+DBS is a strategy specifically designed for noisy environments, however, it ranks
 highly in standard tournaments as well.
-Figure~\ref{fig:std_results} gives the distributions of $r$ for the top
-ranked strategies. The distributions are skewed towards zero and the highest
-median, of the top 15 strategies, is at 0.075. This indicates that the top ranked
-strategies perform well in any given standard tournament, despite the opponents and
-the number of turns.
+Figure~\ref{fig:std_results} supports that these strategies are to perform
+well in any standard tournament they participate.
 
 In the case of noisy tournaments with \(p_n < 0.1\) the top performed strategies
-include strategies specifically designed for noisy tournaments such as DBS,
+include strategies specifically designed for noisy tournaments. These are DBS,
 Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
-Omega Tit For Tat~\cite{kendall2007iterated}, strategies which performed well in
-standard tournaments such as BackStabber, DoubleCrosser, Evolved ANN, FSM and
-HMM and deterministic strategies such as Spiteful Tit For Tat~\cite{prison},
-Level Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}. The \(r\) distributions
-of these strategies are given in Figure~\ref{fig:noise_results} where it is evident
-that these strategies overall performed well in noisy tournaments.
-In comparison, the top ranked strategies in noisy environments when \(p_n\in [0,
-1]\) include strategies which decide their actions based on the cooperations to
-defections ratio, such as ShortMem~\cite{Andre2013},
-Grumpy~\cite{axelrodproject} and e~\cite{axelrodproject}, and the Retaliate
-strategies which are designed to defect if the opponent has tricked them more
-often than x\% of the times that they have done the same. The overall
-performance of these strategies is bimodal,
-Figure~\ref{fig:noise_overall_results}, indicating that although the top
-ranked strategies mainly performed well, there are several tournaments that they
-ranked in the bottom half. The bimodality of the \(r\) distributions can be
-explained by Figure~\ref{fig:effect_of_noise} which gives the \(r\)
-distributions for the top 6 strategies over the noise probability \(p_n\).
-It is evident that the highly ranked strategies
+Omega Tit For Tat~\cite{kendall2007iterated}. The rest of the top ranks are
+occupied by strategies which performed well in standard tournaments and
+deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
+Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}. Similarly to standard
+tournaments, the successful strategies in this given setting performed well
+overall in the tournaments they participated in,
+Figure~\ref{fig:noise_subset_results}.
+
+In comparison, the performance the top ranked strategies in noisy environments
+when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
+decide their actions based on the cooperations to defections ratio, such as
+ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
+e~\cite{axelrodproject}, and the Retaliate strategies which are designed to
+defect if the opponent has tricked them more often than x\% of the times that
+they have done the same. The bimodality of the \(r\) distributions is explained
+by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
 were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
 and that in tournaments with a noise probability lower than \(0.5\) they
 performed poorly.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{../images/noise_effect.pdf}
+    \includegraphics[width=.92\textwidth]{../images/noise_effect.pdf}
     \caption{\(r\) distributions for top 6 strategies in noisy tournaments over
     the probability of noisy ($p_n$).}
     \label{fig:effect_of_noise}
 \end{figure}
 
-In probabilistic ending tournaments with \(p_e < 0.1\) the effective strategies
-are Meta strategies which include Nice Meta Winner, NMWE Finite Memory, NMWE
-Deterministic, trained strategies which performed well in standard tournaments,
-Grudger~\cite{axelrodproject} and Spiteful Tit for Tat~\cite{prison}. The Meta
-strategies~\cite{axelrodproject} are a set of rules that create a team of
+The most effective strategies in probabilistic ending tournaments with \(p_e
+< 0.1\) are a series of Meta strategies, trained strategies which performed well
+in standard tournaments, and  Grudger~\cite{axelrodproject} and Spiteful Tit for
+Tat~\cite{prison}. he Meta strategies~\cite{axelrodproject} create a team of
 strategies and play as an ensemble or some other combination of their team
-members. The distributions of the normalised rank in the 1139 probabilistic
-ending tournaments with \(p_e < 0.1\), are shown in
-Figure~\ref{fig:probend_results}. The medians of the top 15 strategies are lower
-than 0.1 and the distributions are skewed towards 0. The strategies have overall
-performed well in the probabilistic ending tournaments that they participated.
+members. Figure~\ref{fig:probend_subset_results} indicates that these strategies
+performed well in any probabilistic ending tournament they competed in.
 
 In probabilistic ending tournaments with \(p_e \in [0, 1]\) the top ranks are
 mostly occupied by defecting strategies such as Better and Better, Gradual
@@ -477,97 +483,85 @@ Killer, Hard Prober (all from~\cite{axelrodproject}), Bully (Reverse Tit For
 Tat)~\cite{Nachbar1992} and Defector, and a series of strategies based on finite
 state automata introduced by Daniel Ashlock and Wendy Ashlock; Fortress 3,
 Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
-and Solution B1~\cite{Ashlock2014}. As stated in the Folk Theorem~\cite{Fudenberg2009}
-defecting strategies do better when the likelihood of the game ending in the
-next turn increased. This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
+and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
+probabilistic ending tournaments was excepted. As stated in the Folk
+Theorem~\cite{Fudenberg2009} defecting strategies do better when the likelihood
+of the game ending in the next turn increases.
+This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
 distributions of \(r\) for the top 6 strategies in probabilistic ending tournaments
-over \(p_e\). It  shows that the 6 strategies start of with a high median rank,
-however, their ranked decreased as the the probability of the game ending
-increased and at the point of \(p_e = 0.1\).
+over \(p_e\).
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{../images/folk_theorem.pdf}
+    \includegraphics[width=.92\textwidth]{../images/folk_theorem.pdf}
     \caption{\(r\) distributions for top 6 strategies in probabilistic ending tournaments
-    over $p_e$.}
+    over $p_e$. The 6 strategies start of with a high median rank,
+    however, their ranked decreased as the the probability of the game ending
+    increased and at the point of \(p_e = 0.1\).}
     \label{fig:effect_of_probend}
 \end{figure}
 
-In tournaments with both noise and an unspecified number of turns several of the
-top ranked strategies are strategies that were highly ranked in noisy
-tournaments. However, strategies from the top ranks in probabilistic ending
-tournaments did not rank highly here.
-The distributions of \(r\) shown in Figure~\ref{fig:noisy_probend_results} have
-the largest median values compared to the top rank strategies of the other
-tournament types. A subset of noisy probabilistic ending tournaments has been
-considered such that \(p_e < 0.1\) and \(p_n < 0.1\). The top ranked strategies
-are given in Table~\ref{table:subset_probend_noise_result} and it is shown that
-the Meta strategies which performed well in noisy tournaments with \(p_n <
-0.1\), perform well once again even the number of turns is not specified.
-Moreover, several strategies that did well in probabilistic ending tournaments
-such as Fortress 4, MEM2 and Spiteful Tit For Tat.
-
+The top performances in tournaments with both noise and a probabilistic ending
+and the top performances over the entire data set have the largest median values
+compared to the top rank strategies of the other tournament types,
+Figure~\ref{fig:probend_noise_results} and Figure~\ref{fig:overall_results}. The
+\(\bar{r}\) for the top strategy is approximately at 0.3, indicating that the
+most successful strategy can on average just place at the top 30\% of the
+competition.
 
 \begin{table}[!htbp]
     \centering
-    \resizebox{.55\textwidth}{!}{
-    \input{performance_probend_noise_subset_table.tex}}
-    \caption{Top performances in 117 probabilistic ending tournaments with \(p_e < 0.1\) and \(p_n < 0.1\).}
-    \label{table:subset_probend_noise_result}
+    \resizebox{.30\textwidth}{!}{
+    \input{performance_merged_table.tex}}
+    \caption{Top performances over all the tournaments. The top ranks include
+    strategies that have been previously mentioned. The set of Retaliate
+    strategies occupy the top spots followed by BackStabber and DoubleCrosser.
+    The distributions of the Retaliate strategies have no statistical
+    difference. Thus, in an IPD tournament where the type is not specified,
+    playing as any of the Retaliate strategies will have same the result. PSO
+    Gambler and Evolved HMM 5 are trained strategies introduced
+    in~\cite{Harper2017} and Nice Meta Winner and NMWE Memory One are strategies
+    based on teams. Grudger is a strategy from Axelrod's original tournament and
+    Forgetful Fool Me Once is based on the same approach as
+    Grudger.}\label{table:overall_results}
 \end{table}
 
 \begin{figure}[!htbp]
-    \centering
-    \begin{subfigure}{0.475\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../images/performance_probend_noise.pdf}
-        \caption{\(r\) distributions for best performed strategies in noisy
-        probabilistic ending tournaments.}
-        \label{fig:noisy_probend_results}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.475\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/performance_merged.pdf}
-        \caption{\(r\) distributions for best performed strategies in the data set~\cite{data}.}
+        \includegraphics[width=.65\textwidth]{../images/performance_merged.pdf}
+        \caption{\(r\) distributions for best performed strategies in the data set~\cite{data}.
+        A lower value of \(\bar{r}\) corresponds to a more successful
+        performance.}
         \label{fig:overall_results}
-    \end{subfigure}
-    % \caption{\(r\) distributions of the top 15 strategies in different environments. A lower value of
-    % \(\bar{r}\) corresponds to a more successful performance. A strategy's \(r\) distribution skewed towards zero
-    % indicates that the strategy ranked highly in most tournaments it participated in.}\label{fig:r_distributions}
 \end{figure}
 
-This section presented the winning strategies in a series of IPD tournaments. In
-standard tournaments the top spots were dominated by complex strategies that had
-been trained using reinforcement learning techniques. In noisy environments where
-the a noise probability strictly less than 0.1 was considered the successful
-strategies were strategies based on the behaviour of many strategies and strategies
-specifically designed for noisy tournaments. In
-probabilistic ending tournaments most of the highly ranked strategies were defecting
-strategies and trained finite state automata, all by the authors of~\cite{Ashlock2006, Ashlock2014}.
-These strategies ranked high due to their performance in tournaments where the probability of the game ending after
-each turn was bigger than 0.1. In probabilistic tournaments with \(p_e\) less than 0.1
-the highly ranked strategies were trained and Meta strategies.
-Finally the performance of all \numberofstrategies
-strategies over the \numberofalltournaments tournaments in this manuscript was
-assessed on \(\bar{r}\). The top ranked strategies were a mixture of behaviours
-that did well in standard tournaments, tournaments with noise and a
-few Meta strategies.
-The results of this section imply that successful strategies for specific
-settings exist for an IPD tournament. The top ranked strategies in both standard
-tournaments and tournaments with probabilistic ending, managed to rank in the
-top 10\% of the tournament most of the times.
-Strategies in noisy
-environments demonstrated that no strategy can be consistently
-successful, expected if the value of noise is constrained to less than a 0.1.
-Trained strategies, meta strategies and some deterministic defecting strategies
-have demonstrated good performance over several tournament types, however,
-there exists no one single strategy which appears to be dominant in an IPD
-competition. The aim of the next section is to understand which are
-the factors that made these strategies successful, in each setting separately
-but also overall.
+On the whole, the analysis of this manuscript has shown that:
 
-Be envious and be clever.
+\begin{itemize}
+    \item In standard tournaments the dominating strategies were clever
+    strategies that had been trained using reinforcement learning techniques.
+    \item In noisy environments where the noise probability strictly less than
+    0.1 was considered, the successful strategies were strategies specifically
+    designed for noisy environments.
+    \item In probabilistic ending tournaments most of the highly ranked
+    strategies were defecting strategies and trained finite state automata, all
+    by the authors of~\cite{Ashlock2006, Ashlock2014}. These strategies ranked
+    high due to their performance in tournaments where the probability of the
+    game ending after each turn was bigger than 0.1.
+    \item In probabilistic tournaments with \(p_e\) less than 0.1 the highly
+    ranked strategies were strategies based on the behaviour of others.
+    \item From the collection of strategies considered here,  no strategy can be
+    consistently successful in noisy environments, except if the value of noise
+    is constrained to less than a 0.1.
+\end{itemize}
+
+Though there is not a single strategy that repeatably outranks all others in any
+of the distinct tournament types, or even across the tournaments type, there
+are specific types of strategies have been repeatably ranked in the top ranks.
+These have been strategies that have been trained, strategies that defected
+and strategies that would adapt their behaviour based on preassigned rules
+to achieve the highest outcome. These results contradict Axelrod's suggestions,
+and more specifically, the suggestions `Do not be clever' and `Do not be envious'.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
@@ -924,8 +918,8 @@ A variety of software have been used in this work:
 \appendix
 
 \input{parameters_section}
-% \input{overall_results}
 \input{correlation_section}
 \input{random_forest_evaluation}
+\input{strategies_list_section}
 
 \end{document}
