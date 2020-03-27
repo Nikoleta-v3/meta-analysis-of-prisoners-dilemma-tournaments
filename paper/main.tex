@@ -205,7 +205,7 @@ tournament is repeated for \(k\) number of times. This was allowed to vary
 in order to evaluate the effect of smoothing. The winner of each tournament
 is based on the average score a strategy achieved and not by the number of wins.
 
-The process of collecting tournament results implemented in this manuscript is described by
+The process of collecting tournament results is described by
 Algorithm~\ref{algorithm:data_generation}. For each trial a random size \(N\) is
 selected, and from the \numberofstrategies strategies a random list of \(N\) strategies is
 chosen. For the given list of strategies a standard, a noisy, a probabilistic
@@ -270,7 +270,7 @@ Table~\ref{table:output_result}. Each strategy have participated on average in
 tournament type is Inverse Punisher with 5639 entries. The strategy with the
 minimum entries is EvolvedLookerUp 1 1 1 which was selected in 4693 trials.
 
-The result summary, Table~\ref{table:output_result}, has \(N\) number of rows
+A result summary (Table~\ref{table:output_result}) has \(N\) number of rows
 because each row contains information for each strategy that participated in the
 tournament. The information includes the strategy's rank, median score, the rate
 with which the strategy cooperated $(C_r)$, its match win count and the
@@ -279,9 +279,7 @@ probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
 and the rate of which the strategy cooperated after each state. A feature that
 has been manually included is the \textbf{normalised rank}. The rank of a given
 strategy, denoted as \(R\), can vary between 0 and \(N-1\). Thus, the normalised rank,
-denoted as $r$, is calculated as a strategy's rank divided by the tournament's
-size \(N - 1\). In the next section the performance of these strategies is evaluated
-based on their normalised rank.
+denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[!htbp]
@@ -309,6 +307,9 @@ based on their normalised rank.
 \end{center}
 \caption{Output result of a single tournament.}\label{table:output_result}
 \end{table}
+
+In the next section the performance of the \numberofstrategies IPD strategies is
+evaluated based on their normalised rank.
 
 \section{Top ranked strategies}\label{section:top_performances}
 
