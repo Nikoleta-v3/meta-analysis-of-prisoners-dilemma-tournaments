@@ -9,10 +9,14 @@ Example.ipynb
 
 
 # data
-src/data_frame.csv
-src/df.csv
-src/data/*
-data/*
+data/*.csv
+data/raw_data/*.csv
+!data/raw_data/parameters_0-0.csv
+
+data/raw_data/std-data/*.csv
+data/raw_data/noise-data/*.csv
+data/raw_data/probend-data/*.csv
+data/raw_data/noise-probend-data/*.csv
 
 .zshrc
 main.bbl
