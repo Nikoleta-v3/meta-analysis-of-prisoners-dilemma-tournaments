@@ -11,7 +11,7 @@ Example.ipynb
 # data
 data/*.csv
 data/raw_data/*.csv
-!data/raw_data/parameters_0.csv
+!data/raw_data/parameters_0-0.csv
 
 data/raw_data/std-data/*.csv
 data/raw_data/noise-data/*.csv
