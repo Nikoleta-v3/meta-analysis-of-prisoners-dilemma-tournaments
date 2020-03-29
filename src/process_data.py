@@ -203,7 +203,7 @@ if __name__ == "__main__":
     if len(to_drop) != 0:
         df = df[~(df["seed"].isin(to_drop))]
 
-    df["Memory_depth"] = df.apply(get_memory_percentage, axis=1)
+    df["Memory_depth"] = df.apply(fix_fsm_memory, axis=1)
 
     if "turns" in df.columns:
         df["memory_usage"] = df.apply(get_memory_percentage, axis=1)
