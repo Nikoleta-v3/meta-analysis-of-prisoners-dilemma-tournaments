@@ -55,7 +55,7 @@ tournaments, presents the top performing strategies, and analyzes their
 salient features. The results imply that there is not a single
 strategy that performs well in any Iterated Prisoner's Dilemma interaction.
 There are several properties, however, that heavily influence the best performing
-strategies, these are: be nice, be provocable, be a little envious, be clever
+strategies, these are: be nice, be provocable and contrite, be a little envious, be clever
 and adapt to the environment.
 \end{abstract}
 
@@ -156,10 +156,10 @@ work reinforce the discussion started by Axelrod, and it concludes that the prop
 of a successful strategy in the IPD are:
 
 \begin{itemize}
-    \item \st{Do not be envious}
+    \item \st{Do not be envious} Be a little bit envious
     \item Be "nice"; Do not be the first to defect
-    \item Reciprocate both cooperation and defection; Be provocable
-    \item \st{Do not be too clever}
+    \item Reciprocate both cooperation and defection; Be provocable and contrite
+    \item \st{Do not be too clever} Be clever
     \item Adapt to the environment; Adjust to the mean cooperator
 \end{itemize}
 
@@ -832,21 +832,16 @@ performance.
 
 \section{Conclusion}\label{section:conclusion}
 
-This manuscript has explored the performance of \numberofstrategies strategies of the Iterated
-Prisoner's Dilemma in a large number of computer tournaments. The results of
-the analysis demonstrated that, although for specific tournament types such as
-standard, probabilistic ending tournaments and noisy tournaments with \(p_n <0.1\), dominant types of strategies exist
-there is not a single dominant strategy, from the collection on strategies considered in this work, in an IPD competition if the environments
-vary. Moreover, a strategy with a theory of mind should aim to adapt its behaviour
-based on the mean and median cooperators and should in general not be too
-cooperative.
-
+This manuscript has explored the performance of \numberofstrategies strategies
+of the Iterated Prisoner's Dilemma in a large number of computer tournaments.
 The \numberofstrategies strategies used in this manuscript have been mainly for
 the literature, and they have been accessible due to an open source software
 called the Axelrod-Python library. The software was used to generate a total of
 \numberofalltournaments computer tournaments results with different number of
 strategies and different participants each time. The data collection was
-described in Section~\ref{section:data_collection}. In
+described in Section~\ref{section:data_collection}.
+
+In
 Section~\ref{section:top_performances}, the tournaments results were used to
 present the top performances. The data set contained results from four different
 settings, and these were also studied individually. In standard tournaments
@@ -863,9 +858,6 @@ The top rank strategies were performing both well and bad, and this indicates
 that in noisy tournaments there are not strategies that can guarantee winning.
 However, if the probability of noise was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
-Overall, the top ranked strategies differed from one tournament type to
-another and the mechanism behind the winning strategies were all different, with some
-exceptions which include trained (Evolved) and Meta strategies.
 
 Section~\ref{section:evaluation_of_performance} covered an analysis of
 performance based on several features associated with a strategy and with the
@@ -873,16 +865,42 @@ environments in which it was competing. The results of this analysis showed that
 strategy's characteristics such as whether or not it's stochastic, and the information it
 used regarding the game had no effect on the strategy's success. The most
 important features have been those that compared the strategy's behaviour to its
-environment. The cooperating ratio of the strategy compared to the mean and
-median cooperator was highlighted as the most important feature in the analysis.
-More specifically, if a strategy were to enter a tournament with a theory of
-mind of its environment it would choose to be the median cooperator in standard
-tournaments, to cooperate 10\% of the time the median cooperator did in probabilistic ending tournaments and 
-60\% in noisy and noisy probabilistic
-tournaments. Lastly, if a strategy was aware of the opponents but not of the
-setting of the tournament, a strategy would be more likely to be successful if
-it were to identify the median cooperator and cooperated 67\% of the times that
-they did.
+environment. The cooperating ratio of the strategy compared to the mean
+cooperator was highlighted as the most important feature in the analysis.
+Other significant features included the SSE of a strategy and it's cooperating
+rate after being in either state \(CC\) and \(CD\).
+
+So what is the best way of playing the game? and is there a single dominant
+strategy in the IPD? There is not a single strategy, from the collection of the
+195 strategies, that has managed to will all the tournaments it competed in.
+Even if on average a strategy ranked highly in a specific environment it did not
+guarantee its success over the different tournament types. However, he results
+of sections~\ref{section:top_performances}
+and~\ref{section:evaluation_of_performance} have demonstrated that there are
+properties associated with the success of strategies. A few the properties that
+have been identified by this manuscript's analysis contradict the properties of
+Axelrod~\cite{Axelrod1981}. Namely, in Section~\ref{section:top_performances} it
+was shown that trained strategies and strategies that decided their actions
+based on pre designed strategies to maximise their utility dominated several
+tournaments across tournament types. Hinting that successful IPD strategies are
+clever. Most of the successful strategies highlighted
+in~Section~\ref{section:top_performances} were strategies that did open with a
+cooperation.
+
+Furthermore, in Section~\ref{section:top_performances}
+and~\ref{section:evaluation_of_performance} it was shown that envious strategies
+performed well. Though these were not the most envious strategies in the
+tournaments (ZDs were included) these strategies benefited by being a bit
+envious. From Section~\ref{section:evaluation_of_performance} it was concluded
+that there is a significant importance in adapting to the environment, and more
+specifically in this work, to the mean cooperator. This section also
+demonstrated that a strategy should reciprocate, as suggested by Axelrod, but in
+some environments, such as standard and noisy, it should relax it's readiness to
+do so.
+
+Thus, the five properties successful strategies need to have in a IPD competition
+are: be nice, be provocable and contrite, be a little envious, be clever and adapt to the
+environment.
 
 The data set described in this work contains the largest number of IPD tournaments,
 to the authors knowledge, and it available at~\cite{data}. Further data mining
