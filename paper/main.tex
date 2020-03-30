@@ -915,15 +915,33 @@ performance.
 
 This manuscript has explored the performance of \numberofstrategies strategies
 of the Iterated Prisoner's Dilemma in a large number of computer tournaments.
-The \numberofstrategies strategies used in this manuscript have been mainly for
-the literature, accessible due to an open source software library
-called the Axelrod-Python library. The software was used to generate a total of
-\numberofalltournaments computer tournaments results with different number of
-strategies and different participants each time. The data collection was
-described in Section~\ref{section:data_collection}.
+We analyzed and extracted the salient features of the best performing strategies
+across various tournament types, casting the results in terms of Axelrod's
+original suggested features of good IPD strategies. Moreover, our results
+shed light on the historic performance of TFT, zero determinant strategies,
+and memory-one strategies generally. Strategies need to match their play
+to the cooperativeness of the tournament population and do so in a way that
+prevents or minimizes exploitation. Overall we see that complex or clever
+strategies can be effective, whether trained against a corpus of possible
+opponents or purposely designed to mitigate the impact of noise such as
+in the strategy DBS. Further, we showed that while the type of exploitation
+attempted by ZD strategies is not typically effective in tournaments, more
+sophisticated strategies capable of selectively exploiting weaker opponents
+while mutually cooperating with stronger opponents can be highly successful.
+This fact was also indicated numerically by the importance of the strategy
+feature SSE in the analysis of strategy features,
 
-In
-Section~\ref{section:top_performances}, the tournaments results were used to
+Highly noisy or tournaments with short matches favor less cooperative strategies.
+These environments mitigate the value of being nice. The
+added uncertainty reduces the ability of maintaining mutual cooperation and
+also triggers grudging strategies. Accordingly we find that in noisy tournaments
+that the best performing players cooperate a lower rate than the tournament
+population on average. Nevertheless we found some strategies designed or trained
+for noisy environments were also highly ranked in noise-free tournaments. This
+indicates that strategy complexity is not necessarily a liability, rather it
+can confer adaptability to a more diverse set of environments.
+
+In Section~\ref{section:top_performances}, the tournaments results were used to
 present the top performances. The data set contained results from four different
 settings, and these were also studied individually. In standard tournaments
 complex strategies trained using reinforcement learning ranked in the top spots.
@@ -936,24 +954,15 @@ were winning the tournaments because there was a high likelihood of the game
 ending in the next turn. In tournaments with noise the median ranks of the top
 15 strategies had the highest values and the \(r\) distributions were bimodal.
 The top rank strategies were performing both well and bad, and this indicates
-that in noisy tournaments there are not strategies that can guarantee winning.
+that in noisy tournaments where the noise can vary substantially,
+there were no strategies that can guarantee winning across a range of noise.
 However, if the probability of noise was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
 
-Section~\ref{section:evaluation_of_performance} covered an analysis of
-performance based on several features associated with a strategy and with the
-environments in which it was competing. The results of this analysis showed that a
-strategy's characteristics such as whether or not it's stochastic, and the information it
-used regarding the game had no effect on the strategy's success. The most
-important features have been those that compared the strategy's behaviour to its
-environment. The cooperating ratio of the strategy compared to the mean
-cooperator was highlighted as the most important feature in the analysis.
-Other significant features included the SSE of a strategy and it's cooperating
-rate after being in either state \(CC\) and \(CD\).
-
-So what is the best way of playing the game? and is there a single dominant
-strategy in the IPD? There is not a single strategy, from the collection of the
-195 strategies, that has managed to perform well in all the tournaments it competed in.
+So what is the best way of playing the IPD? And is there a single dominant
+strategy for the IPD? There was not a single strategy within the collection of the
+\numberofstrategies strategies, that has managed to perform well in all the
+tournaments variations it competed in.
 Even if on average a strategy ranked highly in a specific environment it did not
 guarantee its success over the different tournament types. However, the results
 of sections~\ref{section:top_performances}
@@ -982,7 +991,7 @@ do so.
 
 Thus, the five properties successful strategies need to have in a IPD competition
 are: be nice, be provocable and contrite, be a little envious, be clever, and adapt to the
-environment (the population of strategies).
+environment (including the population of strategies).
 
 The data set described in this work contains the largest number of IPD tournaments,
 to the authors knowledge, and it available at~\cite{data}. Further data mining
