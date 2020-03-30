@@ -50,7 +50,7 @@ structures such as neural networks, many new strategies have been introduced and
 in a variety of tournaments and population dynamics. Typical results in the literature,
 however, rely on performance against a small number of somewhat arbitrarily selected
 strategies in a very small number of tournaments, casting doubt on the generalizability
-of conclusions. We analyze a large collection of \numberofstrategies
+of conclusions. We analyze a large collection of \numberofstrategies typically known
 strategies in \numberofalltournaments tournaments, present the top performing strategies across multiple
 tournament types, and distill their salient features. The results show that there is not yet a single
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios.
@@ -68,19 +68,19 @@ and that the manner in which a strategy achieves the ideal cooperation rate is c
 \section{Background}
 
 The Iterated Prisoner's Dilemma (IPD) is a repeated two player game that models
-behavioural interactions, and more specifically, interactions where
+behavioural interactions, specifically interactions where
 self-interest clashes with collective interest. At each turn of the game both
 players, simultaneously and independently, decide between cooperation (C) and
-defection (D) whilst having memory of their prior interactions. The payoffs for each
+defection (D), given memory of their prior interactions. The payoffs for each
 player, at each turn, is influenced by their own choice and the choice of the
-other player. The payoffs of the game are generally defined by:
+other player. The payoffs of the game are defined by:
 
 \[\begin{pmatrix}
 R & S \\
 T & P
 \end{pmatrix}\]
 
-where \(T > R > P > S\) and \(2R > T + S\). The most common values used in
+where typically \(T > R > P > S\) and \(2R > T + S\). The most common values used in
 the literature~\cite{Axelrod1981} are $R=3, P=1, T=5, S=0$. These values are also
 used in this work.
 
@@ -89,22 +89,23 @@ has been of interest to the scientific community since the formulation of the
 game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in the
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
-strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991,
-Harper2017, Kendall2007, Stephens2002, Stewart2012} and today more than 200
-strategies exist in the literature.
+strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991, Stephens2002,
+Kendall2007, Stewart2012, Harper2017} and today more hundreds of strategies exist
+in the literature.
 
-Axelrod performed two computer tournaments~\cite{Axelrod1980a,
-Axelrod1980b} in the 80's. The
+Axelrod performed two widely-known computer tournaments~\cite{Axelrod1980a,
+Axelrod1980b} in the 1980's. The
 winner of both tournaments was the simple strategy Tit For Tat (TFT) which cooperated
-on the first turn and then simply copied the previous action of its opponent.
-Axelrod concluded that the strategy's robustness was due to four properties, which
-he adapted in four suggestions on doing well in an IPD:
+on the first turn and then simply copied the previous action of its opponent,
+retailiating against defections with a defection, and forgiving a defection if followed
+by a cooperation. Axelrod concluded that the strategy's robustness was due to four
+properties, which he adapted into four suggestions on doing well in an IPD:
 
 \begin{itemize}
-    \item Do not be envious
+    \item Do not be envious by striving for a payoff larger than the opponent's payoff
     \item Be "nice"; Do not be the first to defect
-    \item Reciprocate both cooperation and defection; Be provocable
-    \item Do not be too clever
+    \item Reciprocate both cooperation and defection; Be provocable to retaliation and forgiveness
+    \item Do not be too clever by scheming to exploit the opponent
 \end{itemize}
 
 As a result of the strategy's strong performance in both tournaments, and moreover in a
@@ -123,37 +124,63 @@ count of past defections, it maintains a continually updated estimate of the
 opponent's behaviour, and uses this estimate to condition its future actions.
 
 Other works have built upon the limitations of the TFT, and others have shown
-that suggestions made by Axelrod were incomplete.
+that suggestions made by Axelrod did not necessarily lift to alternative environmental rules.
 In~\cite{Bendor1991, Donninger1986, Molander1985, Hammerstein1984} it was shown
 that TFT suffered in environments with noise. This was
-mainly due to the strategy's lack of generosity and contrition. The strategy immediately
-punishes a defection and in a noisy environment it could lead to a
+mainly due to the strategy's lack of generosity and contrition. Since TFT immediately
+punishes a defection, in a noisy environment it can get stuck in a
 repeated cycle of defections and cooperations. Some new strategies, more
-robust in tournaments with noise, were soon introduced and became the new
-protagonists of the game. These include Nice and Forgiving~\cite{Bendor1991},
-Pavlov (aka Win Stay Lose Shift) ~\cite{Nowak1993}, Generous Tit For Tat~\cite{Nowak1992}.
-In~\cite{Press2012} a set of envious IPD strategies
-were introduced called zero-determinant strategies (ZDs). By
-forcing a linear relationship between stationary payoffs ZDs can ensure that they will
-never receive less than their opponents. ZDs are indeed a set of mathematically
-unique strategies and robust in pairwise interactions, however, their
-superiority in tournament settings have been tested. In~\cite{Harper2017} a
-series of clever strategies were introduced, and a tournament containing over
-200 strategies was ran and none of the aforementioned strategies ranked in top
-spots. Instead, the top ranked strategies were the set of clever trained
-strategies based on lookup tables~\cite{Axelrod1987}, hidden markov
-models~\cite{Harper2017}, and finite state automata~\cite{Miller1996}.
+robust in tournaments with noise, were soon introduced, including
+Nice and Forgiving~\cite{Bendor1991}, Generous Tit For Tat~\cite{Nowak1992},
+and Pavlov (aka Win Stay Lose Shift) ~\cite{Nowak1993}, as well as later
+variants such as OmegaTFT \cite{kendall2007iterated}. Introduction of new strategies
+is often accompanied by a claim that the new strategy is the best known despite
+only being tested against a small number of opponents, or specific classes of
+opponents not necessarily representative of all possible or all published strategies.
+The lack of testing against formally defined strategies and tournament winners
+is understandable given the effort required to implement
+\footnote{Implementing prior strategies faithfully is often extremely difficult or impossible
+due to insufficient descriptions and lack of published implementations or code.}
+the hundreds of published IPD strategies, yet calls into question any claims of superiority
+or robustness of newly introduced
+strategies.
 
-Though only select pieces of work have been discussed, there is a broad number
+A set of envious IPD strategies were introduced called zero-determinant strategies (ZDs)
+in~\cite{Press2012}. By
+forcing a linear relationship between stationary payoffs ZDs can ensure that they will
+never receive less than their memory-one opponents. While ZD strategies
+were introduced with a small tournament in which some were reportedly
+successful \cite{Stewart2012}, this result has not generally held in future
+work. In~\cite{Harper2017} a
+series of clever strategies were introduced, and a tournament containing over
+200 strategies featured no ZD strategies ranked in top
+spots. Instead, the top ranked strategies were a set of ``clever''
+(in the sense of Axelrod's characteristics) trained
+strategies based on lookup tables~\cite{Axelrod1987}, hidden Markov
+models~\cite{Harper2017}, and finite state automata~\cite{Miller1996}.
+Similarly, in \cite{mathieu2017}, a set of evolutionarily-trained strategies,
+and a pre-selected set of known strategies, outperformed a collection of 12 ZD strategies.
+
+Though only select pieces of work have been discussed, there is a broad collection
 of strategies in the literature, and new strategies and competitions are being
-published every year~\cite{Glynatsi2019}. The question, however, still remains
+published frequently~\cite{Glynatsi2019}. The question, however, still remains
 the same: what is the best way to play the game?
 
-Compared to other works, where a few selected strategies are evaluated
-on a small number of tournaments, this manuscript evaluates the performance of \numberofstrategies
-strategies in \numberofalltournaments tournaments. These tournaments come in a
-number of variations including tournaments with noise, probabilistic match
-length and both noise and probabilistic match length.
+Compared to other works, where typically a few selected or introduced strategies
+are evaluated on a small number of tournaments and/or small number of opponents,
+this manuscript evaluates the performance of \numberofstrategies
+strategies in \numberofalltournaments tournaments. Furthermore a large portion
+of the strategies used in this manuscript are drawn from the known and named strategies
+in IPD literature, including many previous tournament winners,
+in contrast to other work that may have randomly generated many essentially arbitrary
+strategies (typically restrained to a class such as memory-one strategies,
+or those of a certain structural form such as finite state machines or deterministic
+memory two strategies). Additionally, our tournaments come in a
+number of variations including standard tournaments emulating Axelrod's original tournaments,
+tournaments with noise, probabilistic match length, and both noise and probabilistic match length.
+This diversity of strategies and tournament types yields new insights and tests
+earlier claims in alternative settings against known powerful strategies.
+
 The later part of the paper evaluates
 the impact of features on the performance of the strategies using modern
 machine learning techniques. These features include measures regarding a
@@ -164,13 +191,13 @@ of a successful strategy in the IPD are:
 \begin{itemize}
     \item \st{Do not be envious} Be a little bit envious
     \item Be "nice"; Do not be the first to defect
-    \item Reciprocate both cooperation and defection; Be provocable and contrite
-    \item \st{Do not be too clever} Be clever
+    \item Reciprocate both cooperation and defection; Be provocable and forgiving
+    \item \st{Do not be too clever} It's ok to be clever
     \item Adapt to the environment; Adjust to the mean population cooperation
 \end{itemize}
 
 The different tournament types as well as the data collection, made
-possible due to an open source libary called Axelrod-Python (APL),
+possible due to an open source library called Axelrod-Python (APL),
 are covered in Section~\ref{section:data_collection}. The data set generated
 for this work has been made publicly available~\cite{data} and can be used
 for further analysis and insights.
