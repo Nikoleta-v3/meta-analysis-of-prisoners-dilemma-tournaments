@@ -151,7 +151,7 @@ strategies.
 A set of envious IPD strategies were introduced called zero-determinant strategies (ZDs)
 in~\cite{Press2012}. By
 forcing a linear relationship between stationary payoffs ZDs can ensure that they will
-never receive less than their memory-one opponents. While ZD strategies
+never receive less than their memory-one opponents. While ZDs
 were introduced with a small tournament in which some were reportedly
 successful \cite{Stewart2012}, this result has not generally held in future
 work. In~\cite{Harper2017} a
@@ -162,7 +162,7 @@ spots. Instead, the top ranked strategies were a set of ``clever''
 strategies based on lookup tables~\cite{Axelrod1987}, hidden Markov
 models~\cite{Harper2017}, and finite state automata~\cite{Miller1996}.
 Similarly, in \cite{mathieu2017}, a set of evolutionarily-trained strategies,
-and a pre-selected set of known strategies, outperformed a collection of 12 ZD strategies.
+and a pre-selected set of known strategies, outperformed a collection of 12 ZDs.
 
 Though only select pieces of work have been discussed, there is a broad collection
 of strategies in the literature, and new strategies and competitions are being
@@ -523,7 +523,7 @@ Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
 and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
 probabilistic ending tournaments is due to larger values of
 \(p_e\) which lead to shorter matches (the expected number of rounds is $1\p_e$), so the
-impact of the prisoner's dilemma being iterated is subdued. This is captured by the Folk
+impact of the PD being iterated is subdued. This is captured by the Folk
 Theorem~\cite{Fudenberg2009} as defecting strategies do better when the likelihood
 of the game ending in the next turn increases.
 This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
@@ -726,7 +726,7 @@ C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished less than in noisy and probabilistic ending
 tournaments.
 
-Moreover, the manner in which as strategy achieves a given cooperation rate
+Moreover, the manner in which a strategy achieves a given cooperation rate
 relative to the tournament population average is important. Playing a strategy
 that randomly cooperates with $C_mean$ is unlikely to be as effective as it will
 randomly have cooperations matched with defections. In contrast, TFT naturally
@@ -758,7 +758,7 @@ average and the four memory-one probabilities of cooperating conditional on the
 previous round of play, all five features can be optimized by a memory one
 strategy such as TFT. Usage of more history becomes valuable when there are
 exploitable opponent patterns, indicated by the importance of SSE as a feature,
-that the first-approximation provided by a memory-one strategy is no longer
+that the first-approximation provided by a memory one strategy is no longer
 sufficient.
 
 \begin{figure}[!htbp]
@@ -853,11 +853,11 @@ success fails to generalize -- it never attempts to defect against a cooperating
 or exploitable opponent (e.g. Alternator). Moreover, many of the strategies in
 the library will not tolerate exploitation attempts. A clever strategy can
 achieve mutual cooperation with stronger strategies while also being able to
-exploit weaker strategies. This is why ZD strategies fail to appear in the top
+exploit weaker strategies. This is why ZDs fail to appear in the top
 ranks -- they try to exploit all opponents and cannot actively adapt back to
 mutual cooperation against stronger strategies, which requires more depth of memory.
-\footnote{Note that ZD strategies also tend to perform poorly in population games for
-a similar reason: they attempt to exploit other players using ZD strategies, failing to
+\footnote{Note that ZDs also tend to perform poorly in population games for
+a similar reason: they attempt to exploit other players using ZDs, failing to
 form a cooperative subpopulation. This makes them good invaders but poor resisters of invasion.}
 
 \begin{figure}[!htbp]
@@ -920,14 +920,14 @@ of the Iterated Prisoner's Dilemma in a large number of computer tournaments.
 We analyzed and extracted the salient features of the best performing strategies
 across various tournament types, casting the results in terms of Axelrod's
 original suggested features of good IPD strategies. Moreover, our results
-shed light on the historic performance of TFT, zero determinant strategies,
-and memory-one strategies generally. Strategies need to match their play
+shed light on the historic performance of TFT, zero-determinant strategies,
+and memory one strategies generally. Strategies need to match their play
 to the cooperativeness of the tournament population and do so in a way that
 prevents or minimizes exploitation. Overall we see that complex or clever
 strategies can be effective, whether trained against a corpus of possible
 opponents or purposely designed to mitigate the impact of noise such as
 in the strategy DBS. Further, we showed that while the type of exploitation
-attempted by ZD strategies is not typically effective in tournaments, more
+attempted by ZDs is not typically effective in tournaments, more
 sophisticated strategies capable of selectively exploiting weaker opponents
 while mutually cooperating with stronger opponents can be highly successful.
 This fact was also indicated numerically by the importance of the strategy
@@ -942,8 +942,8 @@ Highly noisy or tournaments with short matches favor less cooperative strategies
 These environments mitigate the value of being nice. Uncertainty enables
 exploitation, reducing the ability of maintaining or enforcing mutual cooperation,
 while triggering grudging strategies to switch from typically cooperating to
-typically defecting. Accordingly we find that in noisy tournaments
-that the best performing players cooperate a lower rate than the tournament
+typically defecting. Accordingly, we find that in noisy tournaments
+the best performing players cooperate a lower rate than the tournament
 population on average. Nevertheless we found some strategies designed or trained
 for noisy environments were also highly ranked in noise-free tournaments. This
 indicates that strategy complexity is not necessarily a liability, rather it
