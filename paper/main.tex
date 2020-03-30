@@ -779,13 +779,18 @@ in the distinct tournaments and their regression coefficients.
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[h]
     \begin{center}
-\resizebox{.8\textwidth}{!}{
+\resizebox{\textwidth}{!}{
     \input{regression_table.tex}}
     \end{center}
     \caption{Results of multivariate linear regressions with \(r\) as the dependent variable.
     \(R\) squared is reported for each model.}
     \label{table:linear_regression}
 \end{table}
+
+A multivariate linear regression has also be fitted on the median score. The
+coefficients and \(p\) values of the features can be found in
+Appendix~\ref{app:regression_median_score}. The results of the two methods
+are in agreement.
 
 The feature \(C_{r} / C_{\text{mean}}\) has a statistically significant effect
 across all models and a high regression coefficient. It has both a positive and
@@ -1068,6 +1073,7 @@ A variety of software have been used in this work:
 \input{parameters_section}
 \input{correlation_section}
 \input{random_forest_evaluation}
+\input{regression_on_median_score}
 \input{strategies_list_section}
 
 \end{document}
