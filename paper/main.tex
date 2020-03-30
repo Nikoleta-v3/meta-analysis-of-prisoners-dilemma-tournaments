@@ -733,6 +733,8 @@ randomly have cooperations matched with defections. In contrast, TFT naturally
 achieves a cooperation rate near $C_mean$ by virtue of copying its opponent's
 last move while also minimizing instances where it is exploited by an opponent
 (cooperating while the opponent defects), at least in non-noisy tournaments.
+\footnote{This also explains why Tit For N Tats does not fare well -- it fails
+to achieve the proper cooperation ratio.}
 TFT forces the opponent to pay back the (C, D) round with a (D, C) round before
 returning to mutual cooperation. This explains why TFT performed well
 in Axelrod's original tournaments as most strategies submitted to those tournaments
@@ -911,7 +913,7 @@ have not been evaluated by the methods above because there are binary variables.
 The results imply that they have no significant effect on a strategy's
 performance.
 
-\section{Conclusion}\label{section:conclusion}
+\section{Discussion}\label{section:conclusion}
 
 This manuscript has explored the performance of \numberofstrategies strategies
 of the Iterated Prisoner's Dilemma in a large number of computer tournaments.
@@ -929,12 +931,18 @@ attempted by ZD strategies is not typically effective in tournaments, more
 sophisticated strategies capable of selectively exploiting weaker opponents
 while mutually cooperating with stronger opponents can be highly successful.
 This fact was also indicated numerically by the importance of the strategy
-feature SSE in the analysis of strategy features,
+feature SSE in the analysis of strategy features. These results highlight
+a central idea in evolutionary game theory in this context: the fitness
+landscape is a function of the population (where fitness in this case is
+tournament performance). While that may seem obvious now, it shows why
+historical tournament results on small or arbitrary populations of strategies
+have so often failed to produce generalizable results.
 
 Highly noisy or tournaments with short matches favor less cooperative strategies.
-These environments mitigate the value of being nice. The
-added uncertainty reduces the ability of maintaining mutual cooperation and
-also triggers grudging strategies. Accordingly we find that in noisy tournaments
+These environments mitigate the value of being nice. Uncertainty enables
+exploitation, reducing the ability of maintaining or enforcing mutual cooperation,
+while triggering grudging strategies to switch from typically cooperating to
+typically defecting. Accordingly we find that in noisy tournaments
 that the best performing players cooperate a lower rate than the tournament
 population on average. Nevertheless we found some strategies designed or trained
 for noisy environments were also highly ranked in noise-free tournaments. This
