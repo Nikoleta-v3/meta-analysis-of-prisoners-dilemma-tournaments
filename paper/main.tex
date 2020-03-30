@@ -63,6 +63,9 @@ we find that strategies perform best when their probability of cooperation
 matches the total tournament population's aggregate cooperation probabilities,
 or a proportion thereof in the case of noisy and probabilistically ending tournaments,
 and that the manner in which a strategy achieves the ideal cooperation rate is crucial.
+The features of high performing strategies reveal why strategies such as Tit For Tat
+performed historically well in tournaments and why Zero Determinant strategies
+typically do not fare well in tournament settings.
 \end{abstract}
 
 \section{Background}
@@ -601,10 +604,10 @@ explored in Section~\ref{section:evaluation_of_performance}.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
-The performance of the strategies is evaluated based on the features of
+Now we examine performance of the strategies based on features of strategies described in
 Table~\ref{table:manual_features}. These feature are measures regarding a
-strategy's behaviour and the tournaments the strategies competed in are
-explored.
+strategy's behaviour from the tournaments the strategies competed in as well as
+intrinsic properties such as whether a strategy is deterministic or stochastic.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[!htbp]
@@ -645,7 +648,7 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     classifiers that determine whether a strategy is stochastic or deterministic,
     whether it makes use of the number of turns or the game's payoffs. The
     memory usage is calculated as the number of turns the strategy considers to
-    make an action (which is specified in the APL) divide by the number of
+    make an action (which is specified in the APL) divided by the number of
     turns. The SSE (introduced in~\cite{Knight2019}) shows how close a strategy
     is to behaving as a ZDs, and subsequently, in an extortionate way. The
     method identifies the ZDs closest to a given strategy and calculates the
@@ -660,10 +663,11 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
 \end{table}
 
 The memory usage of strategies with an infinite memory size, for example Evolved
-FSM 16 Noise 05 is set to 1. The others are calculated as explained in Table
-\ref{table:manual_features}. For example,  Winner12 has a memory size of 2 and
-participated in a tournament where $n$ was 101. In the given tournament Winner12
-has a memory usage of 0.014925. Note that for tournaments with a probabilistic
+FSM 16 Noise 05, is equal to 1. Otherwise the memory usage is the number of
+rounds of play used by the strategy divided by the number of turns in each match.
+For example, Winner12 uses the previous two rounds of play, and if participating in a
+participated in a tournament where $n$ was 100 the memory usage would be 2/100.
+Note that for tournaments with a probabilistic
 ending the number of turns was not collected, so the memory usage feature is not
 used for probabilistic ending tournaments.
 
@@ -692,7 +696,7 @@ on the median score. The SSE error and the $DD$ to $C$ have the opposite
 effects. Thus, in standard tournaments behaving cooperatively corresponds to a
 more successful performance. Even though being nice pays off,
 that's not true against defective strategies. Being more cooperative after a mutual
-defection is indicative of lesser overall success.
+defection is associated to lesser overall success in terms of normalised rank.
 Figure~\ref{fig:rates_of_winners_in_standard_tournaments} confirms that the
 winners of standard tournaments always cooperate after a mutual cooperation and
 almost always defect after a mutual defection.
@@ -710,7 +714,8 @@ and median score. A strategy would want to cooperate less than both
 the mean and median cooperator in such settings. In probabilistic ending
 tournaments the correlation coefficients have larger values, indicating a
 stronger effect. Thus a strategy will be punished more by its cooperative
-behaviour in probabilistic ending environments, supporting the results of Section~\ref{section:evaluation_of_performance}
+behaviour in probabilistic ending environments, supporting the results of
+Section~\ref{section:evaluation_of_performance}
 as well. The distributions of the $C_r$ of the winners in
 both tournaments are given by Figure~\ref{fig:c_r_distributions}. It confirms
 that the winners in noisy tournaments cooperated less than 35\% of the time
@@ -720,6 +725,39 @@ the only features that had a moderate effect are $C_r/C_{\text{mean}},
 C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished less than in noisy and probabilistic ending
 tournaments.
+
+Moreover, the manner in which as strategy achieves a given cooperation rate
+relative to the tournament population average is important. Playing a strategy
+that randomly cooperates with $C_mean$ is unlikely to be as effective as it will
+randomly have cooperations matched with defections. In contrast, TFT naturally
+achieves a cooperation rate near $C_mean$ by virtue of copying its opponent's
+last move while also minimizing instances where it is exploited by an opponent
+(cooperating while the opponent defects), at least in non-noisy tournaments.
+TFT forces the opponent to pay back the (C, D) round with a (D, C) round before
+returning to mutual cooperation. This explains why TFT performed well
+in Axelrod's original tournaments as most strategies submitted to those tournaments
+were typically cooperative and relatively few strategies used an easily exploitable
+pattern. TFT does not appear in the top ranks in
+these tournaments because it is too nice. Strategies like Grudger will always
+defect after a fixed number of opponent defections, which allows them to
+effectively exploit strategies like Alternator or stochastic strategies that
+have a non-zero chance of cooperating after mutual defection, which TFT will
+not do. Moreover in a noisy environment these strategies will naturally tend
+toward always defecting, leading them to exploit strategies like Cooperator. In
+such a scenario the noisy environment effectively voids Axelrod's rule to be nice,
+allowing strategies to attempt exploitation, whereas in a noise-free environment,
+exploitation is risky because several strategies exhibit a Grudger-like behavior,
+reducing the overall value in attempting to exploit strategies like Cooperator.
+
+Similarly, these results suggest an explanation regarding the perhaps intuitively unexpected
+effectiveness of memory one strategies historically. Given that among the important
+features associated to success are the relative cooperation rate to the population
+average and the four memory-one probabilities of cooperating conditional on the
+previous round of play, all five features can be optimized by a memory one
+strategy such as TFT. Usage of more history becomes valuable when there are
+exploitable opponent patterns, indicated by the importance of SSE as a feature,
+that the first-approximation provided by a memory-one strategy is no longer
+sufficient.
 
 \begin{figure}[!htbp]
     \centering
@@ -763,7 +801,7 @@ The distributions of SSE and \(CC\) to \(D\) rate for the winners of standard
 tournaments are also given in Figure~\ref{fig:discussion_standard}. The SSE
 distributions for the winners indicate that they strategy's behaved in ZD way in
 several tournaments, however, not constantly. The winners participated in
-matches where they did not try to extortionate their opponents. Futhermore, the
+matches where they did not try to extortionate their opponents. Furthermore, the
 \(CC\) to \(D\) distribution indicates that if a strategy were to defect against
 the winners they would reciprocate on average with a probability of 0.5.
 
@@ -791,9 +829,9 @@ thereupon the winners cooperated 67\% of the time the mean cooperator did. In
 tournaments with noise and a probabilistic ending the winners cooperated 60\%,
 whereas in settings that the type of the tournament can vary between all the
 types the winners cooperated 67\% of the time the mean cooperator did. Lastly,
-in probabilistic ending tournaments it has already been mentioned that more defecting
+in probabilistic ending tournaments above more defecting
 strategies prevail (Section~\ref{section:top_performances}), and this result is
-once again confirmed here.
+reflected here.
 
 \begin{figure}[!htbp]
     \centering
@@ -810,7 +848,15 @@ ZDs are a set of strategies that are envious as they try to exploit their
 opponents. The winners of the tournaments considered in this work are
 envious, but not as much as many ZDs. This highlights why TFT's early tournament
 success fails to generalize -- it never attempts to defect against a cooperating
-or exploitable opponent (e.g. Alternator).
+or exploitable opponent (e.g. Alternator). Moreover, many of the strategies in
+the library will not tolerate exploitation attempts. A clever strategy can
+achieve mutual cooperation with stronger strategies while also being able to
+exploit weaker strategies. This is why ZD strategies fail to appear in the top
+ranks -- they try to exploit all opponents and cannot actively adapt back to
+mutual cooperation against stronger strategies, which requires more depth of memory.
+\footnote{Note that ZD strategies also tend to perform poorly in population games for
+a similar reason: they attempt to exploit other players using ZD strategies, failing to
+form a cooperative subpopulation. This makes them good invaders but poor resisters of invasion.}
 
 \begin{figure}[!htbp]
     \centering
@@ -857,7 +903,7 @@ significant effects based on the multivariate regression models.
 \end{figure}
 
 A third method that evaluates the importance of the features in
-Table~\ref{table:manual_features} using random forests can be found in
+Table~\ref{table:manual_features} using clustering and random forests can be found in
 the Appendix~\ref{app:clustering}. The results uphold the outcomes of the
 correlation and multivariate regression methods. It also evaluates the effects
 of the classifiers stochastic, make use of game, and make use of length which
