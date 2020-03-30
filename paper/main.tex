@@ -224,7 +224,7 @@ tournaments.
 
 \textbf{Standard tournaments} are tournaments similar to that of Axelrod's well-known
 tournaments ~\cite{Axelrod1980a}. There are \(N\) strategies which all play an iterated
-game of \(n\) number of turns against each other. Note that self interactions
+game of \(n\) number of turns against each other. Note that self-interactions
 are not included. Similarly, \textbf{noisy
 tournaments} have \(N\) strategies and \(n\) number of turns, but at each turn
 there is a probability \(p_n\) that a player's action will be flipped.
@@ -364,10 +364,10 @@ strategies' multiple entries their performance is evaluated based on the
 \end{figure}
 
 The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
-Table~\ref{table:top_performances}. The data collection process was design such
-as that the probabilities of noise and ending of the match varied between 0 and
+Table~\ref{table:top_performances}. The data collection process was designed such
+that the probabilities of noise and ending of the match varied between 0 and
 1. However, commonly used values of these probabilities are
-values less than 0.1. Thus,
+values are often less than 0.1. Thus,
 Table~\ref{table:top_performances} also includes the top 15 strategies in noisy
 tournaments with \(p_n < 0.1\) and probabilistic ending tournaments with \(p_e <
 0.1\).
@@ -457,19 +457,23 @@ strategies not from the literature but from the APL. DoubleCrosser is an extensi
 of BackStabber and both strategies make use of the number of turns because they are
 set to defect on the last two rounds. It should be noted that these
 strategies can be characterised as ``cheaters'' because the source code of the strategies
-allows them to known the number of turns in a match (if they are specified).
+allows them to know the number of turns in a match (if they are specified).
 These strategies were expected to not perform as well in
 tournaments where the number of turns is not specified. Finally, Winner
 12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the literature.
 DBS is a strategy specifically designed for noisy environments, however, it ranks
-highly in standard tournaments as well.
-Figure~\ref{fig:std_results} supports that these strategies are to perform
-well in any standard tournament they participate.
+highly in standard tournaments as well. Similarly the fourth ranked player,
+Evolved FSM 16 Noise 05, was
+trained for noisy tournaments yet performs well in standard tournaments.
+Figure~\ref{fig:std_results} shows that these strategies typically perform
+well in any standard tournament in which they participate.
 
 In the case of noisy tournaments with \(p_n < 0.1\) the top performed strategies
 include strategies specifically designed for noisy tournaments. These are DBS,
 Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
-Omega Tit For Tat~\cite{kendall2007iterated}. The rest of the top ranks are
+Omega Tit For Tat~\cite{kendall2007iterated}. Omega TFT, another strategy designed
+to break the deadlocking cycles of CD and DC that TFT can fall into in noisy
+environments, places 10th. The rest of the top ranks are
 occupied by strategies which performed well in standard tournaments and
 deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
 Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}. Similarly to standard
@@ -479,7 +483,7 @@ Figure~\ref{fig:noise_subset_results}.
 
 In comparison, the performance the top ranked strategies in noisy environments
 when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
-decide their actions based on the cooperations to defections ratio, such as
+decide their actions based on the cooperation to defection ratio, such as
 ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
 e~\cite{axelrodproject}, and the Retaliate strategies which are designed to
 defect if the opponent has tricked them more often than x\% of the times that
@@ -487,7 +491,8 @@ they have done the same. The bimodality of the \(r\) distributions is explained
 by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
 were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
 and that in tournaments with a noise probability lower than \(0.5\) they
-performed poorly.
+performed poorly. At a noisy level of \(0.5\) or greater, mostly cooperative strategies
+become mostly defectors and vice versa.
 
 \begin{figure}[!htbp]
     \centering
@@ -497,9 +502,10 @@ performed poorly.
     \label{fig:effect_of_noise}
 \end{figure}
 
-The most effective strategies in probabilistic ending tournaments with \(p_e
-< 0.1\) are a series of Meta strategies, trained strategies which performed well
-in standard tournaments, and  Grudger~\cite{axelrodproject} and Spiteful Tit for
+The new entrants to the most effective strategies list in probabilistic ending
+tournaments with \(p_e< 0.1\) are a series of Meta strategies, trained strategies
+which performed well
+in standard tournaments, and Grudger~\cite{axelrodproject} and Spiteful Tit for
 Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject} create a team of
 strategies and play as an ensemble or some other combination of their team
 members. Figure~\ref{fig:probend_subset_results} indicates that these strategies
@@ -512,8 +518,10 @@ Tat)~\cite{Nachbar1992} and Defector, and a series of strategies based on finite
 state automata introduced by Daniel Ashlock and Wendy Ashlock; Fortress 3,
 Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
 and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
-probabilistic ending tournaments was excepted. As stated in the Folk
-Theorem~\cite{Fudenberg2009} defecting strategies do better when the likelihood
+probabilistic ending tournaments is due to larger values of
+\(p_e\) which lead to shorter matches (the expected number of rounds is $1\p_e$), so the
+impact of the prisoner's dilemma being iterated is subdued. This is captured by the Folk
+Theorem~\cite{Fudenberg2009} as defecting strategies do better when the likelihood
 of the game ending in the next turn increases.
 This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
 distributions of \(r\) for the top 6 strategies in probabilistic ending tournaments
