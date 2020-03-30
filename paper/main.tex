@@ -64,7 +64,7 @@ matches the total tournament population's aggregate cooperation probabilities,
 or a proportion thereof in the case of noisy and probabilistically ending tournaments,
 and that the manner in which a strategy achieves the ideal cooperation rate is crucial.
 The features of high performing strategies reveal why strategies such as Tit For Tat
-performed historically well in tournaments and why Zero Determinant strategies
+performed historically well in tournaments and why zero-determinant strategies
 typically do not fare well in tournament settings.
 \end{abstract}
 
@@ -522,7 +522,7 @@ state automata introduced by Daniel Ashlock and Wendy Ashlock; Fortress 3,
 Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
 and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
 probabilistic ending tournaments is due to larger values of
-\(p_e\) which lead to shorter matches (the expected number of rounds is $1\p_e$), so the
+\(p_e\) which lead to shorter matches (the expected number of rounds is \(1 / p_e\)), so the
 impact of the PD being iterated is subdued. This is captured by the Folk
 Theorem~\cite{Fudenberg2009} as defecting strategies do better when the likelihood
 of the game ending in the next turn increases.
@@ -728,9 +728,9 @@ tournaments.
 
 Moreover, the manner in which a strategy achieves a given cooperation rate
 relative to the tournament population average is important. Playing a strategy
-that randomly cooperates with $C_mean$ is unlikely to be as effective as it will
+that randomly cooperates with $C_{\text{mean}}$ is unlikely to be as effective as it will
 randomly have cooperations matched with defections. In contrast, TFT naturally
-achieves a cooperation rate near $C_mean$ by virtue of copying its opponent's
+achieves a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
 last move while also minimizing instances where it is exploited by an opponent
 (cooperating while the opponent defects), at least in non-noisy tournaments.
 \footnote{This also explains why Tit For N Tats does not fare well -- it fails
