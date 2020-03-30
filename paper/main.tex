@@ -43,20 +43,26 @@
 \maketitle
 
 \begin{abstract}
-From the celebrated performance of Tit for Tat, to the
-introduction of the zero-determinant strategies, to the use of sophisticated
-structures such as neural networks, the literature has been exploring the
-performance of Iterated Prisoner's Dilemma strategies for decades. The results of the literature,
-however, have been relying on a small number of somewhat arbitrarily selected
-strategies in a very small number of tournaments,
-casting doubt on the generalizability of results from statistical perspective.
-This manuscript evaluates \numberofstrategies strategies in 45686
-tournaments, presents the top performing strategies, and analyzes their
-salient features. The results imply that there is not yet a single
-strategy that performs well in every Iterated Prisoner's Dilemma interaction.
-There are several properties, however, that heavily influence the best performing
-strategies, these are: be nice, be provocable and contrite, be a little envious, be clever
-and adapt to the environment.
+Researchers have explored the performance of Iterated Prisoner's Dilemma strategies
+for decades: from the celebrated performance of Tit for Tat, to the
+introduction of the zero-determinant strategies, to the use of sophisticated learning
+structures such as neural networks, many new strategies have been introduced and tested
+in a variety of tournaments and population dynamics. Typical results in the literature,
+however, rely on performance against a small number of somewhat arbitrarily selected
+strategies in a very small number of tournaments, casting doubt on the generalizability
+of conclusions. We analyze a large collection of \numberofstrategies
+strategies in \numberofalltournaments tournaments, present the top performing strategies across multiple
+tournament types, and distill their salient features. The results show that there is not yet a single
+strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios.
+Nevertheless there are several properties that heavily influence the best performing
+strategies, refining the properties described by R. Axelrod in light of
+recent and more diverse opponent populations. These are: be nice, be provocable and contrite,
+be a little envious, be clever, and adapt to the environment, which includes the parameters
+of the tournament (e.g. noise) and the population of opponents. More precisely,
+we find that strategies perform best when their probability of cooperation
+matches the total tournament population's aggregate cooperation probabilities,
+or a proportion thereof in the case of noisy and probabilistically ending tournaments,
+and that the manner in which a strategy achieves the ideal cooperation rate is crucial.
 \end{abstract}
 
 \section{Background}
