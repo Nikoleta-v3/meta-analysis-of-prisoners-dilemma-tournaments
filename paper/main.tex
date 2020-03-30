@@ -844,6 +844,50 @@ reflected here.
         \label{fig:discussion_noisy}
 \end{figure}
 
+The probability of noise has been observed to excessively affect optimal
+behaviour. In environments with considerable values of noise no strategy from
+our collection managed to perform sufficiently.
+Figure~\ref{fig:compared_to_mean_over_noise_probability} gives the ratio \(C_r /
+C_{\text{mean}}\) for the winners in tournaments with noise, over the
+probability of noise. From Figure~\ref{fig:noisy_discussion_over_noise} it is
+clear that the cooperating only 67\% of the time the mean cooperator did is
+optimal only when \(p_n \in [0.2, 0.4)\) and \(p_n \in [0.6, 0.7]\). In
+environments with \(p_n < 0.1\) the winners want to be close to the mean
+cooperator, similarly to standard tournaments, and as the probability of noise
+is exceeding 0.5 (the game becomes unreasonable) strategies should aim to be
+less and less cooperative.
+
+Figure~\ref{fig:compared_to_mean_over_noise_probability} gives \(C_r /
+C_{\text{mean}}\) for the winners over \(p_n\) in tournaments with noise and a
+probabilistic ending. The optimal proportions of cooperations are different
+now that the number of turns is not fixed, successful strategies
+want to be more defecting that the mean cooperator, that only changes when
+\(p_n\) approaches 0.5. Figure~\ref{fig:compared_to_mean_over_noise_probability}
+demonstrates how the adjustments to \(C_r /C_{\text{mean}}\) change over the
+noise in the to the environment, and thus supports how important adapting to
+the environment is for a strategy to be successful.
+ 
+\begin{figure}[!htbp]
+    \centering
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/noisy_discussion_over_noise.pdf}
+        \caption{\(C_r / C_{\text{mean}}\) distribution for winners in noisy tournaments over
+        \(p_n\).}\label{fig:noisy_discussion_over_noise}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/noisy_probend_discussion_over_noise.pdf}
+        \caption{\(C_r / C_{\text{mean}}\) distribution for winners in noisy probabilistic ending tournaments over
+        \(p_n\).}\label{fig:noisy_probend_discussion_over_noise}
+    \end{subfigure}
+    \caption{\(C_r / C_{\text{mean}}\) distributions over intervals of \(p_n\).
+    These distributions model the optimal proportion of cooperation
+    compared to \(C_{\text{mean}}\) as a function of (\(p_n\)).}
+    \label{fig:compared_to_mean_over_noise_probability}
+\end{figure}
+
 The distributions of the SSE across the tournament types suggest that successful
 strategies exhibit some extortionate behaviour, but not constantly.
 ZDs are a set of strategies that are envious as they try to exploit their
