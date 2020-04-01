@@ -126,7 +126,7 @@ Tat~\cite{tzafestas-2000a}. Adaptive Tit for Tat does not keep a permanent
 count of past defections, it maintains a continually updated estimate of the
 opponent's behaviour, and uses this estimate to condition its future actions.
 
-Other works have built upon the limitations of the TFT, and others have shown
+Other works have built upon the limitations of TFT, and others have shown
 that suggestions made by Axelrod did not necessarily lift to alternative environmental rules.
 In~\cite{Bendor1991, Donninger1986, Molander1985, Hammerstein1984} it was shown
 that TFT suffered in environments with noise. This was
@@ -484,7 +484,7 @@ tournaments, the successful strategies in this given setting performed well
 overall in the tournaments they participated in,
 Figure~\ref{fig:noise_subset_results}.
 
-In comparison, the performance the top ranked strategies in noisy environments
+In comparison, the performance of the top ranked strategies in noisy environments
 when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
 decide their actions based on the cooperation to defection ratio, such as
 ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
@@ -575,7 +575,7 @@ competition.
 On the whole, the analysis of this manuscript has shown that:
 
 \begin{itemize}
-    \item In standard tournaments the dominating strategies were clever
+    \item In standard tournaments the dominating strategies were 
     strategies that had been trained using reinforcement learning techniques.
     \item In noisy environments where the noise probability strictly less than
     0.1 was considered, the successful strategies were strategies specifically
@@ -605,7 +605,7 @@ explored in Section~\ref{section:evaluation_of_performance}.
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
 Now we examine performance of the strategies based on features of strategies described in
-Table~\ref{table:manual_features}. These feature are measures regarding a
+Table~\ref{table:manual_features}. These features are measures regarding a
 strategy's behaviour from the tournaments the strategies competed in as well as
 intrinsic properties such as whether a strategy is deterministic or stochastic.
 
@@ -751,9 +751,9 @@ allowing strategies to attempt exploitation, whereas in a noise-free environment
 exploitation is risky because several strategies exhibit a Grudger-like behavior,
 reducing the overall value in attempting to exploit strategies like Cooperator.
 
-Similarly, these results suggest an explanation regarding the perhaps intuitively unexpected
+Similarly, these results suggest an explanation regarding the intuitively unexpected
 effectiveness of memory one strategies historically. Given that among the important
-features associated to success are the relative cooperation rate to the population
+features associated with success are the relative cooperation rate to the population
 average and the four memory-one probabilities of cooperating conditional on the
 previous round of play, all five features can be optimized by a memory one
 strategy such as TFT. Usage of more history becomes valuable when there are
@@ -806,7 +806,7 @@ cooperator of its respective tournament.
 
 The distributions of SSE and \(CC\) to \(D\) rate for the winners of standard
 tournaments are also given in Figure~\ref{fig:discussion_standard}. The SSE
-distributions for the winners indicate that they strategy's behaved in ZD way in
+distributions for the winners indicate that the strategy behaved in a ZD way in
 several tournaments, however, not constantly. The winners participated in
 matches where they did not try to extortionate their opponents. Furthermore, the
 \(CC\) to \(D\) distribution indicates that if a strategy were to defect against
@@ -956,7 +956,7 @@ significant effects based on the multivariate regression models.
 A third method that evaluates the importance of the features in
 Table~\ref{table:manual_features} using clustering and random forests can be found in
 the Appendix~\ref{app:clustering}. The results uphold the outcomes of the
-correlation and multivariate regression methods. It also evaluates the effects
+correlation and multivariate regression. It also evaluates the effects
 of the classifiers stochastic, make use of game, and make use of length which
 have not been evaluated by the methods above because there are binary variables.
 The results imply that they have no significant effect on a strategy's
@@ -1024,7 +1024,7 @@ Even if on average a strategy ranked highly in a specific environment it did not
 guarantee its success over the different tournament types. However, the results
 of sections~\ref{section:top_performances}
 and~\ref{section:evaluation_of_performance} have demonstrated that there are
-properties associated with the success of strategies. A few the properties that
+properties associated with the success of strategies. A few of the properties that
 have been identified by this manuscript's analysis contradict the properties of
 Axelrod~\cite{Axelrod1981}. Namely, in Section~\ref{section:top_performances} it
 was shown that trained strategies and strategies that decided their actions
