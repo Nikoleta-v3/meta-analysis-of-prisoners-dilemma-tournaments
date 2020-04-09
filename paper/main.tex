@@ -92,13 +92,13 @@ has been of interest to the scientific community since the formulation of the
 game in 1950~\cite{Flood1958}. Following the computer tournaments of Axelrod in the
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
-strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991, Stephens2002,
+strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991, Beaufils1997, Stephens2002,
 Kendall2007, Stewart2012, Harper2017} and today more hundreds of strategies exist
 in the literature.
 
-Axelrod performed two widely-known computer tournaments~\cite{Axelrod1980a,
-Axelrod1980b} in the 1980's. The
-winner of both tournaments was the simple strategy Tit For Tat (TFT) which cooperated
+The
+winner of both of Axelrod's tournaments~\cite{Axelrod1980a,
+Axelrod1980b} was the simple strategy Tit For Tat (TFT) which cooperated
 on the first turn and then simply copied the previous action of its opponent,
 retailiating against defections with a defection, and forgiving a defection if followed
 by a cooperation. Axelrod concluded that the strategy's robustness was due to four
@@ -122,12 +122,11 @@ of the game since the beginning of it. Gradual recorded the number of defections
 by the opponent and punished them with a growing number of defections. It would
 then enter a calming state in which it would cooperates for two rounds. A
 strategy with the same intuition as Gradual is Adaptive Tit for
-Tat~\cite{tzafestas-2000a}. Adaptive Tit for Tat does not keep a permanent
-count of past defections, it maintains a continually updated estimate of the
+Tat~\cite{tzafestas-2000a}. Adaptive Tit for Tat maintains a continually updated estimate of the
 opponent's behaviour, and uses this estimate to condition its future actions.
 
 Other works have built upon the limitations of TFT, and others have shown
-that suggestions made by Axelrod did not necessarily lift to alternative environmental rules.
+that suggestions made by Axelrod did not necessarily apply in alternative environmental settings.
 In~\cite{Bendor1991, Donninger1986, Molander1985, Hammerstein1984} it was shown
 that TFT suffered in environments with noise. This was
 mainly due to the strategy's lack of generosity and contrition. Since TFT immediately
@@ -155,7 +154,7 @@ never receive less than their memory-one opponents. While ZDs
 were introduced with a small tournament in which some were reportedly
 successful \cite{Stewart2012}, this result has not generally held in future
 work. In~\cite{Harper2017} a
-series of clever strategies were introduced, and a tournament containing over
+series of strategies trained using reinforcement learning were introduced, and a tournament containing over
 200 strategies featured no ZD strategies ranked in top
 spots. Instead, the top ranked strategies were a set of ``clever''
 (in the sense of Axelrod's characteristics) trained
@@ -460,7 +459,7 @@ strategies not from the literature but from the APL. DoubleCrosser is an extensi
 of BackStabber and both strategies make use of the number of turns because they are
 set to defect on the last two rounds. It should be noted that these
 strategies can be characterised as ``cheaters'' because the source code of the strategies
-allows them to know the number of turns in a match (if they are specified).
+allows them to know the number of turns in a match (unless the match has a probabilistic ending).
 These strategies were expected to not perform as well in
 tournaments where the number of turns is not specified. Finally, Winner
 12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the literature.
@@ -489,7 +488,7 @@ when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
 decide their actions based on the cooperation to defection ratio, such as
 ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
 e~\cite{axelrodproject}, and the Retaliate strategies which are designed to
-defect if the opponent has tricked them more often than x\% of the times that
+defect if the opponent has tricked them more often than a given percentage of the times that
 they have done the same. The bimodality of the \(r\) distributions is explained
 by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
 were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
