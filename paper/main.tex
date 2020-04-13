@@ -310,7 +310,7 @@ with which the strategy cooperated $(C_r)$, its match win count, and the
 probability that the strategy cooperated in the opening move. Moreover, the
 probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
 and the rate of which the strategy cooperated after each state. The \textbf{normalised rank}
-feature that is manually added. The rank \(R\) of a given
+feature that is manually added. The rank \(R\) of a given. % TODO Clarify how strategies are ranked (see email discussion)
 strategy can vary between 0 and \(N-1\). Thus, the normalised rank,
 denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
 
@@ -651,9 +651,9 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     turns. The SSE (introduced in~\cite{Knight2019}) shows how close a strategy
     is to behaving as a ZDs, and subsequently, in an extortionate way. The
     method identifies the ZDs closest to a given strategy and calculates the
-    algebraic distance between them, defined as SSE. A SSE value of 1 indicates
+    algebraic distance between them as the sum of squared error (SSE). A SSE value of 1 indicates
     no extortionate behaviour at all whereas a value of 0 indicates that a
-    strategy is behaving a ZDs. The rest of the features considered are the $CC$
+    strategy is behaving as a ZDs. The rest of the features considered are the $CC$
     to $C$, $CD$ to $C$, $DC$ to $C$, and $DD$ to $C$ rates as well as
     cooperating ratio of a strategy, the minimum (\(C_{min}\)), maximum
     (\(C_{max}\)), mean (\(C_{mean}\)) and median (\(C_{median}\)) cooperating
@@ -661,11 +661,12 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     \label{table:manual_features}
 \end{table}
 
-The memory usage of strategies with an infinite memory size, for example Evolved
-FSM 16 Noise 05, is equal to 1. Otherwise the memory usage is the number of
-rounds of play used by the strategy divided by the number of turns in each match.
+The memory usage of strategies is the number of
+rounds of play used by the strategy divided by the number of turns in each match. 
 For example, Winner12 uses the previous two rounds of play, and if participating in a
-participated in a tournament where $n$ was 100 the memory usage would be 2/100.
+participated in a match with 100 turns, the memory usage would be 2/100.
+For strategies with an infinite memory size, for example Evolved
+FSM 16 Noise 05, is equal to 1.
 Note that for tournaments with a probabilistic
 ending the number of turns was not collected, so the memory usage feature is not
 used for probabilistic ending tournaments.
@@ -739,7 +740,7 @@ returning to mutual cooperation. This explains why TFT performed well
 in Axelrod's original tournaments as most strategies submitted to those tournaments
 were typically cooperative and relatively few strategies used an easily exploitable
 pattern. TFT does not appear in the top ranks in
-these tournaments because it is too nice. Strategies like Grudger will always
+ tournaments with more aggressive strategies because it is too nice. Strategies like Grudger will always
 defect after a fixed number of opponent defections, which allows them to
 effectively exploit strategies like Alternator or stochastic strategies that
 have a non-zero chance of cooperating after mutual defection, which TFT will
@@ -756,8 +757,8 @@ features associated with success are the relative cooperation rate to the popula
 average and the four memory-one probabilities of cooperating conditional on the
 previous round of play, all five features can be optimized by a memory one
 strategy such as TFT. Usage of more history becomes valuable when there are
-exploitable opponent patterns, indicated by the importance of SSE as a feature,
-that the first-approximation provided by a memory one strategy is no longer
+exploitable opponent patterns. This is indicated by the importance of SSE as a feature,
+showing that the first-approximation provided by a memory one strategy is no longer
 sufficient.
 
 \begin{figure}[!htbp]
@@ -770,7 +771,7 @@ sufficient.
 A multivariate linear regression has been fitted to model the relationship between
 the features and the normalised rank. Based on the graphical representation of
 the correlation matrices given in Appendix~\ref{app:correlations} several of the
-features are highly correlated. Highly correlated features have been removed
+features are highly correlated and have been removed
 before fitting the linear regression model. The features included are given
 by Table~\ref{table:linear_regression} alongside their corresponding \(p\) values
 in the distinct tournaments and their regression coefficients.
@@ -788,8 +789,7 @@ in the distinct tournaments and their regression coefficients.
 
 A multivariate linear regression has also be fitted on the median score. The
 coefficients and \(p\) values of the features can be found in
-Appendix~\ref{app:regression_median_score}. The results of the two methods
-are in agreement.
+Appendix~\ref{app:regression_median_score}. This approach leads to similar conclusions.
 
 The feature \(C_{r} / C_{\text{mean}}\) has a statistically significant effect
 across all models and a high regression coefficient. It has both a positive and
@@ -956,9 +956,8 @@ A third method that evaluates the importance of the features in
 Table~\ref{table:manual_features} using clustering and random forests can be found in
 the Appendix~\ref{app:clustering}. The results uphold the outcomes of the
 correlation and multivariate regression. It also evaluates the effects
-of the classifiers stochastic, make use of game, and make use of length which
-have not been evaluated by the methods above because there are binary variables.
-The results imply that they have no significant effect on a strategy's
+of the whether or not a strategy is stochastic, makes use of the knowledge of the utility values, or makes use of match length. These were not evaluated by the methods above because there are binary variables.
+The results showed that they have no significant effect on a strategy's
 performance.
 
 \section{Discussion}\label{section:conclusion}
@@ -1016,7 +1015,9 @@ However, if the probability of noise was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
 
 So what is the best way of playing the IPD? And is there a single dominant
-strategy for the IPD? There was not a single strategy within the collection of the
+strategy for the IPD? 
+
+There was not a single strategy within the collection of the
 \numberofstrategies strategies, that has managed to perform well in all the
 tournaments variations it competed in.
 Even if on average a strategy ranked highly in a specific environment it did not
@@ -1026,8 +1027,7 @@ and~\ref{section:evaluation_of_performance} have demonstrated that there are
 properties associated with the success of strategies. A few of the properties that
 have been identified by this manuscript's analysis contradict the properties of
 Axelrod~\cite{Axelrod1981}. Namely, in Section~\ref{section:top_performances} it
-was shown that trained strategies and strategies that decided their actions
-based on pre-designed strategies to maximise their utility dominated several
+was shown that trained strategies dominated several
 tournaments across tournament types, hinting that successful IPD strategies are
 often clever or more complex than simple strategies like TFT. Most of the
 successful strategies highlighted
@@ -1046,8 +1046,16 @@ some environments, such as standard and noisy, it should relax its readiness to
 do so.
 
 Thus, the five properties successful strategies need to have in a IPD competition
-are: be nice, be provocable and contrite, be a little envious, be clever, and adapt to the
-environment (including the population of strategies).
+are: 
+
+
+\begin{itemize}
+\item be nice, 
+    \item be provocable and contrite, 
+    \item be a little envious, 
+    \item be clever, 
+    \item adapt to theenvironment (including the population of strategies).
+\end{itemize}
 
 The data set described in this work contains the largest number of IPD tournaments,
 to the authors knowledge, and it available at~\cite{data}. Further data mining
