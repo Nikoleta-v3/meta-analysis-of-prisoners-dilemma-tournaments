@@ -658,11 +658,11 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
 \end{table}
 
 The memory usage of strategies is the number of
-rounds of play used by the strategy divided by the number of turns in each match. 
-For example, Winner12 uses the previous two rounds of play, and if participating in a
-participated in a match with 100 turns, the memory usage would be 2/100.
+rounds of play used by the strategy divided by the number of turns in each match.
+For example, Winner12 uses the previous two rounds of play, and if participating
+in a match with 100 turns its memory usage would be 2/100.
 For strategies with an infinite memory size, for example Evolved
-FSM 16 Noise 05, is equal to 1.
+FSM 16 Noise 05, memory usage is equal to 1.
 Note that for tournaments with a probabilistic
 ending the number of turns was not collected, so the memory usage feature is not
 used for probabilistic ending tournaments.
@@ -685,7 +685,7 @@ Appendix~\ref{app:correlations}.
 the normalised rank and the median score.}\label{table:correlations}
 \end{table}
 
-In standard tournaments the features  $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
+In standard tournaments the features $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
 and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
 have a moderate negative effect on the normalised rank (smaller rank is better), and a moderate positive
 on the median score. The SSE error and the $DD$ to $C$ have the opposite
@@ -732,7 +732,7 @@ last move while also minimizing instances where it is exploited by an opponent
 (cooperating while the opponent defects), at least in non-noisy tournaments.
 \footnote{This also explains why Tit For N Tats does not fare well for $N > 1$ -- it fails
 to achieve the proper cooperation ratio by tolerating too many defections.}
-TFT forces the opponent to pay back the (C, D) round with a (D, C) round before
+TFT forces the opponent to pay back the \((C, D)\) round with a \((D, C)\) round before
 returning to mutual cooperation. This explains why TFT performed well
 in Axelrod's original tournaments as most strategies submitted to those tournaments
 were typically cooperative and relatively few strategies played with an easily exploitable
@@ -743,19 +743,19 @@ effectively exploit strategies like Alternator or stochastic strategies that
 have a non-zero chance of cooperating after mutual defection, which TFT will
 not do. Moreover in a noisy environment these strategies will naturally tend
 toward always defecting, leading them to exploit strategies like Cooperator. In
-such a scenario the noisy environment effectively voids Axelrod's rule to be nice,
+such a scenario the noisy environment effectively voids R. Axelrod's rule to be nice,
 allowing strategies to attempt exploitation, whereas in a noise-free environment,
 attempting exploitation can be risky if strategies that exhibit a Grudger-like behavior
 are present, reducing the overall value in attempting to exploit strategies like Cooperator.
 
 Similarly, these results suggest an explanation regarding the intuitively unexpected
-effectiveness of memory one strategies historically. Given that among the important
+effectiveness of memory-one strategies historically. Given that among the important
 features associated with success are the relative cooperation rate to the population
 average and the four memory-one probabilities of cooperating conditional on the
-previous round of play, these features can be optimized by a memory one
+previous round of play, these features can be optimized by a memory-one
 strategy such as TFT. Usage of more history becomes valuable when there are
 exploitable opponent patterns. This is indicated by the importance of SSE as a feature,
-showing that the first-approximation provided by a memory one strategy is no longer
+showing that the first-approximation provided by a memory-one strategy is no longer
 sufficient.
 
 \begin{figure}[!htbp]
@@ -800,12 +800,12 @@ cooperating ratio of the tournament, and in standard tournaments, the median is
 1. Therefore, an effective strategy in standard tournaments was the mean
 cooperator of its respective tournament.
 
-The distributions of SSE and \(CC\) to \(D\) rate for the winners of standard
+The distributions of SSE and \(CD\) to \(D\) rate for the winners of standard
 tournaments are also given in Figure~\ref{fig:discussion_standard}. The SSE
 distributions for the winners indicate that the strategy behaved in a ZD way in
 several tournaments, however, not constantly. The winners participated in
 matches where they did not try to extortionate their opponents. Furthermore, the
-\(CC\) to \(D\) distribution indicates that if a strategy were to defect against
+\(CD\) to \(D\) distribution indicates that if a strategy were to defect against
 the winners they would reciprocate on average with a probability of 0.5.
 
 \begin{figure}[!htbp]
