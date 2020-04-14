@@ -56,7 +56,7 @@ tournament types, and distill their salient features. The results show that ther
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios.
 Nevertheless there are several properties that heavily influence the best performing
 strategies, refining the properties described by R. Axelrod in light of
-recent and more diverse opponent populations. These are: be nice, be provocable and contrite,
+recent and more diverse opponent populations. These are: be nice, be provocable and forgiving,
 be a little envious, be clever, and adapt to the environment, which includes the parameters
 of the tournament (e.g. noise) and the population of opponents. More precisely,
 we find that strategies perform best when their probability of cooperation
@@ -79,13 +79,14 @@ player, at each turn, is influenced by their own choice and the choice of the
 other player. The payoffs of the game are defined by:
 
 \begin{center}
+{\renewcommand{\arraystretch}{2}%
 \begin{tabular}{c|c|c}
 & Cooperate (C) & Defect (D) \\
 \hline
 Cooperate (C) & R & S \\
 \hline
 Defect (D) & T & P \\
-\end{tabular}
+\end{tabular}}
 \end{center}
 
 where typically \(T > R > P > S\) and \(2R > T + S\). The most common values used in
@@ -122,7 +123,7 @@ claimed to be a highly robust (and sometimes the most robust) strategy for the I
 There are strategies which have built upon TFT and the reciprocity based approach.
 In~\cite{Beaufils1997} a strategy called Gradual was introduced, constructed to have the
 same qualities as those of TFT with one addition. Gradual has a memory
-of the previous rounds of play of the game , recording the number of defections
+of the previous rounds of play of the game, recording the number of defections
 by the opponent and punishing them with a growing number of defections. It
 then enters a calming state in which it cooperates for two rounds. A
 strategy with the same intuition as Gradual is Adaptive Tit for
@@ -155,7 +156,7 @@ receive a higher average payout. While ZDs were introduced with a small tourname
 which some were reportedly successful \cite{Stewart2012}, this result has not generally
 held in future work. In~\cite{Harper2017} a series of strategies trained using
 reinforcement learning were introduced, and a tournament containing over 200 strategies
-featured no ZD strategies ranked in top spots. Instead, the top ranked strategies
+featured no ZDs ranked in top spots. Instead, the top ranked strategies
 were a set of ``clever'' (in the sense of Axelrod's characteristics) trained
 strategies based on lookup tables~\cite{Axelrod1987}, hidden Markov
 models~\cite{Harper2017}, and finite state automata~\cite{Miller1996}.
