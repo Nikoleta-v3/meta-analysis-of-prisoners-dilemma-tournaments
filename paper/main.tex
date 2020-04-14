@@ -367,8 +367,8 @@ strategies' multiple entries their performance is evaluated based on the
 The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
 Table~\ref{table:top_performances}. The data collection process was designed such
 that the probabilities of noise and ending of the match varied between 0 and
-1. However, commonly used values of these probabilities are
-values are often less than 0.1. Thus,
+1. However, commonly used values for these probabilities are values less than 0.1.
+Thus,
 Table~\ref{table:top_performances} also includes the top 15 strategies in noisy
 tournaments with \(p_n < 0.1\) and probabilistic ending tournaments with \(p_e <
 0.1\).
@@ -448,7 +448,7 @@ are given by Figure~\ref{fig:r_distributions}.
 
 In standard tournaments 10 out of the 15 top strategies are introduced
 in~\cite{Harper2017}. These are strategies based on finite state automata (FSM),
-hidden markov models (HMM), artificial neural networks (ANN), lookup tables
+hidden Markov models (HMM), artificial neural networks (ANN), lookup tables
 (LookerUp) and stochastic lookup tables (Gambler) that have been trained using
 reinforcement learning algorithms (evolutionary and particle swarm algorithms).
 They have been trained to perform well against a subset of the strategies
@@ -472,13 +472,13 @@ In the case of noisy tournaments with smaller noise \(p_n < 0.1\) the top perfor
 include strategies specifically designed for noisy tournaments. These are DBS,
 Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
 Omega Tit For Tat~\cite{kendall2007iterated}. Omega TFT, a strategy designed
-to break the deadlocking cycles of CD and DC that TFT can fall into in noisy
+to break the deadlocking cycles of \(CD\) and \(DC\) that TFT can fall into in noisy
 environments, places 10th. The rest of the top ranks are
 occupied by strategies which performed well in standard tournaments and
 deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
 Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}. Similarly to standard
 tournaments, the successful strategies in this given setting performed well
-overall in the tournaments they participated in (see Figure~\ref{fig:noise_subset_results}).
+overall the tournaments they participated in (see Figure~\ref{fig:noise_subset_results}).
 
 In contrast, the performance of the top ranked strategies in noisy environments
 when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
@@ -502,7 +502,7 @@ become mostly defectors and vice versa.
 \end{figure}
 
 The new entrants to the most effective strategies list in probabilistic ending
-tournaments with \(p_e< 0.1\) are a series of ensembled Meta-strategies, trained strategies
+tournaments with \(p_e< 0.1\) are a series of ensembled Meta strategies, trained strategies
 which performed well
 in standard tournaments, and Grudger~\cite{axelrodproject} and Spiteful Tit for
 Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject} utilize a team of
@@ -554,7 +554,7 @@ competition.
     The distributions of the Retaliate strategies have no statistical
     difference. PSO Gambler and Evolved HMM 5 are trained strategies introduced
     in~\cite{Harper2017} and Nice Meta Winner and NMWE Memory One are strategies
-    based on teams. Grudger is a strategy from Axelrod's original tournament and
+    based on teams. Grudger is a strategy from R. Axelrod's original tournament and
     Forgetful Fool Me Once is based on the same approach as
     Grudger.}\label{table:overall_results}
 \end{table}
@@ -589,11 +589,11 @@ On the whole, the analysis of this manuscript has shown that:
 \end{itemize}
 
 Though there is not a single strategy that repeatably outranks all others in any
-of the distinct tournament types, or even across the tournaments type, there
+of the distinct tournament types, or even across the tournament types, there
 are specific types of strategies have been repeatably ranked in the top ranks.
 These have been strategies that have been trained, strategies that retailiate,
 and strategies that would adapt their behaviour based on preassigned rules
-to achieve the highest outcome. These results contradict some of Axelrod's suggestions,
+to achieve the highest outcome. These results contradict some of R. Axelrod's suggestions,
 and more specifically, the suggestions `Do not be clever' and `Do not be envious'.
 We dig deeper into the crucial strategy features for success in the following sections.
 
