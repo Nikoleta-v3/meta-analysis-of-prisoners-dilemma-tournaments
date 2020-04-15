@@ -79,13 +79,6 @@ $ python correlation.py
 $ python regression.py
 ```
 
-Finally, the clustering analysis presented in the Appendix is performed using the script:
-
-```
-$
-$
-```
-
 ## Tests
 
 Several scripts have been tested with `pytest`. To test run:

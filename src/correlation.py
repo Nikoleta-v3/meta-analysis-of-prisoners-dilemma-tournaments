@@ -1,3 +1,5 @@
+"""A script for running the correlation analysis on the marged data set."""
+
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -69,7 +71,7 @@ corr_data = df[features + clustering_on].corr()
 table = corr_data[clustering_on].iloc[:-2].round(3)
 table.index = [plot.features_labels[index] for index in table.index]
 
-textfile = open("correlation_table_merged.tex", "w")
+textfile = open("paper/correlation_table_merged.tex", "w")
 textfile.write(
     table.reindex(sort)
     .to_latex()
@@ -94,4 +96,4 @@ plt.figure(figsize=(20, 15))
 
 sns.heatmap(data, annot=True, cmap="viridis")
 
-plt.savefig("merged_correlation_plot.pdf", bbox_inches="tight")
+plt.savefig("images/merged_correlation_plot.pdf", bbox_inches="tight")
