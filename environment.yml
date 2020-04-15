@@ -19,6 +19,7 @@ dependencies:
     - tqdm==4.31.1
     - treeinterpreter==0.2.2
     - ipython==5.0.0
-    - prompt_toolkit== 1.0.18
+    - prompt_toolkit==1.0.18
+    - statsmodels==0.11.1
 prefix: /home/nightwing/anaconda3/envs/axlml
 
