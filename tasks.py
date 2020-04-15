@@ -61,3 +61,8 @@ def test(c):
     Test all packaged code and notebooks
     """
     c.run("pytest tests")
+
+
+@task
+def merge(c):
+    c.run("cat src/*_3_processed.csv > src/merged_3_processed.csv")

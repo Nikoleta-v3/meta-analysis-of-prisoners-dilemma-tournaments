@@ -52,9 +52,7 @@ This creates four data sets in the folder `data`:
 These are the data sets used to carry out the analysis of the paper.
 
 There are also available to download here: https://zenodo.org/record/3753565 without carrying
-out the process task.
-
-The processed data sets can be downloaded by running the command:
+out the process task. To download run:
 
 ```
 $ inv prodata
@@ -62,18 +60,26 @@ $ inv prodata
 
 ## Analysis
 
-The entire analysis presented in the paper is carried out in the Jupyter notebooks
-under the `nbs/` folder.
+Most of the analysis presented in the paper is carried out in the Jupyter notebooks
+found in the `nbs/` folder.
 
-The regression and correlation analysis is carried out for the merged data set
-by running the scipts respectivaly:
+The analysis is also carried out for a merged data set. The merged data is created
+by:
 
 ```
-$
-$
+$ inv merge
 ```
 
-The clustering analysis presented in the Appendix is performed using the script:
+The regression and correlation analysis as presented in the notebooks [3. Linear Regression](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/3.%20Linear%20Regression.ipynb)
+and [2. Correlation Table and Heatmaps](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/2.%20Correlation%20Table%20and%20Heatmaps.ipynb) are carried out for the merged
+data set by running:
+
+```
+$ python correlation.py
+$ python regression.py
+```
+
+Finally, the clustering analysis presented in the Appendix is performed using the script:
 
 ```
 $
