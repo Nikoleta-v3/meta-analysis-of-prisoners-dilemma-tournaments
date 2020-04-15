@@ -49,16 +49,15 @@ introduction of the zero-determinant strategies, to the use of sophisticated lea
 structures such as neural networks, many new strategies have been introduced and tested
 in a variety of tournaments and population dynamics. Typical results in the literature,
 however, rely on performance against a small number of somewhat arbitrarily selected
-strategies in a very small number of tournaments, casting doubt on the generalizability
-of conclusions. We analyze a large collection of \numberofstrategies typically known
+strategies in a small number of tournaments, casting doubt on the generalizability
+of conclusions. We analyze a large collection of \numberofstrategies
 strategies in \numberofalltournaments tournaments, present the top performing strategies across multiple
 tournament types, and distill their salient features. The results show that there is not yet a single
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios.
 Nevertheless there are several properties that heavily influence the best performing
 strategies, refining the properties described by R. Axelrod in light of
-recent and more diverse opponent populations. These are: be nice, be provocable and forgiving,
-be a little envious, be clever, and adapt to the environment, which includes the parameters
-of the tournament (e.g. noise) and the population of opponents. More precisely,
+recent and more diverse opponent populations. These are: be nice, be provocable and forgiving,  % TODO modify this based on discussion about vocabulary.
+be a little envious, be clever, and adapt to the environment. More precisely,
 we find that strategies perform best when their probability of cooperation
 matches the total tournament population's aggregate cooperation probabilities,
 or a proportion thereof in the case of noisy and probabilistically ending tournaments,
@@ -74,7 +73,7 @@ The Iterated Prisoner's Dilemma (IPD) is a repeated two player game that models
 behavioural interactions, specifically interactions where
 self-interest clashes with collective interest. At each turn of the game both
 players, simultaneously and independently, decide between cooperation (C) and
-defection (D), given memory of their prior interactions. The payoffs for each
+defection (D), given memory of all prior interactions. The payoffs for each
 player, at each turn, is influenced by their own choice and the choice of the
 other player. The payoffs of the game are defined by:
 
@@ -99,11 +98,11 @@ game in 1950~\cite{Flood1958}. Following the computer tournaments of R. Axelrod 
 1980's~\cite{Axelrod1980a, Axelrod1980b}, a strategy's performance in a round
 robin computer tournament became a common evaluation technique for newly designed
 strategies. Many tournaments have followed Axelrod's~\cite{Bendor1991, Beaufils1997, Stephens2002,
-Kendall2007, Stewart2012, Harper2017} and today more hundreds of strategies exist
+Kendall2007, Stewart2012, Harper2017} and today more hundreds of strategies exist  % TODO Order these citations
 in the literature.
 
 The winner of both of R. Axelrod's tournaments~\cite{Axelrod1980a, Axelrod1980b}
-was the simple strategy Tit For Tat (TFT) which cooperates
+was the simple strategy Tit For Tat (TFT) which cooperates  % TODO In the appendix we referr to TFT as TfT, we need to be consistent throughout.
 on the first turn and thereafter copies the previous action of its opponent,
 retailiating against defections with a defection, and forgiving a defection if followed
 by a cooperation. R. Axelrod concluded that the strategy's robustness was due to four
@@ -111,7 +110,7 @@ properties, which he adapted into four suggestions on doing well in an IPD:
 
 \begin{itemize}
     \item Do not be envious by striving for a payoff larger than the opponent's payoff
-    \item Be "nice"; Do not be the first to defect
+    \item Be ``nice''; Do not be the first to defect
     \item Reciprocate both cooperation and defection; Be provocable to retaliation and forgiveness
     \item Do not be too clever by scheming to exploit the opponent
 \end{itemize}
@@ -145,9 +144,11 @@ is often accompanied by a claim that the new strategy is the best known, despite
 only being tested against a small number of opponents or against specific classes of
 opponents not necessarily representative of all possible or all published strategies.
 The lack of testing against formally defined strategies and tournament winners
-is understandable given the effort required to implement the hundreds of published IPD strategies 
-\footnote{Implementing prior strategies faithfully is often extremely difficult or impossible due to insufficient descriptions and lack of published implementations or code.}, 
-yet calls into question any claims of superiority or robustness of newly introduced strategies.
+is understandable given the effort required to implement the hundreds of published IPD strategies
+Implementing prior strategies faithfully is often extremely difficult or
+impossible due to insufficient descriptions and lack of published
+implementations or code.
+This calls into question any claims of superiority or robustness of newly introduced strategies.
 
 A set of envious IPD strategies were introduced called zero-determinant strategies (ZDs)
 in~\cite{Press2012}. These strategies attempt to force a linear relationship between
@@ -156,7 +157,7 @@ receive a higher average payout. While ZDs were introduced with a small tourname
 which some were reportedly successful \cite{Stewart2012}, this result has not generally
 held in future work. In~\cite{Harper2017} a series of strategies trained using
 reinforcement learning were introduced, and a tournament containing over 200 strategies
-featured no ZDs ranked in top spots. Instead, the top ranked strategies
+featured no ZDs ranking in top spots. Instead, the top ranked strategies
 were a set of ``clever'' (in the sense of R. Axelrod's characteristics) trained
 strategies based on lookup tables~\cite{Axelrod1987}, hidden Markov
 models~\cite{Harper2017}, and finite state automata~\cite{Miller1996}.
@@ -164,7 +165,7 @@ Similarly, in \cite{mathieu2017}, a set of evolutionarily-trained strategies,
 and a pre-selected set of known strategies, outperformed a collection of 12 ZDs.
 
 Though only select pieces of work have been discussed, there is a broad collection
-of strategies in the literature, and new strategies and competitions are being
+of strategies in the literature, and new strategies and competitions are
 published frequently~\cite{Glynatsi2019}. The question, however, still remains
 the same: what is the best way to play the game?
 
@@ -172,7 +173,7 @@ Compared to other works, where typically a few selected or introduced strategies
 are evaluated on a small number of tournaments and/or small number of opponents,
 this manuscript evaluates the performance of \numberofstrategies
 strategies in \numberofalltournaments tournaments. Furthermore a large portion
-of the strategies used in this manuscript are drawn from the known and named strategies
+of the strategies used in this manuscript are drawn from known and named strategies
 in IPD literature, including many previous tournament winners,
 in contrast to other work that may have randomly generated many essentially arbitrary
 strategies (typically restrained to a class such as memory-one strategies,
@@ -186,20 +187,20 @@ earlier claims in alternative settings against known powerful strategies.
 The later part of the paper evaluates the impact of various strategy features
 on the performance of the strategies using standard statistical and machine learning techniques. These
 features include measures regarding a strategy's behaviour and measures regarding
-the tournaments. The outcomes of our work reinforce the discussion started by R. Axelrod
+the tournaments. This rigorous analysis reinforces the discussion started by R. Axelrod
 and concludes that the properties of a successful strategy in the IPD are:
 
 \begin{itemize}
     \item \st{Do not be envious} Be a little bit envious
-    \item Be "nice" in non-noisy environments or when game lengths are longer
-    \item Reciprocate both cooperation and defection; Be provocable and forgiving
+    \item Be ``nice'' in non-noisy environments or when game lengths are longer
+    \item Reciprocate both cooperation and defection; Be provocable and forgiving  % TODO Modify this following decision on vocabulary
     \item \st{Do not be too clever} It's ok to be clever
     \item Adapt to the environment; Adjust to the mean population cooperation
 \end{itemize}
 
 The different tournament types as well as the data collection, made
 possible due to an open source library called Axelrod-Python (APL),
-are covered in Section~\ref{section:data_collection}. The data set generated
+are covered in Section~\ref{section:data_collection}. The data set generated  % TODO Modify this when the raw as well as the processed data is archived
 for this work has been made publicly available~\cite{data} and can be used
 for further analysis and insights.
 Section~\ref{section:top_performances}, focuses on the best performing
@@ -219,7 +220,7 @@ Most of these are strategies described in the literature with a few exceptions
 of strategies that have been contributed specifically to the package. This
 paper makes use of \numberofstrategies strategies implemented in version 3.0.0. A
 list of the strategies is given in the Appendix~\ref{app:list_of_players}.
-Although APL features several tournament types, this work considers
+APL features several tournament types, this work considers
 standard, noisy, probabilistic ending, and noisy probabilistic ending
 tournaments.
 
@@ -233,9 +234,9 @@ there is a probability \(p_n\) that a player's action will be flipped.
 a match between strategies ends with a given probability \(p_e\). Finally,
 \textbf{noisy probabilistic ending} tournaments have both a noise probability
 \(p_n\) and an ending probability \(p_e\). For smoothing the simulated results a
-tournament is repeated for \(k\) number of times. This was allowed to vary 
+tournament is repeated for \(k\) number of times. This was allowed to vary
 in order to evaluate the effect of smoothing. The winner of each tournament
-is based on the average score a strategy achieved and not by the number of wins.
+is based on the median score a strategy achieved and not by the number of wins.
 
 The process of collecting tournament results is described by
 Algorithm~\ref{algorithm:data_generation}. For each trial a random size \(N\) is
@@ -269,7 +270,7 @@ Table~\ref{table:parameters_values}.
 The source code for the data collection, as well as the source code for
 the analysis, which will be discussed in the following sections, have been written
 following best practices~\cite{Aberdour2007, Benureau2018}
-and is available here. %TODO archive code
+and is available here. %TODO archive code and include github url as well.
 
 \begin{algorithm}[!htbp]
     \setstretch{1.35}
@@ -297,20 +298,20 @@ A total of \uniquenumberofseeds trials of Algorithm~\ref{algorithm:data_generati
 run. For each trial the results for 4 different tournaments were collected,
 thus a total of \numberofalltournaments $(\uniquenumberofseeds \times 4)$ tournament results have been
 retrieved. Each tournament outputs a result summary in the form of
-Table~\ref{table:output_result}. Each strategy have participated on average in
+Table~\ref{table:output_result}. Each strategy has participated on average in
 5154 tournaments of each type. The strategy with the maximum participation in each
 tournament type is Inverse Punisher with 5639 entries. The strategy with the
 minimum entries is EvolvedLookerUp 1 1 1 which was selected in 4693 trials.
 
-A result summary (Table~\ref{table:output_result}) has \(N\) number of rows
+A result summary (Table~\ref{table:output_result}) has \(N\) rows
 because each row contains information for each strategy that participated in the
 tournament. The information includes the strategy's rank, median score, the rate
 with which the strategy cooperated $(C_r)$, its match win count, and the
 probability that the strategy cooperated in the opening move. Moreover, the
 probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
 and the rate of which the strategy cooperated after each state. The \textbf{normalised rank}
-feature that is manually added. The rank \(R\) of a given. % TODO Clarify how strategies are ranked (see email discussion)
-strategy can vary between 0 and \(N-1\). Thus, the normalised rank,
+feature that is manually added. The rank \(R\) of a given.
+strategy can vary between 0 (first) and \(N-1\) (last). Thus, the normalised rank,
 denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
@@ -318,13 +319,13 @@ denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
     \begin{center}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{ccccccgcgcgcgcg}
-    \toprule 
+    \toprule
     & & & & & &   \multicolumn{8}{g}{Rates}  \\
     Rank & Name & Median score & Cooperation rating $(C_r)$ & Win & Initial C &
     CC & CD & DC & DD & CC to C & CD to C & DC to C & DD to C \\
     0 &  EvolvedLookerUp2 2 2 & 2.97 & 0.705 & 28.0 & 1.0 & 0.639 & 0.066 & 0.189 &
     0.106 & 0.836 & 0.481 & 0.568 & 0.8 \\
-    1 &  Evolved FSM 16 Noise 05 & 2.875 & 0.697 & 21.0 & 1.0 & 0.676 & 
+    1 &  Evolved FSM 16 Noise 05 & 2.875 & 0.697 & 21.0 & 1.0 & 0.676 &
     0.020 & 0.135 & 0.168 & 0.985 & 0.571 & 0.392 & 0.07 \\
     2 & PSO Gambler 1 1 1 & 2.874 & 0.684 &  23.0 &     1.0 &    0.651 &    0.034 &    0.152 &    0.164
     & 1.000 & 0.283 & 0.000 & 0.136 \\
@@ -342,7 +343,7 @@ denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
 
 \section{Top ranked strategies}\label{section:top_performances}
 
-The performance of each strategy is evaluated in four tournament types, as
+The performance of each strategy is evaluated in the four tournament types
 presented in Section \ref{section:data_collection}, followed by an
 evaluation of their performance over all the \numberofalltournaments simulated
 tournaments of this work. Each strategy participated in multiple tournaments of
@@ -351,12 +352,12 @@ total of 5114 tournaments of each type. The strategy's normalised rank
 distribution in these is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A
 value of \(r = 0\) corresponds to a strategy winning the tournament where a
 value of \(r = 1\) corresponds to the strategy coming last. Because of the
-strategies' multiple entries their performance is evaluated based on the
+strategies' multiple entries their overall performance is evaluated based on the
 \textbf{median normalised rank} denoted as \(\bar{r}\).
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.60\textwidth]{../images/tit_for_tat_r_distributions.pdf}
+    \includegraphics[width=.8\textwidth]{../images/tit_for_tat_r_distributions.pdf}
     \caption{TFT's $r$ distribution in tournaments. Lower values of \(r\)
     correspond to better performances. The best performance
     of the strategy has been in standard tournaments where it achieved a $\bar{r}$
@@ -381,16 +382,14 @@ tournaments with \(p_n < 0.1\) and probabilistic ending tournaments with \(p_e <
     }
 \end{center}
 \caption{Top performances for each tournament type based on $\bar{r}$. The
-results of each type are based on 11420 unique tournaments of each type. The
+results of each type are based on 11420 unique tournaments. The
 results for noisy tournaments with \(p_n < 0.1\) are based on 1151 tournaments,
 and for probabilistic ending tournaments with \(p_e < 0.1\) on 1139. The top
 ranks indicate that trained strategies perform well in a variety of
 environments, but so do simple deterministic strategies. The normalised medians
 are close to 0 for most environments, except environments with noise not
-restricted to 0.1 regardless the number of turns. Noisy and noisy probabilistic
-ending tournaments have the highest medians. This implies that strategies from
-the collection of this work do not perform well in environments with high values
-of noise.}
+restricted to 0.1 regardless of the number of turns. Noisy and noisy probabilistic
+ending tournaments have the highest medians.}
 \label{table:top_performances}
 \end{table}
 
@@ -412,7 +411,7 @@ are given by Figure~\ref{fig:r_distributions}.
     \end{subfigure}
     \vskip\baselineskip
     \begin{subfigure}{0.485\textwidth}
-        \centering 
+        \centering
         \includegraphics[width=\textwidth]{../images/r_distribution_noise.pdf}
         \caption{$r$ distributions of top 15 strategies in noisy tournaments.}\label{fig:noise_results}
     \end{subfigure}
@@ -426,7 +425,7 @@ are given by Figure~\ref{fig:r_distributions}.
     \end{subfigure}
     \vskip\baselineskip
     \begin{subfigure}{0.485\textwidth}
-        \centering 
+        \centering
         \includegraphics[width=\textwidth]{../images/r_distribution_probend.pdf}
         \caption{$r$ distributions of top 15 strategies in probabilistic ending tournaments.}\label{fig:probend_results}
     \end{subfigure}
@@ -446,14 +445,15 @@ are given by Figure~\ref{fig:r_distributions}.
     Table~\ref{table:top_performances}.}\label{fig:r_distributions}
 \end{figure*}
 
-In standard tournaments 10 out of the 15 top strategies are introduced
+In standard tournaments 10 out of the 15 top strategies were introduced
 in~\cite{Harper2017}. These are strategies based on finite state automata (FSM),
 hidden Markov models (HMM), artificial neural networks (ANN), lookup tables
 (LookerUp) and stochastic lookup tables (Gambler) that have been trained using
 reinforcement learning algorithms (evolutionary and particle swarm algorithms).
 They have been trained to perform well against a subset of the strategies
 in APL in a standard tournament, thus their performance in the
-specific setting was anticipated. DoubleCrosser, BackStabber and Fool Me Once, are
+specific setting was anticipated although still noteworthy given the random
+sampling of tournament participants. DoubleCrosser, BackStabber and Fool Me Once, are
 strategies not from the literature but from the APL. DoubleCrosser is an extension
 of BackStabber and both strategies make use of the number of turns because they are
 set to defect on the last two rounds. It should be noted that these
@@ -468,7 +468,8 @@ trained for noisy tournaments yet performs well in standard tournaments.
 Figure~\ref{fig:std_results} shows that these strategies typically perform
 well in any standard tournament in which they participate.
 
-In the case of noisy tournaments with smaller noise \(p_n < 0.1\) the top performed strategies
+In the case of noisy tournaments with smaller noise \(p_n < 0.1\) the top
+performing strategies
 include strategies specifically designed for noisy tournaments. These are DBS,
 Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
 Omega Tit For Tat~\cite{kendall2007iterated}. Omega TFT, a strategy designed
@@ -476,9 +477,7 @@ to break the deadlocking cycles of \(CD\) and \(DC\) that TFT can fall into in n
 environments, places 10th. The rest of the top ranks are
 occupied by strategies which performed well in standard tournaments and
 deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
-Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}. Similarly to standard
-tournaments, the successful strategies in this given setting performed well
-overall the tournaments they participated in (see Figure~\ref{fig:noise_subset_results}).
+Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}.
 
 In contrast, the performance of the top ranked strategies in noisy environments
 when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
@@ -489,7 +488,7 @@ defect if the opponent has tricked them more often than a given percentage of th
 they have done the same. The bimodality of the \(r\) distributions is explained
 by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
 were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
-and that in tournaments with a noise probability lower than \(0.5\) they
+and that in tournaments with \(p_n<0.5\) they
 performed poorly. At a noisy level of \(0.5\) or greater, mostly cooperative strategies
 become mostly defectors and vice versa.
 
@@ -501,14 +500,14 @@ become mostly defectors and vice versa.
     \label{fig:effect_of_noise}
 \end{figure}
 
-The new entrants to the most effective strategies list in probabilistic ending
-tournaments with \(p_e< 0.1\) are a series of ensembled Meta strategies, trained strategies
+The most effective strategies in probabilistic ending
+tournaments with \(p_e< 0.1\) are a series of ensemble Meta strategies, trained strategies
 which performed well
 in standard tournaments, and Grudger~\cite{axelrodproject} and Spiteful Tit for
 Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject} utilize a team of
 strategies and aggregate the potential actions of the team members into a single action
 in various ways. Figure~\ref{fig:probend_subset_results} indicates that these strategies
-performed well in any probabilistic ending tournament they competed in.
+performed well in any probabilistic ending tournament.
 
 In probabilistic ending tournaments with \(p_e \in [0, 1]\) the top ranks are
 mostly occupied by defecting strategies such as Better and Better, Gradual
@@ -541,7 +540,7 @@ and the top performances over the entire data set have the largest median values
 compared to the top rank strategies of the other tournament types,
 Figure~\ref{fig:probend_noise_results} and Figure~\ref{fig:overall_results}. The
 \(\bar{r}\) for the top strategy is approximately at 0.3, indicating that the
-most successful strategy can on average just place at the top 30\% of the
+most successful strategy can on average just place in the top 30\% of the
 competition.
 
 \begin{table}[!htbp]
@@ -571,7 +570,7 @@ competition.
 On the whole, the analysis of this manuscript has shown that:
 
 \begin{itemize}
-    \item In standard tournaments the dominating strategies were 
+    \item In standard tournaments the dominating strategies were
     strategies that had been trained using reinforcement learning techniques.
     \item In noisy environments where the noise probability strictly less than
     0.1 was considered, the successful strategies were strategies specifically
@@ -599,7 +598,7 @@ We dig deeper into the crucial strategy features for success in the following se
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
-For each strategy we have a variety of features, described in
+For each strategy, for each tournament we have a variety of features, described in
 Table~\ref{table:manual_features}. These features are measures regarding a
 strategy's behaviour from the tournaments the strategies competed in as well as
 intrinsic properties such as whether a strategy is deterministic or stochastic.
@@ -681,14 +680,14 @@ Appendix~\ref{app:correlations}.
         \input{correlations_table.tex}
     }
 \end{center}
-\caption{Correlations table between the features of Table~\ref{table:manual_features}
-the normalised rank and the median score.}\label{table:correlations}
+\caption{Correlations between the features of Table~\ref{table:manual_features}
+and the normalised rank and the median score.}\label{table:correlations}
 \end{table}
 
 In standard tournaments the features $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
 and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
-have a moderate negative effect on the normalised rank (smaller rank is better), and a moderate positive
-on the median score. The SSE error and the $DD$ to $C$ have the opposite
+have a moderately negative effect on the normalised rank (smaller rank is better), and a moderate positive
+on the median score. The SSE error and the $DD$ to $C$ rate have the opposite
 effects. Thus, in standard tournaments behaving cooperatively corresponds to a
 more successful performance. Even though being nice generally pays off
 that does not hold against defective strategies. Being more cooperative after a mutual
@@ -699,7 +698,7 @@ almost always defect after a mutual defection.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.57\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
+    \includegraphics[width=.8\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
     \caption{Distributions of $CC$ to $C$ and $DD$ to $C$ for the winners in
     standard tournaments.}\label{fig:rates_of_winners_in_standard_tournaments}
 \end{figure}
@@ -724,14 +723,14 @@ tournaments.
 
 Moreover, the manner in which a strategy achieves a given cooperation rate
 relative to the tournament population average is important. Playing a strategy
-that randomly cooperates with $C_{\text{mean}}$ is unlikely to be as effective as it will
+that randomly cooperates with probability $C_{\text{mean}}$ is unlikely to be as effective as it will
 randomly have cooperations matched with defections, and it may be punished for
 defections against cooperations by retailiating opponents. In contrast, TFT naturally
 achieves a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
 last move while also minimizing instances where it is exploited by an opponent
 (cooperating while the opponent defects), at least in non-noisy tournaments.
-\footnote{This also explains why Tit For N Tats does not fare well for $N > 1$ -- it fails
-to achieve the proper cooperation ratio by tolerating too many defections.}
+This also explains why Tit For N Tats does not fare well for $N > 1$ as it fails
+to achieve the proper cooperation ratio by tolerating too many defections.
 TFT forces the opponent to pay back the \((C, D)\) round with a \((D, C)\) round before
 returning to mutual cooperation. This explains why TFT performed well
 in Axelrod's original tournaments as most strategies submitted to those tournaments
@@ -747,6 +746,9 @@ such a scenario the noisy environment effectively voids R. Axelrod's rule to be 
 allowing strategies to attempt exploitation, whereas in a noise-free environment,
 attempting exploitation can be risky if strategies that exhibit a Grudger-like behavior
 are present, reducing the overall value in attempting to exploit strategies like Cooperator.
+% TODO Both NG and MH seem happy with this paragraph but I find it quite a
+% mouthful and not very too the point (took me a few reads). If you're both
+% happy with it that's fine with me but can we just be sure.
 
 Similarly, these results suggest an explanation regarding the intuitively unexpected
 effectiveness of memory-one strategies historically. Given that among the important
@@ -760,7 +762,7 @@ sufficient.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=.57\textwidth]{../images/c_r_winners_tournaments.pdf}
+    \includegraphics[width=.8\textwidth]{../images/c_r_winners_tournaments.pdf}
     \caption{$C_r$ distributions of the winners in noisy and in probabilistic
     ending tournaments.}\label{fig:c_r_distributions}
 \end{figure}
@@ -866,7 +868,7 @@ want to be more defecting that the mean cooperator, that only changes when
 demonstrates how the adjustments to \(C_r /C_{\text{mean}}\) change over the
 noise in the to the environment, and thus supports how important adapting to
 the environment is for a strategy to be successful.
- 
+
 \begin{figure}[!htbp]
     \centering
     \begin{subfigure}{0.485\textwidth}
@@ -963,7 +965,7 @@ of the IPD in a large number of computer tournaments.
 We analyzed and extracted the salient features of the best performing strategies
 across various tournament types, casting the results in terms of R. Axelrod's
 original suggested features of good IPD strategies. Moreover, our results
-shed light on the historic performance of TFT, zero-determinant strategies,
+shed light on the historic performance of TFT, ZDs,
 and memory-one strategies generally. Strategies need to match their play
 to the cooperativeness of the tournament population and do so in a way that
 prevents or minimizes exploitation. Overall we see that complex or clever
@@ -1011,7 +1013,7 @@ However, if the probability of noise was constrained at 0.1 then strategies
 designed for noisy tournaments indeed performed well.
 
 So what is the best way of playing the IPD? And is there a single dominant
-strategy for the IPD? 
+strategy for the IPD?
 
 There was not a single strategy within the collection of the
 \numberofstrategies strategies that managed to perform well in all the
@@ -1025,7 +1027,7 @@ have been identified by this manuscript's analysis contradict the properties of
 Axelrod~\cite{Axelrod1981}. Namely, in Section~\ref{section:top_performances} it
 was shown that trained strategies dominated several
 tournaments across tournament types, hinting that successful IPD strategies are
-often clever or more complex than simple strategies like TFT. Most of the
+often clever or more complex than simple strategies like TFT or ZDs. Most of the
 successful strategies highlighted
 in~Section~\ref{section:top_performances} were strategies that begin with
 cooperation.
@@ -1042,19 +1044,19 @@ some environments, such as standard and noisy, it should relax its readiness to
 do so.
 
 Thus, the five properties successful strategies need to have in a IPD competition
-are: 
+are:
 
 
 \begin{itemize}
 \item be nice, if the environment isn't noisy and the games are long
     \item be provocable and forgiving,
     \item be a little envious,
-    \item it's ok to be clever,
+    \item be clever,
     \item adapt to the environment (including the population of strategies).
 \end{itemize}
 
 The data set described in this work contains the largest number of IPD tournaments,
-to the authors knowledge, and it available at~\cite{data}. Further data mining
+to the authors knowledge, and it available at~\cite{data}. Further data mining % TODO Modify this when the raw data is also archived
 could be applied and provide new insights in the field.
 
 \bibliographystyle{plain}
