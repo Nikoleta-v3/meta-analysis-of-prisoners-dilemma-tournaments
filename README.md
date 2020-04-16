@@ -75,8 +75,8 @@ and [2. Correlation Table and Heatmaps](https://github.com/Nikoleta-v3/meta-anal
 data set by running:
 
 ```
-$ python correlation.py
-$ python regression.py
+$ python src/correlation.py
+$ python src/regression.py
 ```
 
 ## Tests

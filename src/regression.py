@@ -33,4 +33,6 @@ file = open('paper/regression_merged_result_on_median_score.tex', "w")
 file.write(table.round(3).to_latex().replace('\$', '$').replace('\_', ('_')))
 file.close()
 
-print(rs)
+file = open('paper/r_square_merged_result_on_median_score.tex', "w")
+file.write(rs)
+file.close()
