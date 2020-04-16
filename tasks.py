@@ -1,4 +1,5 @@
 from invoke import task
+import pandas as pd
 
 @task
 def unpack(c):
@@ -65,4 +66,11 @@ def test(c):
 
 @task
 def merge(c):
-    c.run("cat data/*_3_processed.csv > data/merged_3_processed.csv")
+    dfs = []
+    for name in ['standard', 'noise', 'probend', 'probend_noise']:
+        df = pd.read_csv(f'data/{name}_3_processed.csv')
+
+        dfs.append(df)
+    df = pd.concat(dfs)
+    df.reset_index(inplace=True)
+    df.to_csv('data/merged_3_processed.csv')
