@@ -42,17 +42,17 @@ To process the raw data run:
 $ inv process
 ```
 
-Note that the `process` task takes time.
+Note that this will take a few minutes.
 
-`inv process` creates four data sets located in the folder `data`:
+The `process` task creates four data sets located in the folder `data/`:
 
 - standard_3_processed.csv
 - noise_3_processed.csv
 - probend_3_processed.csv
 - noise_probend_3_processed.csv
 
-There are also available to download here: https://zenodo.org/record/3753565 without carrying
-out the `process` task. To download run:
+These are also available at https://zenodo.org/record/3753565.
+To download the processed data sets without carrying out the `process` task run:
 
 ```
 $ inv prodata
@@ -61,18 +61,18 @@ $ inv prodata
 ## Analysis
 
 Most of the analysis presented in the paper is carried out in the Jupyter notebooks
-found in the `nbs/` folder.
+found in the folder `nbs/`.
 
-The analysis is also carried out for a merged data set. To get the merged data
-set run:
+The analysis is also carried out the merged data set of the entire data sets
+considered in the paper. To generate the merged data set run the command:
 
 ```
 $ inv merge
 ```
 
-The regression and correlation analysis, as presented in the notebooks [3. Linear Regression](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/3.%20Linear%20Regression.ipynb)
-and [2. Correlation Table and Heatmaps](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/2.%20Correlation%20Table%20and%20Heatmaps.ipynb), is carried out for the merged
-data set by running:
+To carry out the regression and correlation analysis, presented in the notebooks [3. Linear Regression](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/3.%20Linear%20Regression.ipynb)
+and [2. Correlation Table and Heatmaps](https://github.com/Nikoleta-v3/meta-analysis-of-prisoners-dilemma-tournaments/blob/master/nbs/2.%20Correlation%20Table%20and%20Heatmaps.ipynb), for the merged
+data set run the commands:
 
 ```
 $ python src/correlation.py
