@@ -29,7 +29,7 @@ number_of_parameter_sets = 20
 try:
     directory = sys.argv[1]
 except IndexError:
-    directory = "../data/"
+    directory = "data/"
 
 try:
     min_seed, max_seed = map(int, sys.argv[2:])
