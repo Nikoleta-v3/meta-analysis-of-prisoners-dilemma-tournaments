@@ -65,4 +65,4 @@ def test(c):
 
 @task
 def merge(c):
-    c.run("cat src/*_3_processed.csv > src/merged_3_processed.csv")
+    c.run("cat data/*_3_processed.csv > data/merged_3_processed.csv")
