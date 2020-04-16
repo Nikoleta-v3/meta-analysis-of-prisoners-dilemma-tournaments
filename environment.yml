@@ -21,5 +21,6 @@ dependencies:
     - ipython==5.0.0
     - prompt_toolkit==1.0.18
     - statsmodels==0.11.1
+    - invoke==1.4.1
 prefix: /home/nightwing/anaconda3/envs/axlml
 
