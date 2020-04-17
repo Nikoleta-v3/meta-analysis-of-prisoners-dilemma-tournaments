@@ -56,7 +56,7 @@ tournament types, and distill their salient features. The results show that ther
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios.
 Nevertheless there are several properties that heavily influence the best performing
 strategies, refining the properties described by R. Axelrod in light of
-recent and more diverse opponent populations. These are: be nice, be provocable and forgiving,  % TODO modify this based on discussion about vocabulary.
+recent and more diverse opponent populations. These are: be nice, be somewhat provocable
 be a little envious, be clever, and adapt to the environment. More precisely,
 we find that strategies perform best when their probability of cooperation
 matches the total tournament population's aggregate cooperation probabilities,
@@ -193,7 +193,7 @@ and concludes that the properties of a successful strategy in the IPD are:
 \begin{itemize}
     \item \st{Do not be envious} Be a little bit envious
     \item Be ``nice'' in non-noisy environments or when game lengths are longer
-    \item Reciprocate both cooperation and defection; Be provocable and forgiving  % TODO Modify this following decision on vocabulary
+    \item Reciprocate both cooperation and defection correctly; Be somewhat provocable
     \item \st{Do not be too clever} It's ok to be clever
     \item Adapt to the environment; Adjust to the mean population cooperation
 \end{itemize}
@@ -721,44 +721,6 @@ C_r/C_{\text{max}}$ and $C_r$. In such environments cooperative behaviour
 appears to be punished less than in noisy and probabilistic ending
 tournaments.
 
-Moreover, the manner in which a strategy achieves a given cooperation rate
-relative to the tournament population average is important. Playing a strategy
-that randomly cooperates with probability $C_{\text{mean}}$ is unlikely to be as effective as it will
-randomly have cooperations matched with defections, and it may be punished for
-defections against cooperations by retailiating opponents. In contrast, TFT naturally
-achieves a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
-last move while also minimizing instances where it is exploited by an opponent
-(cooperating while the opponent defects), at least in non-noisy tournaments.
-This also explains why Tit For N Tats does not fare well for $N > 1$ as it fails
-to achieve the proper cooperation ratio by tolerating too many defections.
-TFT forces the opponent to pay back the \((C, D)\) round with a \((D, C)\) round before
-returning to mutual cooperation. This explains why TFT performed well
-in Axelrod's original tournaments as most strategies submitted to those tournaments
-were typically cooperative and relatively few strategies played with an easily exploitable
-pattern. TFT does not appear in the top ranks in tournaments with more aggressive
-strategies because it is too nice. Strategies like Grudger will always
-defect after a fixed number of opponent defections, which allows them to
-effectively exploit strategies like Alternator or stochastic strategies that
-have a non-zero chance of cooperating after mutual defection, which TFT will
-not do. Moreover in a noisy environment these strategies will naturally tend
-toward always defecting, leading them to exploit strategies like Cooperator. In
-such a scenario the noisy environment effectively voids R. Axelrod's rule to be nice,
-allowing strategies to attempt exploitation, whereas in a noise-free environment,
-attempting exploitation can be risky if strategies that exhibit a Grudger-like behavior
-are present, reducing the overall value in attempting to exploit strategies like Cooperator.
-% TODO Both NG and MH seem happy with this paragraph but I find it quite a
-% mouthful and not very too the point (took me a few reads). If you're both
-% happy with it that's fine with me but can we just be sure.
-
-Similarly, these results suggest an explanation regarding the intuitively unexpected
-effectiveness of memory-one strategies historically. Given that among the important
-features associated with success are the relative cooperation rate to the population
-average and the four memory-one probabilities of cooperating conditional on the
-previous round of play, these features can be optimized by a memory-one
-strategy such as TFT. Usage of more history becomes valuable when there are
-exploitable opponent patterns. This is indicated by the importance of SSE as a feature,
-showing that the first-approximation provided by a memory-one strategy is no longer
-sufficient.
 
 \begin{figure}[!htbp]
     \centering
@@ -808,7 +770,7 @@ distributions for the winners indicate that the strategy behaved in a ZD way in
 several tournaments, however, not constantly. The winners participated in
 matches where they did not try to extortionate their opponents. Furthermore, the
 \(CD\) to \(D\) distribution indicates that if a strategy were to defect against
-the winners they would reciprocate on average with a probability of 0.5.
+the winners the winners would reciprocate on average with a probability of 0.5.
 
 \begin{figure}[!htbp]
     \centering
@@ -918,7 +880,9 @@ form a cooperative subpopulation. This makes them good invaders but poor resiste
 The distributions of the \(CD\) to \(C\) rate evaluate the behaviour of a
 successful strategy after its opponent has defected against it. In standard
 tournaments it was observed that a successful strategy reciprocates with a
-probability of 0.5. This is distinct between the tournament types. In
+probability of 0.5.
+This leads to the recommendation of needing to be somewhat provocable.
+This is distinct between the tournament types. In
 tournaments with noise a strategy is less likely to cooperate following a
 defection compared to standard tournaments, and in probabilistic ending
 tournaments a strategy will reciprocate a defection. In a setting that the type
@@ -976,7 +940,12 @@ attempted by ZDs is not typically effective in tournaments, more
 sophisticated strategies capable of selectively exploiting weaker opponents
 while mutually cooperating with stronger opponents can be highly successful.
 This fact was also indicated numerically by the importance of the strategy
-feature SSE in the analysis of strategy features. These results highlight
+feature SSE in the analysis of strategy features.
+
+% TODO Add discussion about what our results imply and how they are explained
+% relative to past performances of TfT and ZDs.
+
+These results highlight
 a central idea in evolutionary game theory in this context: the fitness
 landscape is a function of the population (where fitness in this case is
 tournament performance). While that may seem obvious now, it shows why
@@ -1046,10 +1015,9 @@ do so.
 Thus, the five properties successful strategies need to have in a IPD competition
 are:
 
-
 \begin{itemize}
 \item be nice, if the environment isn't noisy and the games are long
-    \item be provocable and forgiving,
+    \item be somewhat provocable,
     \item be a little envious,
     \item be clever,
     \item adapt to the environment (including the population of strategies).
