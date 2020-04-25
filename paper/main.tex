@@ -864,17 +864,20 @@ The distributions of the SSE across the tournament types suggest that successful
 strategies exhibit some extortionate behaviour, but not constantly.
 ZDs are a set of strategies that are often envious as they try to exploit their
 opponents. The winners of the tournaments considered in this work are
-envious, but not as much as many ZDs. This highlights why TFT's early tournament
-success fails to generalize -- it never attempts to defect against a cooperating
-or exploitable opponent (e.g. Alternator). Moreover, many of the strategies in
-the library will not tolerate exploitation attempts. A clever strategy can
-achieve mutual cooperation with stronger strategies while also being able to
-exploit weaker strategies. This is why ZDs fail to appear in the tops
-ranks -- they try to exploit all opponents and cannot actively adapt back to
-mutual cooperation against stronger strategies, which requires more depth of memory.
-\footnote{Note that ZDs also tend to perform poorly in population games for
-a similar reason: they attempt to exploit other players using ZDs, failing to
-form a cooperative subpopulation. This makes them good invaders but poor resisters of invasion.}
+envious, but not as much as many ZDs.
+Though the exact interactions between the matches have not been recorded here,
+the work of~\cite{Harper2017} which introduced the trained strategies that
+appeared in the top ranked strategies of Section~\ref{section:top_performances}
+did. In~\cite{Harper2017} it was shown that clever strategies managed to achieve
+mutual cooperation with stronger strategies whilst exploiting the weaker
+strategies. This could potentially be what is happening with the clever winners
+of our analysis, and would explain the SSE distributions. This could also
+be the reason why ZDs fail to appear in the tops ranks -- they try to exploit
+all opponents and cannot actively adapt back to mutual cooperation against
+stronger strategies, which requires more depth of memory. \footnote{Note that
+ZDs also tend to perform poorly in population games for a similar reason: they
+attempt to exploit other players using ZDs, failing to form a cooperative
+subpopulation. This makes them good invaders but poor resisters of invasion.}
 
 \begin{figure}[!htbp]
     \centering
@@ -888,14 +891,16 @@ form a cooperative subpopulation. This makes them good invaders but poor resiste
 The distributions of the \(CD\) to \(C\) rate evaluate the behaviour of a
 successful strategy after its opponent has defected against it. In standard
 tournaments it was observed that a successful strategy reciprocates with a
-probability of 0.5.
-This leads to the recommendation of needing to be somewhat provocable.
-This is distinct between the tournament types. In
+probability of 0.5, and in a setting that the type
+of the tournament can vary between all the examined types a winning strategy
+would reciprocate on average with a probability of 0.58. In
 tournaments with noise a strategy is less likely to cooperate following a
 defection compared to standard tournaments, and in probabilistic ending
-tournaments a strategy will reciprocate a defection. In a setting that the type
-of the tournament can vary between all the examined types a winning strategy
-would reciprocate on average with a probability of 0.58.
+tournaments a strategy will reciprocate a defection.
+This leads to revisit the recommendation of being provocable to defections made
+by R. Axerlod. In fact only in tournament that are not long a strategy should
+be too provocable, in the rest of the settings a strategy should be more
+generous.
 
 \begin{figure}[!htbp]
     \centering
@@ -931,6 +936,10 @@ The results showed that they have no significant effect on a strategy's
 performance.
 
 \section{Discussion}\label{section:conclusion}
+
+This highlights why TFT's early tournament
+success fails to generalize -- it never attempts to defect against a cooperating
+or exploitable opponent (e.g. Alternator).
 
 This manuscript has explored the performance of \numberofstrategies strategies
 of the IPD in a large number of computer tournaments.
