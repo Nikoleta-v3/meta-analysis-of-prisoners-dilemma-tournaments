@@ -937,107 +937,94 @@ performance.
 
 \section{Discussion}\label{section:conclusion}
 
-This highlights why TFT's early tournament
-success fails to generalize -- it never attempts to defect against a cooperating
-or exploitable opponent (e.g. Alternator).
+This manuscript explored the performance of \numberofstrategies strategies of
+the IPD in \numberofalltournaments computer tournaments. The collection of
+computer tournaments presented here is the largest and more diverse collection in the
+literature. The \numberofstrategies strategies are drawn from known named
+strategies in IPD literature and the computer tournaments include tournaments of
+four different settings.
 
-This manuscript has explored the performance of \numberofstrategies strategies
-of the IPD in a large number of computer tournaments.
-We analyzed and extracted the salient features of the best performing strategies
-across various tournament types, casting the results in terms of R. Axelrod's
-original suggested features of good IPD strategies. Moreover, our results
-shed light on the historic performance of TFT, ZDs,
-and memory-one strategies generally. Strategies need to match their play
-to the cooperativeness of the tournament population and do so in a way that
-prevents or minimizes exploitation. Overall we see that complex or clever
-strategies can be effective, whether trained against a corpus of possible
-opponents or purposely designed to mitigate the impact of noise such as
-in the strategy DBS. Further, we showed that while the type of exploitation
-attempted by ZDs is not typically effective in tournaments, more
-sophisticated strategies capable of selectively exploiting weaker opponents
-while mutually cooperating with stronger opponents can be highly successful.
-This fact was also indicated numerically by the importance of the strategy
-feature SSE in the analysis of strategy features.
+So what is the best way of playing the IPD? And is
+there a single dominant strategy for the IPD? There was not a single strategy
+within the collection of the \numberofstrategies strategies that managed to
+perform well in all the tournaments variations it competed in. Even if on
+average a strategy ranked highly in a specific environment this did not
+guarantee its success over the different tournament types. Nevertheless, in
+Sections~\ref{section:top_performances}
+and~\ref{section:evaluation_of_performance} we examined the best performing
+strategies across various tournament types and analysed their salient features,
+and demonstrated that there are properties associated with the success of
+strategies, contradicting the originally suggested properties of R.
+Axelrod~\cite{Axelrod1981}.
 
-% TODO Add discussion about what our results imply and how they are explained
-% relative to past performances of TfT and ZDs.
+We showed that complex or \textbf{clever} strategies can be effective, whether
+trained against a corpus of possible opponents or purposely designed to mitigate
+the impact of noise such as in the strategy DBS. Moreover, we found some
+strategies designed or trained for noisy environments were also highly ranked in
+noise-free tournaments which reinforces the idea that strategies'
+complexity/cleverness is not necessarily a liability, rather it can confer
+adaptability to a more diverse set of environments.
+We also showed that while the type of exploitation attempted by ZDs is
+not typically effective in standard tournaments, \textbf{envious} strategies
+capable of both exploiting and not their opponents can be highly successful.
+Based on the results of~\cite{Harper2017} this could be because they are
+selectively exploiting weaker opponents while mutually cooperating with stronger
+opponents. Highly noisy or tournaments with short matches also favoured envious
+strategies. These environments mitigated the value of being nice. Uncertainty
+enables exploitation, reducing the ability of maintaining or enforcing mutual
+cooperation, while triggering grudging strategies to switch from typically
+cooperating to typically defecting.
 
-These results highlight
-a central idea in evolutionary game theory in this context: the fitness
-landscape is a function of the population (where fitness in this case is
-tournament performance). While that may seem obvious now, it shows why
-historical tournament results on small or arbitrary populations of strategies
-have so often failed to produce generalizable results.
+The features analysis of the best performing strategies demonstrated that a
+strategy should reciprocate, as suggested by R. Axelrod, but it should relax its
+readiness to do so and be more \textbf{generous}. For noisy environments this is
+inline with the results of~\cite{Bendor1991, Donninger1986, Molander1985,
+Hammerstein1984}, however, we also showed that generosity pays off even in
+standard settings, and that in fact the only setting a strategy would want to be
+too provocable is when the matches are not long. Forgiveness as defined by R.
+Axerlod was not explored here. This was mainly because the two round states were
+not recorded during the data collection. That is something we would aim to
+incorporate in future work.
+The features analysis also concluded that
+there is a significant importance in \textbf{adapting to the environment}, and
+more specifically, to the mean cooperator. Moreover, the manner in which a
+strategy achieves a given cooperation rate relative to the tournament population
+average is important. In standard tournaments a strategy would aim to be the
+mean the cooperator while in noisy tournaments the best performing players
+cooperate a lower rate than the tournament population on average.
 
-Highly noisy or tournaments with short matches favor less cooperative strategies.
-These environments mitigate the value of being nice. Uncertainty enables
-exploitation, reducing the ability of maintaining or enforcing mutual cooperation,
-while triggering grudging strategies to switch from typically cooperating to
-typically defecting. Accordingly, we find that in noisy tournaments
-the best performing players cooperate a lower rate than the tournament
-population on average. Nevertheless we found some strategies designed or trained
-for noisy environments were also highly ranked in noise-free tournaments. This
-indicates that strategy complexity is not necessarily a liability, rather it
-can confer adaptability to a more diverse set of environments.
+This could potentially explain the early success of TFT. TFT naturally achieves
+a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
+last move while also minimizing instances where it is exploited by an opponent
+(cooperating while the opponent defects), at least in non-noisy tournaments. It
+could also explain why Tit For \(N\) Tats does not fare well for $N > 1$ -- it
+fails to achieve the proper cooperation ratio by tolerating too many defections.
 
-In Section~\ref{section:top_performances}, the tournaments results were used to
-present the top performances. The data set contained results from four different
-settings, and these were also studied individually. In standard tournaments
-complex strategies trained using reinforcement learning ranked in the top spots.
-Some of these strategies ranked again in the top spots in probabilistic
-ending tournaments when a \(p_e\) of less 0.1 was considered and in noisy tournaments
-when \(p_n\) was less than 0.1. In probabilistic
-ending tournaments \(p_e\) was designed to vary between 0 and 1. It was demonstrated
-that for values larger than 0.1, as stated in the Folk Theorem, defecting strategies
-were winning the tournaments because there was a high likelihood of the game
-ending in the next turn. In tournaments with noise the median ranks of the top
-15 strategies had the highest values and the \(r\) distributions were bimodal.
-The top rank strategies were performing both well and bad, and this indicates
-that in noisy tournaments where the noise can vary substantially,
-there were no strategies that can guarantee winning across a range of noise.
-However, if the probability of noise was constrained at 0.1 then strategies
-designed for noisy tournaments indeed performed well.
+Similarly, our results could suggest an explanation regarding the intuitively
+unexpected effectiveness of memory-one strategies historically. Given that among
+the important features associated with success are the relative cooperation rate
+to the population average and the four memory-one probabilities of cooperating
+conditional on the previous round of play, these features can be optimized by a
+memory-one strategy such as TFT. Usage of more history becomes valuable when
+there are exploitable opponent patterns. This is indicated by the importance of
+SSE as a feature, showing that the first-approximation provided by a memory-one
+strategy is no longer sufficient.
 
-So what is the best way of playing the IPD? And is there a single dominant
-strategy for the IPD?
+These results highlight a central idea in evolutionary game theory in this
+context: the fitness landscape is a function of the population (where fitness in
+this case is tournament performance). While that may seem obvious now, it shows
+why historical tournament results on small or arbitrary populations of
+strategies have so often failed to produce generalizable results.
 
-There was not a single strategy within the collection of the
-\numberofstrategies strategies that managed to perform well in all the
-tournaments variations it competed in.
-Even if on average a strategy ranked highly in a specific environment this did not
-guarantee its success over the different tournament types. However, the results
-of sections~\ref{section:top_performances}
-and~\ref{section:evaluation_of_performance} demonstrated that there are
-properties associated with the success of strategies. A few of the properties that
-have been identified by this manuscript's analysis contradict the properties of
-Axelrod~\cite{Axelrod1981}. Namely, in Section~\ref{section:top_performances} it
-was shown that trained strategies dominated several
-tournaments across tournament types, hinting that successful IPD strategies are
-often clever or more complex than simple strategies like TFT or ZDs. Most of the
-successful strategies highlighted
-in~Section~\ref{section:top_performances} were strategies that begin with
-cooperation.
-
-Furthermore, in Section~\ref{section:top_performances}
-and~\ref{section:evaluation_of_performance} it was shown that envious strategies
-performed well. Though these were not the most envious strategies in the
-tournaments (ZDs were included), these strategies benefited by being a bit
-envious. From Section~\ref{section:evaluation_of_performance} it was concluded
-that there is a significant importance in adapting to the environment, and more
-specifically in this work, to the mean cooperator. This section also
-demonstrated that a strategy should reciprocate, as suggested by R. Axelrod, but in
-some environments, such as standard and noisy, it should relax its readiness to
-do so.
-
-Thus, the five properties successful strategies need to have in a IPD competition
-are:
+Overall, the five properties successful strategies need to have in a IPD competition
+based on the analysis that has been presented in this manuscript are:
 
 \begin{itemize}
-\item be nice, if the environment isn't noisy and the games are long
-    \item be somewhat provocable,
-    \item be a little envious,
-    \item be clever,
-    \item adapt to the environment (including the population of strategies).
+    \item Be ``nice'' in non-noisy environments or when game lengths are longer
+    \item Be provocable but also generous when game lengths are longer
+    \item Be a little bit envious
+    \item It's ok to be clever
+    \item Adapt to the environment (including the population of strategies).
 \end{itemize}
 
 The data set described in this work contains the largest number of IPD tournaments,
