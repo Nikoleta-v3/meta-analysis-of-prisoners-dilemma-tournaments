@@ -56,8 +56,8 @@ tournament types, and distill their salient features.
 The results show that there is not yet a single
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios,
 nevertheless there are several properties that heavily influence the best performing
-strategies. Refining the properties described by R. Axelrod in light of
-recent and more diverse opponent populations these are: be nice, be provocable and generous,
+strategies. This refines the properties described by R. Axelrod in light of
+recent and more diverse opponent populations to be: be nice, be provocable and generous,
 be a little envious, be clever, and adapt to the environment. More precisely,
 we find that strategies perform best when their probability of cooperation
 matches the total tournament population's aggregate cooperation probabilities,
@@ -898,9 +898,9 @@ would reciprocate on average with a probability of 0.58. In
 tournaments with noise a strategy is less likely to cooperate following a
 defection compared to standard tournaments, and in probabilistic ending
 tournaments a strategy will reciprocate a defection.
-This leads to revisit the recommendation of being provocable to defections made
-by R. Axerlod. In fact only in tournament that are not long a strategy should
-be too provocable, in the rest of the settings a strategy should be more
+This leads to revisiting the recommendation of being provocable to defections made
+by R. Axerlod. In fact only in tournaments with short matches should a strategy
+be provocable, in the rest of the settings a strategy should be more
 generous.
 
 \begin{figure}[!htbp]
@@ -940,27 +940,29 @@ performance.
 
 This manuscript explored the performance of \numberofstrategies strategies of
 the IPD in \numberofalltournaments computer tournaments. The collection of
-computer tournaments presented here is the largest and more diverse collection in the
-literature. The \numberofstrategies strategies are drawn from known named
-strategies in IPD literature and the computer tournaments include tournaments of
-four different settings.
+computer tournaments presented here is the largest and most diverse collection in the
+literature. The \numberofstrategies strategies are drawn from the APL and include
+strategies from the IPD literature. The computer tournaments include tournaments of
+four different types.
 
 So what is the best way of playing the IPD? And is
-there a single dominant strategy for the IPD? There was not a single strategy
+there a single dominant strategy for the IPD? 
+
+There was not a single strategy
 within the collection of the \numberofstrategies strategies that managed to
 perform well in all the tournaments variations it competed in. Even if on
 average a strategy ranked highly in a specific environment this did not
 guarantee its success over the different tournament types. Nevertheless, in
 Sections~\ref{section:top_performances}
 and~\ref{section:evaluation_of_performance} we examined the best performing
-strategies across various tournament types and analysed their salient features,
-and demonstrated that there are properties associated with the success of
-strategies, contradicting the originally suggested properties of R.
+strategies across various tournament types and analysed their salient features.
+this demonstrated that there are properties associated with the success of
+strategies which in fact contradict the originally suggested properties of R.
 Axelrod~\cite{Axelrod1981}.
 
 We showed that complex or \textbf{clever} strategies can be effective, whether
 trained against a corpus of possible opponents or purposely designed to mitigate
-the impact of noise such as in the strategy DBS. Moreover, we found some
+the impact of noise such as the DBS strategy. Moreover, we found some
 strategies designed or trained for noisy environments were also highly ranked in
 noise-free tournaments which reinforces the idea that strategies'
 complexity/cleverness is not necessarily a liability, rather it can confer
@@ -988,11 +990,13 @@ not recorded during the data collection. That is something we would aim to
 incorporate in future work.
 The features analysis also concluded that
 there is a significant importance in \textbf{adapting to the environment}, and
-more specifically, to the mean cooperator. Moreover, the manner in which a
-strategy achieves a given cooperation rate relative to the tournament population
-average is important. In standard tournaments a strategy would aim to be the
+more specifically, to the mean cooperator. 
+In standard tournaments a strategy would aim to be the
 mean the cooperator while in noisy tournaments the best performing players
-cooperate a lower rate than the tournament population on average.
+cooperate at a lower rate than the tournament population on average.
+Moreover, the manner in which a
+strategy achieves a given cooperation rate relative to the tournament population
+average is important.
 
 This could potentially explain the early success of TFT. TFT naturally achieves
 a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
@@ -1024,7 +1028,7 @@ based on the analysis that has been presented in this manuscript are:
     \item Be ``nice'' in non-noisy environments or when game lengths are longer
     \item Be provocable but also generous when game lengths are longer
     \item Be a little bit envious
-    \item It's ok to be clever
+    \item Be clever
     \item Adapt to the environment (including the population of strategies).
 \end{itemize}
 
