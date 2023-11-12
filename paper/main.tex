@@ -31,6 +31,7 @@
 \newcommand{\uniquenumberofseeds}{\input{unique_number_of_seeds.tex}}
 \newcommand{\numberofalltournaments}{\input{number_of_all_tournaments.tex}}
 \newcommand{\numberofstrategies}{\input{unique_number_of_strategies.tex}}
+\def\axelrod{\texttt{Axelrod-Python }}
 
 \setlength{\tabcolsep}{3pt}
 
@@ -220,74 +221,49 @@ parameters and their definitions are given in Appendix~\ref{app:parameters}.
 
 \section{Data collection}\label{section:data_collection}
 
-The data set generated for this manuscript was created with APL version 3.0.0.
-APL allows for different types of IPD computer
-tournaments to be simulated and contains a large list of strategies.
-Most of these are strategies described in the literature with a few exceptions
-of strategies that have been contributed specifically to the package. This
-paper makes use of \numberofstrategies strategies implemented in version 3.0.0. A
-list of the strategies is given in the Appendix~\ref{app:list_of_players}.
-APL features several tournament types, this work considers
-standard, noisy, probabilistic ending, and noisy probabilistic ending
-tournaments.
+The data set generated for this manuscript was created using \axelrod version 3.0.0.
+\axelrod enables the simulation of Iterated Prisoner's Dilemma
+computer tournaments and contains an extensive list of strategies. Most of these
+strategies are described in the literature, with a few exceptions contributed
+specifically to the package. In this paper, we use a total of \numberofstrategies
+strategies. You can find a list of these strategies in the Supplementary Material.
 
-\textbf{Standard tournaments} are tournaments similar to that of R. Axelrod's well-known
-tournaments~\cite{Axelrod1980a}. There are \(N\) strategies which all play an iterated
-game of \(n\) number of turns against each other. Note that self-interactions
-are not included. Similarly, \textbf{noisy
-tournaments} have \(N\) strategies and \(n\) number of turns, but at each turn
-there is a probability \(p_n\) that a player's action will be flipped.
-\textbf{Probabilistic ending tournaments}, are of size \(N\) and after each turn
-a match between strategies ends with a given probability \(p_e\). Finally,
-\textbf{noisy probabilistic ending} tournaments have both a noise probability
-\(p_n\) and an ending probability \(p_e\). For smoothing the simulated results a
-tournament is repeated for \(k\) number of times. This was allowed to vary
-in order to evaluate the effect of smoothing. The winner of each tournament
-is based on the median score a strategy achieved and not by the number of wins.
+The package supports several tournament types, and this work considers standard,
+noisy, probabilistic ending, and noisy probabilistic ending tournaments.
+{\it Standard tournaments} are similar to Axelrod's well-known
+tournaments~\cite{Axelrod1980a}. In these tournaments, there are \(N\)
+strategies, and each strategy plays an iterated game with \(n\) turns against
+all other strategies, not including self-interactions.
+{\it Noisy tournaments} also involve \(N\) strategies and \(n\) turns, but
+in each turn, there is a probability \(p_n\) that a player's action is
+flipped.
+{\it Probabilistic ending tournaments} consist of \(N\) strategies, and
+after each turn, a match between strategies ends with a given probability
+\(p_e\).
+Finally, {\it noisy probabilistic ending tournaments} incorporate both a
+noise probability \(p_n\) and an ending probability \(p_e\). For smoother
+results, each tournament is repeated \(k\) times, and this repetition factor was
+allowed to vary to assess the impact of smoothing. The winner of each tournament
+is determined based on the average score achieved by a strategy from the entire
+set of repetitions, not by the number of wins.
+The process of collecting tournament results is outlined in
+Algorithm~\ref{algorithm:data_generation}. For each trial, we choose a random
+size \(N\) is selected, and a random list of \(N\) strategies from the
+\numberofstrategies available. Subsequently, standard, noisy, probabilistic
+ending, and noisy probabilistic ending tournaments are conducted for the
+selected list of strategies. The parameters for the tournaments, as well as the
+number of repetitions, are chosen once for each trial.
 
-The process of collecting tournament results is described by
-Algorithm~\ref{algorithm:data_generation}. For each trial a random size \(N\) is
-selected, and from the \numberofstrategies strategies a random list of \(N\) strategies is
-chosen. For the given list of strategies a standard, a noisy, a probabilistic
-ending and a noisy probabilistic ending tournament are performed and repeated
-\(k\) times. The parameters for the tournaments, as well as the number of
-repetitions, are selected once for each trial. The parameters and their
-respective minimum and maximum values are given by
-Table~\ref{table:parameters_values}.
-
-\begin{table}[!htbp]
-    \begin{center}
-        \resizebox{.6\textwidth}{!}{
-        \begin{tabular}{lcccc}
-    \toprule
-    parameter & parameter explanation &   min value & max value \\
-    \midrule
-    $N$ & number of strategies  & 3 & 195 \\
-    $k$ & number of repetitions  & 10 & 100 \\
-    $n$ & number of turns      & 1 & 200 \\
-    $p_n$ & probability of flipping action at each turn  & 0 & 1   \\
-    $p_e$ & probability of match ending in the next turn & 0 & 1   \\
-    \bottomrule
-        \end{tabular}}
-    \end{center}
-    \caption{Data collection; parameters' values}
-    \label{table:parameters_values}
-\end{table}
-
-The source code for the data collection, as well as the source code for
-the analysis, which will be discussed in the following sections, have been written
-following best practices~\cite{Aberdour2007, Benureau2018}
-and is available here. %TODO archive code and include github url as well.
 
 \begin{algorithm}[!htbp]
     \setstretch{1.35}
-    \ForEach{\text{seed} $\in [0, 11420]$}{
-        $N \gets \text{randomly select integer}\in [N_{min}, N_{max}]$\;
+    \For{\text{seed} $\in [0, 11420]$}{
+        $N \gets \text{randomly select integer}\in [3, 195]$\;
         $\text{players} \gets  \text{randomly select $N$ players}$\;
-        $k \gets  \text{randomly select integer}\in [k_{min}, k_{max}]$\;
-        $n \gets  \text{randomly select integer}\in [n_{min}, n_{max}]$\;
-        $p_n \gets  \text{randomly select float}\in [p_{n\, min}, p_{n\, max}]$\;
-        $p_e \gets   \text{randomly select float}\in [p_{e\, min}, p_{e\, max}]$\;
+        $k \gets  \text{randomly select integer}\in [10, 100]$\;
+        $n \gets  \text{randomly select integer}\in [1, 200]$\;
+        $p_n \gets  \text{randomly select float}\in [0, 1]$\;
+        $p_e \gets   \text{randomly select float}\in [0, 1]$\;
         \vspace{0.4cm}
         $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, k)$\;
         $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p_n, k)$\;
@@ -297,29 +273,29 @@ and is available here. %TODO archive code and include github url as well.
     }
     \KwRet{result standard, result noisy, result probabilistic ending,
     result noisy probabilistic ending}\;
-    \caption{Data collection Algorithm}
+    \caption{Tournament Data Collection Algorithm}
     \label{algorithm:data_generation}
 \end{algorithm}
 
-A total of \uniquenumberofseeds trials of Algorithm~\ref{algorithm:data_generation} have been
-run. For each trial the results for 4 different tournaments were collected,
-thus a total of \numberofalltournaments $(\uniquenumberofseeds \times 4)$ tournament results have been
-retrieved. Each tournament outputs a result summary in the form of
-Table~\ref{table:output_result}. Each strategy has participated on average in
-5154 tournaments of each type. The strategy with the maximum participation in each
-tournament type is Inverse Punisher with 5639 entries. The strategy with the
-minimum entries is EvolvedLookerUp 1 1 1 which was selected in 4693 trials.
-
-A result summary (Table~\ref{table:output_result}) has \(N\) rows
-because each row contains information for each strategy that participated in the
-tournament. The information includes the strategy's rank, median score, the rate
-with which the strategy cooperated $(C_r)$, its match win count, and the
-probability that the strategy cooperated in the opening move. Moreover, the
-probabilities of a strategy being in any of the four states ($CC, CD, DC, DD$),
-and the rate of which the strategy cooperated after each state. The \textbf{normalised rank}
-is a feature that has been manually added to the result summary. The rank \(R\) of a given
-strategy can vary between 0 (first) and \(N-1\) (last), and thus the normalised rank,
-denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
+We have run a total of \uniquenumberofseeds trials of
+Algorithm~\ref{algorithm:data_generation}. For each trial, we collect the
+results for four different tournaments, resulting in a total of
+\numberofalltournaments $(\uniquenumberofseeds \times 4)$ tournament results.
+Each tournament outputs a result summary in the form of
+Table~\ref{table:output_result}. Each strategy has participated, on average, in
+5154 tournaments of each type. The strategy with the maximum participation in
+each tournament type is Inverse Punisher with 5639 entries. The strategy with
+the minimum entries is EvolvedLookerUp 1 1 1, which was selected in 4693 trials.
+During the data collection process, we allowed the probabilities of noise and
+tournament ending to vary between 0 and 1. However, commonly used values for
+these probabilities are \(p_n < 0.5\) and \(p_e < 0.1\) (for more details, see the
+Supplementary Material). Therefore, in this context, we will focus on these
+subsets for the three tournament types: noisy, probabilistic ending, and noisy
+probabilistic ending. The results presented here pertain to these subsets.
+Specifically, there are a total of 5650, 1134, and 565 runs for each of the
+three tournament types, respectively. We also provide an analysis of the paper
+considering the entire datasets, and these results are presented in the
+Supplementary Material.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[!htbp]
@@ -345,44 +321,72 @@ denoted as $r$, is calculated as a strategy's rank divided by \(N - 1\).
     \bottomrule
     \end{tabular}}
 \end{center}
-\caption{Output result of a single tournament.}\label{table:output_result}
+\caption{\textbf{Result Summary Example of a Tournament.}
+A result summary consists of \(N\) rows, with each row containing information
+for each strategy that participated in the tournament. This information includes
+the strategy's rank (\(R\)), median score, the cooperation rate (\(C_r\)), the number of
+match wins, and the probability that the strategy cooperated in the opening
+move. Additionally, it provides the probabilities of a strategy being in any of
+the four states ($CC, CD, DC, DD$) and the cooperation rate after each state.}\label{table:output_result}
 \end{table}
 
 \section{Top ranked strategies}\label{section:top_performances}
 
-The performance of each strategy is evaluated in the four tournament types
-presented in Section \ref{section:data_collection}, followed by an
-evaluation of their performance over all the \numberofalltournaments simulated
-tournaments of this work. Each strategy participated in multiple tournaments of
-the same type (on average 5154). For example TFT participated in a
-total of 5114 tournaments of each type. The strategy's normalised rank
-distribution in these is given in Figure~\ref{fig:tit_for_tat_r_distribution}. A
-value of \(r = 0\) corresponds to a strategy winning the tournament where a
-value of \(r = 1\) corresponds to the strategy coming last. Because of the
-strategies' multiple entries their overall performance is evaluated based on the
-\textbf{median normalised rank} denoted as \(\bar{r}\).
+A strategy has participated in multiple tournaments of each type, and to
+evaluate its overall performance, we introduce a measure called the {\textit
+normalized rank}. In each tournament, the strategies receive a rank, where 0
+denotes that the strategy was the winner, and \(N-1\) indicates that the
+strategy came last in the tournament. The normalized rank, denoted as \(r\), is
+calculated as \(r = \frac{R}{N-1}\). Thus, the rank a strategy achieved over the
+number of players in the tournament. The performance of the strategies is
+assessed based on the {\it median of the normalized rank}, denoted as
+\(\bar{r}\).
 
-\begin{figure}[!htbp]
+For example, let's consider the well-known strategies Tit For Tat and
+Gradual. Each strategy participated in several tournaments of each type (see
+Figure~\ref{fig:normalised_rank_distributions}).
+We show the distribution of the ranks of these
+strategies in each of the four tournaments. We can observe that in tournaments
+with the presence of noise, Tit For Tat has a normally distributed normalized
+rank around 1/2. In tournaments without noise, the strategy performs better,
+achieving its best performance in probabilistic ending tournaments with a median
+normalized rank of 0.298.
+In comparison, Gradual's performance has longer tails, indicating that there
+were tournaments where the strategy performed very well or very poorly. Overall,
+Gradual achieves a lower median rank, signifying that it performs better than
+Tit For Tat except in the case of noisy and probabilistic ending tournaments.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=.8\textwidth]{../images/tit_for_tat_r_distributions.pdf}
-    \caption{TFT's $r$ distribution in tournaments. Lower values of \(r\)
-    correspond to better performances. The best performance
-    of the strategy has been in standard tournaments where it achieved a $\bar{r}$
-    of 0.34.}
-    \label{fig:tit_for_tat_r_distribution}
+    \includegraphics[width=\textwidth]{../images/normalised_rank_distributions.pdf}
+    \caption{\textbf{Examples of normalized rank distributions for two
+    strategies, Tit For Tat and Gradual.} We plot the distributions of \(r\) for
+    the two strategies in the four tournament types. As a reminder, lower values
+    of \(r\) correspond to better performances. In each plot, we also show the
+    number of data points. Both strategies participated in a similar number of
+    tournaments. Based on the median rank, which we use in this work to define
+    overall performance, Tit For Tat performs best in probabilistic ending
+    tournaments, whereas Gradual was in standard tournaments. The best
+    performance of the Gradual strategy has been in standard tournaments where
+    it achieved a \(\bar{r}\) of 0.34.}
+    \label{fig:normalised_rank_distributions}
 \end{figure}
 
-The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
-Table~\ref{table:top_performances}. The data collection process was designed such
-that the probabilities of noise and ending of the match varied between 0 and
-1. However, commonly used values for these probabilities are values less than 0.1.
-Thus,
-Table~\ref{table:top_performances} also includes the top 15 strategies in noisy
-tournaments with \(p_n < 0.1\) and probabilistic ending tournaments with \(p_e <
-0.1\).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.8\textwidth]{../images/top_performers.pdf}
+    \caption{\(r\) distributions of the top 15 strategies in different
+    environments. A lower value of \(\bar{r}\) corresponds to a more successful
+    performance. A strategy's \(r\) distribution skewed towards zero indicates
+    that the strategy ranked highly in most tournaments it participated in. Most
+    distributions are skewed towards zero except the distributions with
+    unrestricted noise, supporting the conclusions from
+    Table~\ref{table:top_performances}.}\label{fig:r_distributions}
+\end{figure}
 
 \newcolumntype{g}{>{\columncolor{Gray}}l}
-\begin{table}[!htbp]
+\begin{table}[t]
     \begin{center}
     \resizebox{\textwidth}{!}{
         \input{top_perfomances.tex}
@@ -400,208 +404,71 @@ ending tournaments have the highest medians.}
 \label{table:top_performances}
 \end{table}
 
-The \(r\) distributions for the top ranked strategies of Table~\ref{table:top_performances}
-are given by Figure~\ref{fig:r_distributions}.
 
-\begin{figure*}[!htbp]
-    \centering
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_standard.pdf}
-        \caption{$r$ distributions of top 15 strategies in standard tournaments.}\label{fig:std_results}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_noise_subset.pdf}
-        \caption{$r$ distributions of top 15 strategies in noisy tournaments with \(p_n < 0.1\).}\label{fig:noise_subset_results}
-    \end{subfigure}
-    \vskip\baselineskip
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_noise.pdf}
-        \caption{$r$ distributions of top 15 strategies in noisy tournaments.}\label{fig:noise_results}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_probend_subset.pdf}
-        \caption{\(r\) distributions of top 15 strategies in 1139 probabilistic ending
-        tournaments with \(p_e < 0.1\).}
-        \label{fig:probend_subset_results}
-    \end{subfigure}
-    \vskip\baselineskip
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_probend.pdf}
-        \caption{$r$ distributions of top 15 strategies in probabilistic ending tournaments.}\label{fig:probend_results}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}{0.485\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../images/r_distribution_probend_noise.pdf}
-        \caption{$r$ distributions of top 15 strategies in noisy probabilistic ending tournaments.}
-        \label{fig:probend_noise_results}
-    \end{subfigure}
-    \caption{\(r\) distributions of the top 15 strategies in different
-    environments. A lower value of \(\bar{r}\) corresponds to a more successful
-    performance. A strategy's \(r\) distribution skewed towards zero indicates
-    that the strategy ranked highly in most tournaments it participated in. Most
-    distributions are skewed towards zero except the distributions with
-    unrestricted noise, supporting the conclusions from
-    Table~\ref{table:top_performances}.}\label{fig:r_distributions}
-\end{figure*}
-
-In standard tournaments 10 out of the 15 top strategies were introduced
-in~\cite{Harper2017}. These are strategies based on finite state automata (FSM),
+The top 15 strategies for each tournament type, based on \(\bar{r}\), are
+presented in Table~\ref{table:top_performances}, while the \(r\) distributions
+for the top-ranked strategies can be found in Figure~\ref{fig:r_distributions}.
+In standard tournaments, 10 out of the 15 top strategies were introduced
+in~\cite{Harper2017}. These strategies are based on finite state automata (FSM),
 hidden Markov models (HMM), artificial neural networks (ANN), lookup tables
-(LookerUp) and stochastic lookup tables (Gambler) that have been trained using
-reinforcement learning algorithms (evolutionary and particle swarm algorithms).
-They have been trained to perform well against a subset of the strategies
-in APL in a standard tournament, thus their performance in the
-specific setting was anticipated although still noteworthy given the random
-sampling of tournament participants. DoubleCrosser, BackStabber and Fool Me Once, are
-strategies not from the literature but from the APL. DoubleCrosser is an extension
-of BackStabber and both strategies make use of the number of turns because they are
-set to defect on the last two rounds. It should be noted that these
-strategies can be characterised as ``cheaters'' because the source code of the strategies
-allows them to know the number of turns in a match (unless the match has a probabilistic ending). These strategies were expected to not perform as well in
-tournaments where the number of turns is not specified. Finally, Winner
-12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the literature.
-DBS is a strategy specifically designed for noisy environments, however, it ranks
-highly in standard tournaments as well. Similarly the fourth ranked player,
-Evolved FSM 16 Noise 05, was
-trained for noisy tournaments yet performs well in standard tournaments.
-Figure~\ref{fig:std_results} shows that these strategies typically perform
-well in any standard tournament in which they participate.
+(LookerUp), and stochastic lookup tables (Gambler). They have been trained using
+reinforcement learning algorithms (evolutionary and particle swarm algorithms)
+to perform well against a subset of the strategies in \axelrod in a standard
+tournament. Thus, their performance in the specific setting was anticipated,
+although still noteworthy given the random sampling of tournament participants.
+DoubleCrosser and BackStabber, both from the \axelrod, use the number of turns and
+are set to defect in the last two rounds. These strategies can be characterized
+as “cheaters” because their source code allows them to know the number of turns
+(unless the match has a probabilistic ending). These strategies were expected to
+not perform as well in tournaments where the number of turns is not specified.
+Finally, Winner 12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the
+literature. DBS is a strategy specifically designed for noisy environments;
+however, it ranks highly in standard tournaments as well. Similarly, the
+fourth-ranked player, Evolved FSM 16 Noise 05, was trained for noisy tournaments
+yet performs well in standard tournaments.
 
-In the case of noisy tournaments with smaller noise \(p_n < 0.1\) the top
-performing strategies
-include strategies specifically designed for noisy tournaments. These are DBS,
-Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
-Omega Tit For Tat~\cite{kendall2007iterated}. Omega TFT, a strategy designed
-to break the deadlocking cycles of \(CD\) and \(DC\) that TFT can fall into in noisy
-environments, places 10th. The rest of the top ranks are
-occupied by strategies which performed well in standard tournaments and
+In the case of noisy tournaments, the
+top-performing strategies include strategies specifically designed for noisy
+tournaments. These are DBS, Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO
+Gambler 2 2 2 Noise 05, and Omega Tit For Tat~\cite{kendall2007iterated}. Omega
+TFT, a strategy designed to break the deadlocking cycles of \(CD\) and \(DC\)
+that TFT can fall into in noisy environments, places 10th. The rest of the top
+ranks are occupied by strategies that performed well in standard tournaments and
 deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
 Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}.
 
-In contrast, the performance of the top ranked strategies in noisy environments
-when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
-decide their actions based on the cooperation to defection ratio, such as
-ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
-e~\cite{axelrodproject}, and the Retaliate strategies which are designed to
-defect if the opponent has tricked them more often than a given percentage of the times that
-they have done the same. The bimodality of the \(r\) distributions is explained
-by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
-were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
-and that in tournaments with \(p_n<0.5\) they
-performed poorly. At a noisy level of \(0.5\) or greater, mostly cooperative strategies
-become mostly defectors and vice versa.
+The most effective strategies in probabilistic ending tournaments with \(p_e<
+0.1\) are a series of ensemble Meta strategies, trained strategies which
+performed well in standard tournaments, and Grudger~\cite{axelrodproject} and
+Spiteful Tit for Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject}
+utilize a team of strategies and aggregate the potential actions of the team
+members into a single action in various ways.
 
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=.92\textwidth]{../images/noise_effect.pdf}
-    \caption{Normalised rank \(r\) distributions for top 6 strategies in noisy tournaments over
-    the probability of noisy ($p_n$).}
-    \label{fig:effect_of_noise}
-\end{figure}
+Overall, the analysis reveals that dominating strategies in standard tournaments
+were those trained using reinforcement learning techniques. In standard
+tournaments, these dominating strategies exhibited a clear trend of being
+trained through reinforcement learning techniques. Additionally, in environments
+with a noise probability strictly less than 0.1, successful strategies were
+purposefully designed or trained to adapt to noisy conditions. Furthermore, in
+tournaments with probabilistic endings, the highly ranked strategies leaned
+towards defecting strategies and trained finite state automata, as demonstrated
+by the works of Ashlock et al.~\cite{Ashlock2006,Ashlock2014}. Their prominence
+in tournaments where the probability of the game ending after each turn exceeded
+0.1 underscored their effectiveness. Similarly, in probabilistic tournaments
+with \(p_e\) less than 0.1, the highly ranked strategies were characterized by
+their reliance on the behavior of others. Notably, from the comprehensive set of
+strategies considered, no strategy demonstrated consistent success in noisy
+environments unless the noise value was limited to less than 0.1.
 
-The most effective strategies in probabilistic ending
-tournaments with \(p_e< 0.1\) are a series of ensemble Meta strategies, trained strategies
-which performed well
-in standard tournaments, and Grudger~\cite{axelrodproject} and Spiteful Tit for
-Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject} utilize a team of
-strategies and aggregate the potential actions of the team members into a single action
-in various ways. Figure~\ref{fig:probend_subset_results} indicates that these strategies
-performed well in any probabilistic ending tournament.
-
-In probabilistic ending tournaments with \(p_e \in [0, 1]\) the top ranks are
-mostly occupied by defecting strategies such as Better and Better, Gradual
-Killer, Hard Prober (all from~\cite{axelrodproject}), Bully (Reverse Tit For
-Tat)~\cite{Nachbar1992} and Defector, and a series of strategies based on finite
-state automata introduced by Daniel Ashlock and Wendy Ashlock: Fortress 3,
-Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
-and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
-probabilistic ending tournaments is due to larger values of
-\(p_e\) which lead to shorter matches (the expected number of rounds is \(1 / p_e\)), so the
-impact of the PD being iterated is subdued. This is captured by the Folk
-Theorem~\cite{Fudenberg2009} as defecting strategies do better when the likelihood
-of the game ending in the next turn increases.
-This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
-distributions of \(r\) for the top 6 strategies in probabilistic ending tournaments
-over \(p_e\).
-
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=.92\textwidth]{../images/folk_theorem.pdf}
-    \caption{Normalised rank \(r\) distributions for top 6 strategies in probabilistic ending tournaments
-    over $p_e$. The 6 strategies start of with a high median rank,
-    however, their ranked decreased as the the probability of the game ending
-    increased and at the point of \(p_e = 0.1\).}
-    \label{fig:effect_of_probend}
-\end{figure}
-
-The top performances in tournaments with both noise and a probabilistic ending
-and the top performances over the entire data set have the largest median values
-compared to the top rank strategies of the other tournament types,
-Figure~\ref{fig:probend_noise_results} and Figure~\ref{fig:overall_results}. The
-\(\bar{r}\) for the top strategy is approximately at 0.3, indicating that the
-most successful strategy can on average just place in the top 30\% of the
-competition.
-
-\begin{table}[!htbp]
-    \centering
-    \resizebox{.30\textwidth}{!}{
-    \input{performance_merged_table.tex}}
-    \caption{Top performances over all the tournaments. The top ranks include
-    strategies that have been previously mentioned. The set of Retaliate
-    strategies occupy the top spots followed by BackStabber and DoubleCrosser.
-    The distributions of the Retaliate strategies have no statistical
-    difference. PSO Gambler and Evolved HMM 5 are trained strategies introduced
-    in~\cite{Harper2017} and Nice Meta Winner and NMWE Memory One are strategies
-    based on teams. Grudger is a strategy from R. Axelrod's original tournament and
-    Forgetful Fool Me Once is based on the same approach as
-    Grudger.}\label{table:overall_results}
-\end{table}
-
-\begin{figure}[!htbp]
-        \centering
-        \includegraphics[width=.65\textwidth]{../images/performance_merged.pdf}
-        \caption{Normalised rank \(r\) distributions for best performed strategies in the data set~\cite{data}.
-        A lower value of \(\bar{r}\) corresponds to a more successful
-        performance.}
-        \label{fig:overall_results}
-\end{figure}
-
-On the whole, the analysis of this manuscript has shown that:
-
-\begin{itemize}
-    \item In standard tournaments the dominating strategies were
-    strategies that had been trained using reinforcement learning techniques.
-    \item In noisy environments where the noise probability strictly less than
-    0.1 was considered, the successful strategies were strategies specifically
-    designed or trained for noisy environments.
-    \item In probabilistic ending tournaments most of the highly ranked
-    strategies were defecting strategies and trained finite state automata, all
-    by the authors of~\cite{Ashlock2006, Ashlock2014}. These strategies ranked
-    high due to their performance in tournaments where the probability of the
-    game ending after each turn was bigger than 0.1.
-    \item In probabilistic tournaments with \(p_e\) less than 0.1 the highly
-    ranked strategies were strategies based on the behaviour of others.
-    \item From the collection of strategies considered here,  no strategy can be
-    consistently successful in noisy environments, except if the value of noise
-    is constrained to less than a 0.1.
-\end{itemize}
-
-Though there is not a single strategy that repeatably outranks all others in any
-of the distinct tournament types, or even across the tournament types, there
-are specific types of strategies have been repeatably ranked in the top ranks.
-These have been strategies that have been trained, strategies that retailiate,
-and strategies that would adapt their behaviour based on preassigned rules
-to achieve the highest outcome. These results contradict some of R. Axelrod's suggestions,
-and more specifically, the suggestions `Do not be clever' and `Do not be envious'.
-We dig deeper into the crucial strategy features for success in the following section.
+Though there is not a single strategy that consistently outranks all others in
+any of the distinct tournament types or even across the tournament types, there
+are specific types of strategies that have been repeatedly ranked in the top
+ranks. These include strategies that have been trained, strategies that
+retaliate, and strategies that adapt their behavior based on preassigned rules
+to achieve the highest outcome. These results contradict some of Axelrod's
+suggestions, and more specifically, the suggestions ``Do not be clever'' and
+``Do not be envious''. We delve deeper into the crucial strategy features for
+success in the following section.
 
 \section{Evaluation of performance}\label{section:evaluation_of_performance}
 
@@ -1048,12 +915,6 @@ A variety of software have been used in this work:
     \item The scikit-learn library for data analysis~\cite{scikit-learn}.
 \end{itemize}
 
-\appendix
 
-\input{parameters_section}
-\input{correlation_section}
-\input{random_forest_evaluation}
-\input{regression_on_median_score}
-\input{strategies_list_section}
 
 \end{document}
