@@ -1,40 +1,50 @@
 \section{Correlation coefficients}\label{app:correlations}
 
-A graphical representation of the correlation coefficients for the features in
-Table~\ref{table:manual_features}.
+In this section we present the correlation coefficients for the features
+presented in Table 3 of the main manuscript. The correlation coefficients
+are calculated using the Spearman's rank correlation coefficient. The results
+are presented as a graphical representation.
 
 \begin{figure}[!htbp]
         \begin{center}
             \includegraphics[width=.75\linewidth]{../images/standard_correlation_plot.pdf}
         \end{center}
-        \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-        for standard tournaments}
+        \caption{Correlation coefficients of strategies' features for standard tournaments.}
+\end{figure}
+\begin{figure}[!htbp]
+    \begin{center}
+        \includegraphics[width=.75\linewidth]{../images/subset_noise_correlation_plot.pdf}
+    \end{center}
+    \caption{Correlation coefficients of strategies' features for noisy tournaments with $p_n \leq 0.1$.}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for noisy tournaments}
+    \caption{Correlation coefficients of strategies' features for noisy tournaments.}
+\end{figure}
+\begin{figure}[!htbp]
+    \begin{center}
+        \includegraphics[width=.75\linewidth]{../images/subset_probend_correlation_plot.pdf}
+    \end{center}
+    \caption{Correlation coefficients of strategies' features for probabilistic ending tournaments with $p_e \leq 0.1$.}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for probabilistic ending tournaments}
+    \caption{Correlation coefficients of strategies' features for probabilistic ending tournaments.}
+\end{figure}
+\begin{figure}[!htbp]
+    \begin{center}
+        \includegraphics[width=.75\linewidth]{../images/subset_probend_noise_correlation_plot.pdf}
+    \end{center}
+    \caption{Correlation coefficients of strategies' features for noisy probabilistic ending tournaments
+    with $p_n \leq 0.1$ and $p_e \leq 0.1$.}
 \end{figure}
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[width=.75\linewidth]{../images/probend_noise_correlation_plot.pdf}
     \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for noisy probabilistic ending tournaments}
-\end{figure}
-\begin{figure}[!htbp]
-    \begin{center}
-        \includegraphics[width=.75\linewidth]{../images/merged_correlation_plot.pdf}
-    \end{center}
-    \caption{Correlation coefficients of features in Table~\ref{table:manual_features}
-    for data set}
+    \caption{Correlation coefficients of strategies' features for noisy probabilistic ending tournaments.}
 \end{figure}

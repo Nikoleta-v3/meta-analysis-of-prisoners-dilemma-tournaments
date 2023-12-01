@@ -1,0 +1,441 @@
+\section{Top ranked strategies and features analysis for the entire data set}
+
+In this section we carry out a similar analysis as the one presented in
+main manuscript, but this time we use the entire data set for noisy and
+probabilistic ending tournaments.
+
+\subsection{Top ranked strategies across tournaments}
+
+The top 15 strategies for each tournament type based on \(\bar{r}\) are given in
+Table~\ref{table:top_performances}. The data collection process was designed
+such that the probabilities of noise and ending of the match varied between 0
+and 1. However, commonly used values for these probabilities are values less
+than 0.1. Thus, Table~\ref{table:top_performances} also includes the top 15
+strategies in noisy tournaments with \(p_n < 0.1\) and probabilistic ending
+tournaments with \(p_e < 0.1\).
+
+\newcolumntype{g}{>{\columncolor{Gray}}l}
+\begin{table}[!htbp]
+    \begin{center}
+    \resizebox{\textwidth}{!}{
+        \input{top_perfomances_full_data_set.tex}
+    }
+\end{center}
+\caption{Top performances for each tournament type based on $\bar{r}$. The
+results of each type are based on 11420 unique tournaments. The
+results for noisy tournaments with \(p_n < 0.1\) are based on 1151 tournaments,
+and for probabilistic ending tournaments with \(p_e < 0.1\) on 1139. The top
+ranks indicate that trained strategies perform well in a variety of
+environments, but so do simple deterministic strategies. The normalised medians
+are close to 0 for most environments, except environments with noise not
+restricted to 0.1 regardless of the number of turns. Noisy and noisy probabilistic
+ending tournaments have the highest medians.}
+\label{table:top_performances}
+\end{table}
+
+The \(r\) distributions for the top ranked strategies of Table~\ref{table:top_performances}
+are given by Figure~\ref{fig:r_distributions}.
+
+\begin{figure*}[!htbp]
+    \centering
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_standard.pdf}
+        \caption{$r$ distributions of top 15 strategies in standard tournaments.}\label{fig:std_results}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_noise_subset.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy tournaments with \(p_n < 0.1\).}\label{fig:noise_subset_results}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_noise.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy tournaments.}\label{fig:noise_results}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend_subset.pdf}
+        \caption{\(r\) distributions of top 15 strategies in 1139 probabilistic ending
+        tournaments with \(p_e < 0.1\).}
+        \label{fig:probend_subset_results}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend.pdf}
+        \caption{$r$ distributions of top 15 strategies in probabilistic ending tournaments.}\label{fig:probend_results}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/r_distribution_probend_noise.pdf}
+        \caption{$r$ distributions of top 15 strategies in noisy probabilistic ending tournaments.}
+        \label{fig:probend_noise_results}
+    \end{subfigure}
+    \caption{\(r\) distributions of the top 15 strategies in different
+    environments. A lower value of \(\bar{r}\) corresponds to a more successful
+    performance. A strategy's \(r\) distribution skewed towards zero indicates
+    that the strategy ranked highly in most tournaments it participated in. Most
+    distributions are skewed towards zero except the distributions with
+    unrestricted noise, supporting the conclusions from
+    Table~\ref{table:top_performances}.}\label{fig:r_distributions}
+\end{figure*}
+
+In standard tournaments 10 out of the 15 top strategies were introduced
+in~\cite{Harper2017}. These are strategies based on finite state automata (FSM),
+hidden Markov models (HMM), artificial neural networks (ANN), lookup tables
+(LookerUp) and stochastic lookup tables (Gambler) that have been trained using
+reinforcement learning algorithms (evolutionary and particle swarm algorithms).
+They have been trained to perform well against a subset of the strategies
+in APL in a standard tournament, thus their performance in the
+specific setting was anticipated although still noteworthy given the random
+sampling of tournament participants. DoubleCrosser, BackStabber and Fool Me Once, are
+strategies not from the literature but from the APL. DoubleCrosser is an extension
+of BackStabber and both strategies make use of the number of turns because they are
+set to defect on the last two rounds. It should be noted that these
+strategies can be characterised as ``cheaters'' because the source code of the strategies
+allows them to know the number of turns in a match (unless the match has a probabilistic ending). These strategies were expected to not perform as well in
+tournaments where the number of turns is not specified. Finally, Winner
+12~\cite{mathieu2017} and DBS~\cite{Au2006} are both from the literature.
+DBS is a strategy specifically designed for noisy environments, however, it ranks
+highly in standard tournaments as well. Similarly the fourth ranked player,
+Evolved FSM 16 Noise 05, was
+trained for noisy tournaments yet performs well in standard tournaments.
+Figure~\ref{fig:std_results} shows that these strategies typically perform
+well in any standard tournament in which they participate.
+
+In the case of noisy tournaments with smaller noise \(p_n < 0.1\) the top
+performing strategies
+include strategies specifically designed for noisy tournaments. These are DBS,
+Evolved FSM 16 Noise 05, Evolved ANN 5 Noise 05, PSO Gambler 2 2 2 Noise 05 and
+Omega Tit For Tat~\cite{kendall2007iterated}. Omega TFT, a strategy designed
+to break the deadlocking cycles of \(CD\) and \(DC\) that TFT can fall into in noisy
+environments, places 10th. The rest of the top ranks are
+occupied by strategies which performed well in standard tournaments and
+deterministic strategies such as Spiteful Tit For Tat~\cite{prison}, Level
+Punisher~\cite{Eckhart2015}, Eugine Nier~\cite{lesswrong}.
+
+In contrast, the performance of the top ranked strategies in noisy environments
+when \(p_n\in [0, 1]\) is bimodal. The top strategies include strategies which
+decide their actions based on the cooperation to defection ratio, such as
+ShortMem~\cite{Andre2013}, Grumpy~\cite{axelrodproject} and
+e~\cite{axelrodproject}, and the Retaliate strategies which are designed to
+defect if the opponent has tricked them more often than a given percentage of the times that
+they have done the same. The bimodality of the \(r\) distributions is explained
+by Figure~\ref{fig:effect_of_noise} which demonstrates that the top 6 strategies
+were highly ranked due to the their performance in tournaments with \(p_n>0.5\),
+and that in tournaments with \(p_n<0.5\) they
+performed poorly. At a noisy level of \(0.5\) or greater, mostly cooperative strategies
+become mostly defectors and vice versa.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.92\textwidth]{../images/noise_effect.pdf}
+    \caption{Normalised rank \(r\) distributions for top 6 strategies in noisy tournaments over
+    the probability of noisy ($p_n$).}
+    \label{fig:effect_of_noise}
+\end{figure}
+
+The most effective strategies in probabilistic ending
+tournaments with \(p_e< 0.1\) are a series of ensemble Meta strategies, trained strategies
+which performed well
+in standard tournaments, and Grudger~\cite{axelrodproject} and Spiteful Tit for
+Tat~\cite{prison}. The Meta strategies~\cite{axelrodproject} utilize a team of
+strategies and aggregate the potential actions of the team members into a single action
+in various ways. Figure~\ref{fig:probend_subset_results} indicates that these strategies
+performed well in any probabilistic ending tournament.
+
+In probabilistic ending tournaments with \(p_e \in [0, 1]\) the top ranks are
+mostly occupied by defecting strategies such as Better and Better, Gradual
+Killer, Hard Prober (all from~\cite{axelrodproject}), Bully (Reverse Tit For
+Tat)~\cite{Nachbar1992} and Defector, and a series of strategies based on finite
+state automata introduced by Daniel Ashlock and Wendy Ashlock: Fortress 3,
+Fortress 4 (both introduced in~\cite{Ashlock2006}), Raider~\cite{Ashlock2014}
+and Solution B1~\cite{Ashlock2014}. The success of defecting strategies in
+probabilistic ending tournaments is due to larger values of
+\(p_e\) which lead to shorter matches (the expected number of rounds is \(1 / p_e\)), so the
+impact of the PD being iterated is subdued. This is captured by the Folk
+Theorem~\cite{Fudenberg2009} as defecting strategies do better when the likelihood
+of the game ending in the next turn increases.
+This is demonstrated by Figure~\ref{fig:effect_of_probend}, which gives the
+distributions of \(r\) for the top 6 strategies in probabilistic ending tournaments
+over \(p_e\).
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.92\textwidth]{../images/folk_theorem.pdf}
+    \caption{Normalised rank \(r\) distributions for top 6 strategies in probabilistic ending tournaments
+    over $p_e$. The 6 strategies start of with a high median rank,
+    however, their ranked decreased as the the probability of the game ending
+    increased and at the point of \(p_e = 0.1\).}
+    \label{fig:effect_of_probend}
+\end{figure}
+
+The top performances in tournaments with both noise and a probabilistic ending
+have the largest median values compared to the top rank strategies of the other
+tournament types. The \(\bar{r}\) for the top strategy is approximately at 0.3,
+indicating that the most successful strategy can on average just place in the
+top 30\% of the competition.
+
+On the whole, the analysis has shown that:
+
+\begin{itemize}
+    \item In standard tournaments the dominating strategies were
+    strategies that had been trained using reinforcement learning techniques.
+    \item In noisy environments where the noise probability strictly less than
+    0.1 was considered, the successful strategies were strategies specifically
+    designed or trained for noisy environments.
+    \item In probabilistic ending tournaments most of the highly ranked
+    strategies were defecting strategies and trained finite state automata, all
+    by the authors of~\cite{Ashlock2006, Ashlock2014}. These strategies ranked
+    high due to their performance in tournaments where the probability of the
+    game ending after each turn was bigger than 0.1.
+    \item In probabilistic tournaments with \(p_e\) less than 0.1 the highly
+    ranked strategies were strategies based on the behaviour of others.
+    \item From the collection of strategies considered here,  no strategy can be
+    consistently successful in noisy environments, except if the value of noise
+    is constrained to less than a 0.1.
+\end{itemize}
+
+\section{The effect of strategy features on performance}
+
+The correlation coefficients between the strategies' features and the median
+score and the median normalised rank for the full dataset of tournaments are
+given by Table~\ref{table:correlations}. The correlation coefficients between
+all features have been calculated and a graphical representation can be found in
+the Section~\ref{app:correlations}.
+
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\begin{table}[!htbp]
+    \begin{center}
+    \resizebox{.9\textwidth}{!}{
+        \input{correlations_table_full_dataset.tex}
+    }
+\end{center}
+\caption{Correlations between the strategies' features
+and the normalised rank and the median score.}\label{table:correlations}
+\end{table}
+
+In standard tournaments the features $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
+and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
+have a moderately negative effect on the normalised rank (smaller rank is
+better), and a moderate positive on the median score. The SSE error and the $DD$
+to $C$ rate have the opposite effects. Thus, in standard tournaments behaving
+cooperatively corresponds to a more successful performance. Even though being
+nice generally pays off that does not hold against defective strategies. Being
+more cooperative after a mutual defection, that is not retaliating, is
+associated to lesser overall success in terms of normalised rank.
+Figure~\ref{fig:rates_of_winners_in_standard_tournaments} confirms that the
+winners of standard tournaments always cooperate after a mutual cooperation and
+almost always defect after a mutual defection.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.8\textwidth]{../images/rates_of_winners_in_standard_tournaments.pdf}
+    \caption{Distributions of $CC$ to $C$ and $DD$ to $C$ for the winners in
+    standard tournaments.}\label{fig:rates_of_winners_in_standard_tournaments}
+\end{figure}
+
+Compared to standard tournaments, in both noisy and in probabilistic ending
+tournaments the higher the rates of cooperation the lower a strategy's success
+and median score. A strategy would want to cooperate less than both the mean and
+median cooperator in such settings. In probabilistic ending tournaments the
+correlation coefficients have larger values, indicating a stronger effect. Thus
+a strategy will be punished more by its cooperative behaviour in probabilistic
+ending environments, supporting the results of the previous subsection as well.
+The distributions of the $C_r$ of the winners in both tournaments are given by
+Figure~\ref{fig:c_r_distributions}. It confirms that the winners in noisy
+tournaments cooperated less than 35\% of the time and in probabilistic ending
+tournaments less than 10\%. In noisy probabilistic ending tournaments and over
+all the tournaments' results, the only features that had a moderate effect are
+$C_r/C_{\text{mean}}, C_r/C_{\text{max}}$ and $C_r$. In such environments
+cooperative behaviour appears to be punished less than in noisy and
+probabilistic ending tournaments.
+
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.8\textwidth]{../images/c_r_winners_tournaments.pdf}
+    \caption{$C_r$ distributions of the winners in noisy and in probabilistic
+    ending tournaments.}\label{fig:c_r_distributions}
+\end{figure}
+
+A multivariate linear regression has been fitted to model the relationship between
+the features and the normalised rank. Based on the graphical representation of
+the correlation matrices given in Section~\ref{app:correlations} several of the
+features are highly correlated and have been removed
+before fitting the linear regression model. The features included are given
+by Table~\ref{table:linear_regression} alongside their corresponding \(p\) values
+in the distinct tournaments and their regression coefficients.
+
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\begin{table}[h]
+    \begin{center}
+\resizebox{\textwidth}{!}{
+    \input{regression_table_full_dataset.tex}}
+    \end{center}
+    \caption{Results of multivariate linear regressions with \(r\) as the dependent variable.
+    \(R\) squared is reported for each model.}
+    \label{table:linear_regression}
+\end{table}
+
+A multivariate linear regression has also be fitted on the median score. The
+coefficients and \(p\) values of the features can be found in
+Section~\ref{app:regression_median_score}. This approach leads to similar conclusions.
+
+The feature \(C_{r} / C_{\text{mean}}\) has a statistically significant effect
+across all models and a high regression coefficient. It has both a positive and
+negative impact on the normalised rank depending on the environment. For
+standard tournaments, Figure~\ref{fig:discussion_standard} gives the
+distributions of several features for the winners of standard tournaments. The
+\(C_{r} / C_{\text{mean}}\) distribution of the winner is also given in
+Figure~\ref{fig:discussion_standard}. A value of \(C_r / C_{\text{mean}} = 1\)
+implies that the cooperating ratio of the winner was the same as the mean
+cooperating ratio of the tournament, and in standard tournaments, the median is
+1. Therefore, an effective strategy in standard tournaments was the mean
+cooperator of its respective tournament.
+
+The distributions of SSE and \(CD\) to \(C\) rate for the winners of standard
+tournaments are also given in Figure~\ref{fig:discussion_standard}. The SSE
+distributions for the winners indicate that the strategy behaved in a ZD way in
+several tournaments, however, not constantly. The winners participated in
+matches where they did not try to extortionate their opponents. Furthermore, the
+\(CD\) to \(C\) distribution indicates that if a strategy were to defect against
+the winners the winners would reciprocate on average with a probability of 0.5.
+
+\begin{figure}[!htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{../images/standard_discussion.pdf}
+        \caption{Distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+        for the winners of standard tournaments. A
+        value of \(C_r / C_{\text{mean}} = 1\) imply that the cooperating ratio of the
+        winner was the same as the mean cooperating ratio of the tournament. An SSE distribution
+        skewed towards 0 indicates a extortionate behaviour by the strategy.}
+        \label{fig:discussion_standard}
+\end{figure}
+
+Similarly for the rest of the different tournaments types, and the entire data
+set the distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+are given by Figures~\ref{fig:discussion_noisy},~\ref{fig:discussion_probend},
+\ref{fig:discussion_probend_noisy} and~\ref{fig:discussion_entire_data}.
+
+Based on the \(C_r / C_{\text{mean}}\) distributions the successful strategies
+have adapted differently to the mean cooperator depending on the tournament
+type. In noisy tournaments where the median of the distribution is at 0.67, and
+thereupon the winners cooperated 67\% of the time the mean cooperator did. In
+tournaments with noise and a probabilistic ending the winners cooperated 60\%,
+whereas in settings that the type of the tournament can vary between all the
+types the winners cooperated 67\% of the time the mean cooperator did. Lastly,
+in probabilistic ending tournaments above more defecting
+strategies prevail (Section~\ref{section:top_performances}), and this result is
+reflected here.
+
+\begin{figure}[!htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{../images/noisy_discussion.pdf}
+        \caption{Distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+        for the winners of noisy tournaments.}
+        \label{fig:discussion_noisy}
+\end{figure}
+
+The probability of noise has been observed to substantially affect optimal
+behaviour.
+Figure~\ref{fig:compared_to_mean_over_noise_probability} gives the ratio \(C_r /
+C_{\text{mean}}\) for the winners in tournaments with noise, over the
+probability of noise. From Figure~\ref{fig:noisy_discussion_over_noise} it is
+clear that the cooperating only 67\% of the time the mean cooperator did is
+optimal only when \(p_n \in [0.2, 0.4)\) and \(p_n \in [0.6, 0.7]\). In
+environments with \(p_n < 0.1\) the winners want to be close to the mean
+cooperator, similarly to standard tournaments, and as the probability of noise
+is exceeding 0.5 (where the game is effectively inverted) strategies should
+aim to be less and less cooperative.
+
+Figure~\ref{fig:compared_to_mean_over_noise_probability} gives \(C_r /
+C_{\text{mean}}\) for the winners over \(p_n\) in tournaments with noise and a
+probabilistic ending. The optimal proportions of cooperations are different
+now that the number of turns is not fixed, successful strategies
+want to be more defecting that the mean cooperator, that only changes when
+\(p_n\) approaches 0.5. Figure~\ref{fig:compared_to_mean_over_noise_probability}
+demonstrates how the adjustments to \(C_r /C_{\text{mean}}\) change over the
+noise in the to the environment, and thus supports how important adapting to
+the environment is for a strategy to be successful.
+
+\begin{figure}[!htbp]
+    \centering
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/noisy_discussion_over_noise.pdf}
+        \caption{\(C_r / C_{\text{mean}}\) distribution for winners in noisy tournaments over
+        \(p_n\).}\label{fig:noisy_discussion_over_noise}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.485\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/noisy_probend_discussion_over_noise.pdf}
+        \caption{\(C_r / C_{\text{mean}}\) distribution for winners in noisy probabilistic ending tournaments over
+        \(p_n\).}\label{fig:noisy_probend_discussion_over_noise}
+    \end{subfigure}
+    \caption{\(C_r / C_{\text{mean}}\) distributions over intervals of \(p_n\).
+    These distributions model the optimal proportion of cooperation
+    compared to \(C_{\text{mean}}\) as a function of (\(p_n\)).}
+    \label{fig:compared_to_mean_over_noise_probability}
+\end{figure}
+
+The distributions of the SSE across the tournament types suggest that successful
+strategies exhibit some extortionate behaviour, but not constantly.
+ZDs are a set of strategies that are often envious as they try to exploit their
+opponents. The winners of the tournaments considered in this work are
+envious, but not as much as many ZDs.
+
+\begin{figure}[!htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{../images/probend_discussion.pdf}
+        \caption{Distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+        for the winners of probabilistic ending tournaments.}
+        \label{fig:discussion_probend}
+\end{figure}
+
+The distributions of the \(CD\) to \(C\) rate evaluate the behaviour of a
+successful strategy after its opponent has defected against it. In standard
+tournaments it was observed that a successful strategy reciprocates with a
+probability of 0.5, and in a setting that the type
+of the tournament can vary between all the examined types a winning strategy
+would reciprocate on average with a probability of 0.58. In
+tournaments with noise a strategy is less likely to cooperate following a
+defection compared to standard tournaments, and in probabilistic ending
+tournaments a strategy will reciprocate a defection.
+This leads to adjusting the recommendation of being provocable to defections made
+by Axerlod. A strategy should be provocable in tournaments with short matches,
+but in the rest of the settings a strategy should be more generous.
+
+\begin{figure}[!htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{../images/probend_noisy_discussion.pdf}
+        \caption{Distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+        for the winners of noisy probabilistic ending tournaments.}
+        \label{fig:discussion_probend_noisy}
+\end{figure}
+
+Further statistically significant features with strong effects include \(C_r /
+C_{\text{min}}\), \(C_r / C_{\text{max}}\), \(C_{\text{min}}\) and
+\(C_{\text{max}}\). These add more emphasis on how important it is for a  a
+strategy to adapt to its environment. Finally, the features number of turns,
+repetitions and the probabilities of noise and the game ending had no
+significant effects based on the multivariate regression models.
+
+\begin{figure}[!htbp]
+    \centering
+        \centering
+        \includegraphics[width=\textwidth]{../images/entire_data_discussion.pdf}
+        \caption{Distributions of \(C_r / C_{\text{mean}}\), SSE and \(CD\) to \(C\) ratio
+        for the winners over the tournaments of the entire data set.}
+        \label{fig:discussion_entire_data}
+\end{figure}
