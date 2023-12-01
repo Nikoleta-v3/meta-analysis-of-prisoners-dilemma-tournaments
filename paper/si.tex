@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[margin=2.5cm, includefoot, footskip=30pt]{geometry}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1}
+
+%%%%Packages%%%%
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphics}
+\usepackage{multicol}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{color,colortbl}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{wrapfig, blindtext}
+\usepackage{soul}
+\usepackage[table]{xcolor}
+%%%%%%%%%%%%%%%%%
+
+\definecolor{Gray}{gray}{0.92}
+\usepackage[first=0,last=9]{lcg}
+\newcommand{\ra}{\rand0.\arabic{rand}}
+
+\newcommand{\uniquenumberofseeds}{\input{unique_number_of_seeds.tex}}
+\newcommand{\numberofalltournaments}{\input{number_of_all_tournaments.tex}}
+\newcommand{\numberofstrategies}{\input{unique_number_of_strategies.tex}}
+\def\axelrod{\texttt{Axelrod-Python }}
+
+\setlength{\tabcolsep}{3pt}
+
+\title{{\LARGE Electronic supplementary material}\\{\bf \LARGE Properties of Winning Iterated Prisoner's Dilemma Strategies}}
+\author{Nikoleta E. Glynatsi, Vincent A. Knight, Marc Harper}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+%% BRIEF INTRO %% 
+
+\noindent
+This document provides additional details and analysis based on the complete
+datasets for noisy and probabilistic ending tournaments. In
+Section~\ref{app:parameters}, a summary of all parameters and notation used in
+the manuscript is presented. Section~\ref{app:analysis_full_dataset} offers
+further details on the correlation analysis and includes additional information.
+In Section~\ref{app:correlations}, we present the results of the correlation
+analysis when all features of the strategies are considered. In
+Section~\ref{app:clustering}, the results of the random forest and clustering
+evaluations with the inclusion of all features are discussed.
+Section~\ref{app:regression_median_score} presents the results of the regression
+analysis on the median score of the strategies. Finally, in
+Section~\ref{app:list_of_players}, a comprehensive list of all strategies
+considered in this work is provided.
+
+\input{parameters_section}
+\input{result_with_entire_dataset}
+\input{correlation_section}
+\input{random_forest_evaluation}
+\input{regression_on_median_score}
+\input{strategies_list_section}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

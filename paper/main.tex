@@ -23,6 +23,7 @@
 \usepackage{soul}
 \usepackage{enumerate}
 \usepackage[table]{xcolor}
+\usepackage{authblk}
 %%%%%%%%%%%%%%%%%
 
 \newcommand{\colortext}[1]{\textcolor{blue}{#1}}
@@ -41,8 +42,16 @@
 \setlength{\tabcolsep}{3pt}
 
 \title{Properties of Winning Iterated Prisoner's Dilemma Strategies.}
-\author{Nikoleta E. Glynatsi, Vincent A. Knight, Marc Harper}
+\author[1]{Nikoleta E. Glynatsi}
+\author[2]{Vincent Knight}
+\author[3]{Marc Harper}
+
+\affil[1]{Max Planck Institute for Evolutionary Biology, Research Group Dynamics of Social
+Behavior, Germany}
+\affil[2]{Cardiff University, School of Mathematics, UK}
+\affil[3]{Google Inc., Mountain View, CA, USA}
 \date{}
+
 
 \begin{document}
 
@@ -57,7 +66,7 @@ in a variety of tournaments and population dynamics. Typical results in the lite
 however, rely on performance against a small number of somewhat arbitrarily selected
 strategies in a small number of tournaments, casting doubt on the generalizability
 of conclusions. We analyze a large collection of \numberofstrategies
-strategies in thousands of tournaments, present the top performing strategies across multiple
+strategies in thousands of computer tournaments, present the top performing strategies across multiple
 tournament types, and distill their salient features.
 The results show that there is not yet a single
 strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios,
@@ -72,11 +81,8 @@ strategies such as Tit For Tat performed historically well in tournaments and
 why zero-determinant strategies typically do not fare well in tournament
 settings. Furthermore, our findings have implications for the future training of
 autonomous agents. Understanding the crucial features for incorporation into
-these agents becomes paramount.
+these agents becomes essential.
 \end{abstract}
-
-% or a proportion thereof in the case of noisy and probabilistically ending tournaments,
-% and that the manner in which a strategy achieves the ideal cooperation rate is crucial.
 
 \section{Background}
 
@@ -171,11 +177,11 @@ on a set of 170 strategies.
 One thing that has remained the same is that the introduction of a new strategy
 is often accompanied by a claim that the new strategy is the best performing
 strategy for the \IPD, often without extensive testing against a broad spectrum
-of opponents or representative classes of opponents. This lack of comprehensive
-testing against formally defined strategies and tournament winners is
-justified given the substantial effort required to implement the numerous
-published \IPD{} strategies. The accuracy of implementing prior strategies is
-often hindered by insufficient descriptions and a dearth of published
+of opponents or representative classes of opponents. The lack of testing against
+formally defined strategies and tournament winners is understandable given the
+effort required to implement the hundreds of published \IPD{} strategies.
+Implementing prior strategies faithfully is often extremely difficult or
+impossible due to insufficient descriptions and lack of published
 implementations or code. Despite these challenges, the absence of thorough
 testing raises concerns about claims regarding the superiority or robustness of
 newly introduced strategies.
@@ -206,7 +212,7 @@ strategy in the Iterated Prisoner's Dilemma (\IPD{}) are:
     \item Be a little bit envious
     \item Be ``nice'' in non-noisy environments or when game lengths are longer
     \item Reciprocate both cooperation and defection appropriately;
-    Be provocable in tournaments with short matches, and generous when matches are longer
+    Be provocable in tournaments with short matches, and generous in tournaments with noise
     \item  It's ok to be clever
     \item Adapt to the environment; Adjust to the mean population cooperation
 \end{enumerate}
@@ -549,46 +555,50 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[!htbp]
     \begin{center}
-    \resizebox{.9\textwidth}{!}{
+    \resizebox{.8\textwidth}{!}{
         \input{correlations_table.tex}
     }
 \end{center}
-\caption{Correlations between the features of Table~\ref{table:manual_features}
-and the normalised rank and the median score.}\label{table:correlations}
+\caption{\textbf{Correlations between the features of Table~\ref{table:manual_features}
+and the normalised rank and the median score.}
+The correlation coefficients are calculated using the Spearman's rank
+correlation coefficient.}\label{table:correlations}
 \end{table}
 
-In standard tournaments the features $CC$ to $C$, $C_r$, $C_r / C_{\text{max}}$
-and the cooperating ratio compared to $C_{\text{median}}$ and $C_{\text{mean}}$
-have a moderately negative effect on the normalised rank (smaller rank is better), and a moderate positive
-on the median score. The SSE error and the $DD$ to $C$ rate have the opposite
-effects. Thus, in standard tournaments behaving cooperatively corresponds to a
-more successful performance. Even though being nice generally pays off
-that does not hold against defective strategies. Being more cooperative after a mutual
-defection, that is not retaliating, is associated to lesser overall success in terms of normalised rank.
+In standard tournaments, the features \(CC\) to \(C\), \(C_r\), \(C_r /
+C_{\text{max}}\), and the cooperating ratio compared to \(C_{\text{median}}\)
+and \(C_{\text{mean}}\) have a moderately negative effect on the normalized rank
+(a smaller rank is better) and a moderate positive effect on the median score.
+The SSE error and the \(DD\) to \(C\) rate have the opposite effects. Thus, in
+standard tournaments, behaving cooperatively corresponds to a more successful
+performance. Even though being nice generally pays off, that does not hold
+against defective strategies. Being more cooperative after a mutual defection,
+that is not retaliating, is associated with lesser overall success in terms of
+normalized rank.
 Compared to standard tournaments, in both noisy and noisy probabilistic ending
-tournaments the higher the rates of cooperation the lower a strategy's success
-and median score. A strategy would not want to cooperate more than both
-the mean and median cooperator in such settings. In probabilistic ending
-tournaments, the cooperation rate of the winners and it's relative comparison
-to the cooperation rates of the tournament have no effect. The only features
-that have an effect are the $CD$ to $C$ rate, which is the tendency of a strategy
-to forgive and the SSE rate have a positivist effect on the normalised rank.
+tournaments, the higher the rates of cooperation, the lower a strategy's success
+and median score. A strategy would not want to cooperate more than both the mean
+and median cooperator in such settings. In probabilistic ending tournaments, the
+cooperation rate of the winners and its relative comparison to the cooperation
+rates of the tournament have no effect. The only features that have an effect
+are the \(CD\) to \(C\) rate, which is the tendency of a strategy to forgive,
+and the SSE rate, which has a positive effect on the normalized rank.
 
 A multivariate linear regression has been fitted to model the relationship
-between the features and the normalised rank. Based on the graphical
-representation of the correlation matrices given in Supplementary Information
-several of the features are highly correlated and have been removed before
-fitting the linear regression model. The features included are given by
+between the features and the normalized rank. Based on the graphical
+representation of the correlation matrices given in the Supplementary
+Information, several features are highly correlated and have been removed before
+fitting the linear regression model. The features included are given in
 Table~\ref{table:linear_regression} alongside their corresponding \(p\) values
-in the distinct tournaments and their regression coefficients. The rate $CD$ to
-$C$ has a positively statistically significant effect on the normalized rank,
-across all tournament types. This suggests that forgiveness tends to lower one's
-performance. In the case of probabilistic ending tournaments, the coefficient of
-the $CD$ to $C$ rate is the highest, indicating that one is more harshly
-``punished'' when showing forgiveness. Similarly, the SEE error rate has a
+in distinct tournaments and their regression coefficients. The \(CD\) to \(C\)
+rate has a positively statistically significant effect on the normalized rank
+across all tournament types. This suggests that being generous tends to
+lower one's performance. In the case of probabilistic ending tournaments, the
+coefficient of the \(CD\) to \(C\) rate is the highest, indicating that one
+should be more provocative in this setting. Similarly, the SEE error rate has a
 positive effect on the normalized rank, suggesting that being extortionate pays
-off, especially in noisy tournaments. The measures of cooperation, $C_r$ and
-$C_r / C_{\text{max}}$, also exhibit a significant effect. In noisy
+off, especially in noisy tournaments. The measures of cooperation, \(C_r\) and
+\(C_r / C_{\text{max}}\), also exhibit a significant effect. In noisy
 probabilistic ending tournaments, this effect is positive; however, the
 coefficient is very close to zero. In other tournament types, the effect is
 negative, indicating that one should aim to be less cooperative than the mean
@@ -598,7 +608,7 @@ suggesting that a strategy should be as uncooperative as possible.
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \begin{table}[!htbp]
     \begin{center}
-\resizebox{\textwidth}{!}{
+\resizebox{.8\textwidth}{!}{
     \input{regression_table.tex}}
     \end{center}
     \caption{\textbf{Results of multivariate linear regressions with \(r\) as
@@ -612,21 +622,12 @@ suggesting that a strategy should be as uncooperative as possible.
     \label{table:linear_regression}
 \end{table}
 
-A third method that evaluates the importance of the features in
-Table~\ref{table:manual_features} using clustering and random forests can be
-found in the Supplementary Information. The results uphold the outcomes of the
-correlation and multivariate regression. It also evaluates the effects of the
-whether or not a strategy is stochastic, makes use of the knowledge of the
-utility values, or makes use of match length. These were not evaluated by the
-methods above because there are binary variables. The results showed that they
-have no significant effect on a strategy's performance.
-
-The results presented here suggest that forgiveness and a strategy's cooperation
-rate, particularly in comparison to the tournament averages, are significant
-features. The findings imply that the
-forgiveness exhibited by strategies may not consistently contribute to favorable
-outcomes. Nevertheless, it is essential to exercise caution in extrapolating the
-implications of this analysis. For example, the analysis is limited as we only
+The results presented here suggest that generosity/provocation and a strategy's
+cooperation rate, particularly in comparison to the tournament averages, are
+significant features. The analysis suggests that strategies should be more
+generous in noisy tournaments and less generous in probabilistic ending
+tournaments. Moreover, strategies should aim to not cooperate more than the mean
+cooperator in their tournaments. We note the analysis is limited as we only
 consider a linear relationship between these parameters and the rank. To further
 investigate the effects of the parameters discussed in this section, we have
 conducted a more detailed analysis in the next section, focusing on the
@@ -639,12 +640,10 @@ distributions of the cooperation ratio and \(C_r / C_{\text{mean}}\) for the
 winners of tournaments. A value of \(C_r / C_{\text{mean}} = 1\) implies that
 the cooperation ratio of the winner was the same as the mean cooperating ratio
 of the tournament, and we observe that this occurs for most tournament types,
-apart from the case of noisy and probabilistically ending tournaments. In the
-case of noisy tournaments, there are winners that did not cooperate exactly as
-such but are fairly distributed around 1. Interestingly, in the case of
+apart from the case of noisy and probabilistically ending tournaments. In the case of
 probabilistic ending tournaments, there are several winners that cooperated much
 less than that, confirming the results of the previous section that defecting
-strategies can we winner in probabilistic ending tournaments. The distribution
+strategies can be winners in probabilistic ending tournaments. The distribution
 of the cooperation rates showcases a high cooperation rate in standard
 tournaments and probabilistic ending tournaments. In tournaments with noise, we
 observe a much less cooperative behavior, which could result from strategies
@@ -689,8 +688,10 @@ invaders but poor at resisting invasion.
         \centering
         \includegraphics[width=.75\textwidth]{../images/sse.pdf}
         \caption{\textbf{Distributions of SSE error for the winners of
-        tournaments.} An SSE distribution skewed towards 0 indicates a
-        extortionate behaviour by the strategy.}
+        tournaments.} As a reminder, the SSE error shows how close a strategy is
+        to behaving as a ZDs, and subsequently, in an extortionate way. A SSE
+        value of 1 indicates no extortionate behaviour at all whereas a value of
+        0 indicates that a strategy is behaving as a ZDs.}
         \label{fig:discussion_sse}
 \end{figure}
 
@@ -700,23 +701,22 @@ Figure~\ref{fig:discussion_rates}. In the case of cooperating after mutual
 cooperation, the results align with expectations; the distributions skew towards
 1, indicating that the winners of the tournaments are more likely to cooperate
 after mutual cooperation. Regarding the \(CD\) outcome and the likelihood to
-cooperate after such a result, capturing forgiveness, the distributions skew
+cooperate after such a result, capturing generosity, the distributions skew
 towards 1/2, not 1, suggesting that strategies need to reduce their readiness to
 forgive. This aligns with the known result that Generous Tit For Tat generally
-outperforms \TFT{} in most settings. Interestingly, in probabilistic ending
-tournaments, there is a peak at 0, suggesting that in such tournaments,
-strategies should not be too generous in short matches.
+outperforms \TFT{} in most settings. In probabilistic ending tournaments, there
+is a peak at 0, suggesting that strategies should not be too generous in
+tournaments with short matches. Such a peak also appears in standard
+tournaments; however, not in tournaments with noise, where a strategy should be
+more generous.
 
-A strategy's effort to make amends is captured by the distributions of the
-\(DC\) to \(C\) rates. In noisy tournaments, winners are less likely to
-cooperate after a defection; however, there are still behaviors that attempt to
-make up for their defection. In standard tournaments and probabilistic ending
-tournaments, we observe two hubs of behaviors, one at 0 and one at 0.4-0.5,
-indicating that some winners are exploiting whether to try to make up, but with
-a small probability. This is also reflected in the \(DD\) to \(D\) rates, where
-in standard and probabilistic ending tournaments, there are winners that attempt
-to recover from a \(DD\) outcome. The remaining results are as expected, skewed
-towards 0.
+Part of a strategy's envious behavior can be captured by the rate of \(DC\) to
+\(C\). In noisy tournaments, winners are not too envious, but in tournaments
+without noise, we can see that winners behave in two ways. Some are a bit
+envious, whereas others are very envious. In the \(DD\) to \(D\), we can observe
+that, expectedly, the results are skewed towards 0. However, there are winners
+that attempt to recover from a \(DD\) outcome. The remaining results are as
+expected, skewed towards 0.
 
 \begin{figure}[!htbp]
     \centering
@@ -771,18 +771,19 @@ readiness to do so and be more \textbf{generous}. For noisy environments this is
 inline with the results of~\cite{Bendor1991, Donninger1986, Molander1985,
 Hammerstein1984}, however, we also showed that generosity pays off even in
 standard settings, and that in fact the only setting a strategy would want to be
-too provocable is when the matches are not long. Forgiveness as defined by R.
+too provocable is when the matches are not long.
+Forgiveness as defined by
 Axerlod was not explored here. This was mainly because the two round states were
 not recorded during the data collection. This could be a topic of future work
 that examines the impact of considering more rounds of history.
 The features analysis also concluded that
 there is a significant importance in \textbf{adapting to the environment}, and
 more specifically, to the mean cooperator. 
-In standard tournaments a strategy would aim to be the
-mean cooperator while in noisy tournaments the best performing players
-cooperate at a lower rate than the tournament population on average.
+In most tournament types, the winner of the tournament was also the average
+cooperator. Even in tournaments with short matches where defecting behavior
+could secure a win, a large number of winners were average cooperators.
 
-This could potentially explain the early success of TFT. TFT naturally achieves
+This could potentially explain the early success of \TFT. \TFT{} naturally achieves
 a cooperation rate near $C_{\text{mean}}$ by virtue of copying its opponent's
 last move while also minimizing instances where it is exploited by an opponent
 (cooperating while the opponent defects), at least in non-noisy tournaments. It
@@ -794,7 +795,7 @@ unexpected effectiveness of memory-one strategies historically. Given that among
 the important features associated with success are the relative cooperation rate
 to the population average and the four memory-one probabilities of cooperating
 conditional on the previous round of play, these features can be optimized by a
-memory-one strategy such as TFT. Usage of more history becomes valuable when
+memory-one strategy such as \TFT. Usage of more history becomes valuable when
 there are exploitable opponent patterns. This is indicated by the importance of
 SSE as a feature, showing that the first-approximation provided by a memory-one
 strategy is no longer sufficient.
@@ -804,18 +805,25 @@ this case is tournament performance). While that may seem obvious now, it shows
 why historical tournament results on small or arbitrary populations of
 strategies have so often failed to produce generalizable results.
 
-Overall, the five properties successful strategies need to have in a IPD competition
+Overall, the five properties successful strategies need to have in a \IPD{} competition
 based on the analysis that has been presented in this manuscript are:
 
 \begin{enumerate}[(i)]
     \item Be ``nice'' in non-noisy environments or when game lengths are longer
-    \item Be provocable in tournaments with short matches, and generous when matches are longer
+    \item Be provocable in tournaments with short matches, and generous in tournaments with noise
     \item Be a little bit envious
     \item Be clever
     \item Adapt to the environment (including the population of strategies).
 \end{enumerate}
 
-The data set described in this work contains the largest number of IPD
+The results presented here were based only on a subset of the whole data we have
+collected. The analysis of the full dataset is discussed in the Supplementary Information.
+However, we can see that the general results of our work remain the same. In the
+Supplementary Information, we also evaluate the importance of features using a
+random forest classifier and a clustering approach. The results of these
+analyses are also in line with the results presented here.
+
+The data set described in this work contains the largest number of \IPD{}
 tournaments, to the authors knowledge. The raw data set is available
 at~\cite{raw_data} and the processed data at~\cite{data}. Further data mining
 could be applied and provide new insights in the field.
