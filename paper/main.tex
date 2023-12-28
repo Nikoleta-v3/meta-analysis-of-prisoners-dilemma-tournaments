@@ -59,8 +59,8 @@ Behavior, Germany}
 
 \begin{abstract}
 Researchers have explored the performance of Iterated Prisoner's Dilemma strategies
-for decades: from the celebrated performance of Tit for Tat, to the
-introduction of the zero-determinant strategies, to the use of sophisticated learning
+for decades, from the celebrated performance of Tit for Tat to the
+introduction of the zero-determinant strategies and the use of sophisticated learning
 structures such as neural networks. Many new strategies have been introduced and tested
 in a variety of tournaments and population dynamics. Typical results in the literature,
 however, rely on performance against a small number of somewhat arbitrarily selected
@@ -91,8 +91,8 @@ behavioral interactions, specifically interactions where self-interest clashes
 with collective interest. In each turn of the game, both players simultaneously
 and independently decide between cooperation (\(C\)) and defection (\(D\)). This
 decision is made with the memory of all prior interactions. The payoffs for each
-player at each turn are influenced by their own choice, and the choice of the
-other player. To this end, the payoffs of the game are defined by,
+player at each turn are influenced by their own choice and the choice of the
+other player. To this end, the payoffs of the game are defined by
 
 \begin{center}
 {\renewcommand{\arraystretch}{2}%
@@ -124,7 +124,7 @@ tournament:
 
 \begin{enumerate}[(i)]
     \item Do not be envious by striving for a payoff larger than the opponent's payoff.
-    \item Be ``nice''; Do not be the first to defect.
+    \item Be ``nice'' by not being the first to defect.
     \item Reciprocate both cooperation and defection; Be provocable to retaliation and forgiveness.
     \item Do not be too clever by scheming to exploit the opponent.
 \end{enumerate}
@@ -172,7 +172,7 @@ work~\cite{mathieu2017}. Furthermore, in~\cite{Harper2017}, a series of ``clever
 strategies trained using reinforcement learning were introduced. These
 strategies were trained using lookup tables~\cite{Axelrod1987}, hidden Markov
 models~\cite{Harper2017}, and finite-state automata~\cite{Miller1996}, on
-on a set of 170 strategies.
+a set of 170 strategies.
 
 One thing that has remained the same is that the introduction of a new strategy
 is often accompanied by a claim that the new strategy is the best performing
@@ -193,7 +193,7 @@ including previous tournament winners. This contrasts with other work that may
 have randomly generated essentially arbitrary strategies, often constrained to
 specific classes such as memory-one strategies or those of a certain structural
 form like finite state machines or deterministic memory-two strategies.
-Furthermore, our tournaments encompass various variations, including standard
+Furthermore, our tournaments encompass variations including standard
 tournaments resembling Axelrod's original ones, tournaments with noise,
 probabilistic match length, and both noise and probabilistic match length. This
 diversity in strategies and tournament types provides new insights and tests
@@ -201,7 +201,8 @@ earlier claims in alternative settings against known powerful strategies.
 
 It is important to note that we do not assert the existence of a single
 best-performing strategy across all tournaments or tournament types. On the
-contrary, our work demonstrates that such a strategy does not exist. The primary
+contrary, our work demonstrates that such a strategy does not exist
+(notwithstanding a few strategies with broadly high performance). The primary
 objective of this paper, presented in the latter parts of the paper, is to
 continue the discussion on the properties of successful strategies, a
 conversation started by Axelrod. 
@@ -213,19 +214,22 @@ strategy in the Iterated Prisoner's Dilemma (\IPD{}) are:
     \item Be ``nice'' in non-noisy environments or when game lengths are longer
     \item Reciprocate both cooperation and defection appropriately;
     Be provocable in tournaments with short matches, and generous in tournaments with noise
-    \item  It's ok to be clever
+    \item It's ok to be clever
     \item Adapt to the environment; Adjust to the mean population cooperation
 \end{enumerate}
 
 We believe that the discussion on the properties of winning strategies holds
 significant importance. It aims to provide guidance to researchers designing new
-strategies and those training strategies. Moreover, conducting a similar
+strategies and those training strategies. Specifically, much like the recognized
+value of diversity in training datasets, such as variations in image perspective,
+skin color, etc., are critical in training accurate and generalizable machine
+learning models, we show that diversity in the population of opponent strategies
+is of paramount importance in the construction and evaluation of game theory
+strategies. As AI agents start to interact as scale, they will benefit from
+exposure to a wide variety of alternative agents. Moreover, conducting a similar
 analysis can shed light on already trained strategies, aiding in understanding
 the key features they have autonomously developed during their training
 processes.
-% ToDO: Not sure if this is enough to justify how our work is important for AI.
-% It would be nice to have a sentence or two since it fits the special issue
-% theme.
 
 The rest of the paper is organized as follows. In
 section~\ref{section:data_collection}, we describe the data collection process.
@@ -372,11 +376,11 @@ For example, let's consider the well-known strategies \TFT{} and Gradual. Each
 strategy participated in several tournaments of each type. In
 Figure~\ref{fig:normalised_rank_distributions} we show the distribution of the
 normalised ranks of these strategies in each of the four tournaments. We can
-observe that \TFT{} has a normally distributed normalized rank. In comparison,
+observe that \TFT{} looks to be normally distributed normalized rank. In comparison,
 Gradual's performance has longer tails, indicating that there were tournaments
 where the strategy performed very well or very poorly. Overall, Gradual achieves
 a lower median rank, signifying that it performs better than \TFT{} except in
-the case of noisy and probabilistic ending tournaments.
+the case of noisy and probabilistic ending tournaments (lower rank is better).
 
 \begin{figure}[!htbp]
     \centering
@@ -732,7 +736,7 @@ expected, skewed towards 0.
 This manuscript explored the performance of \numberofstrategies strategies of
 the \IPD{} in thousands of computer tournaments. The collection of computer
 tournaments presented here is the largest and most diverse collection in the
-literature. The \numberofstrategies strategies are drawn from the APL and
+literature. The \numberofstrategies strategies are drawn from the Axelrod Python Library and
 include strategies from the \IPD{} literature. The computer tournaments include
 tournaments of four different types. So what is the best way of playing the
 \IPD{}? And is there a single dominant strategy for the \IPD{}? There was not a
