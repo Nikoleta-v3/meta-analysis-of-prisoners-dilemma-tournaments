@@ -66,7 +66,7 @@ structures such as neural networks. Many new strategies have been introduced and
 in a variety of tournaments and population dynamics. Typical results in the literature,
 however, rely on performance against a small number of somewhat arbitrarily selected
 strategies in a small number of tournaments, casting doubt on the generalizability
-of conclusions. We analyze a large collection of \numberofstrategies
+of conclusions. In this work, we analyze a large collection of \numberofstrategies
 strategies in thousands of computer tournaments, present the top performing strategies across multiple
 tournament types, and distill their salient features.
 The results show that there is not yet a single
@@ -81,7 +81,7 @@ The features of high performing strategies help cast some light on why
 strategies such as Tit For Tat performed historically well in tournaments and
 why zero-determinant strategies typically do not fare well in tournament
 settings. Furthermore, our findings have implications for the future training of
-autonomous agents. Understanding the crucial features for incorporation into
+autonomous agents, as understanding the crucial features for incorporation into
 these agents becomes essential.
 \end{abstract}
 
@@ -187,18 +187,23 @@ implementations or code. Despite these challenges, the absence of thorough
 testing raises concerns about claims regarding the superiority or robustness of
 newly introduced strategies.
 
-In this paper we evaluate the performance of a significant number of \IPD{}
+In this paper, we evaluate the performance of a significant number of \IPD{}
 strategies across a diverse array of tournaments. Many of the strategies used in
-our analysis are drawn from well-known and named strategies in \IPD{} literature,
-including previous tournament winners. This contrasts with other work that may
-have randomly generated essentially arbitrary strategies, often constrained to
-specific classes such as memory-one strategies or those of a certain structural
-form like finite state machines or deterministic memory-two strategies.
-Furthermore, our tournaments encompass variations including standard
+our analysis are drawn from well-known and named strategies in \IPD{}
+literature, including previous tournament winners. This contrasts with other
+work that may have randomly generated essentially arbitrary strategies, often
+constrained to specific classes such as memory-one strategies or those of a
+certain structural form like finite state machines or deterministic memory-two
+strategies. Furthermore, our tournaments encompass variations, including standard
 tournaments resembling Axelrod's original ones, tournaments with noise,
 probabilistic match length, and both noise and probabilistic match length. This
 diversity in strategies and tournament types provides new insights and tests
 earlier claims in alternative settings against known powerful strategies.
+More specifically, we show that the previous tournament
+winners are lacking against large enough opponent pools; they do not appear
+among the top-performing strategies anymore. This could be due to likely
+suffering from a lack of diversity in the strategies they were trained/tested
+against, finding it hard to adapt to the new strategies.
 
 It is important to note that we do not assert the existence of a single
 best-performing strategy across all tournaments or tournament types. On the
@@ -734,24 +739,29 @@ expected, skewed towards 0.
 
 \section{Discussion}\label{section:conclusion}
 
-This manuscript explored the performance of \numberofstrategies strategies of
+This manuscript explores the performance of \numberofstrategies strategies in
 the \IPD{} in thousands of computer tournaments. The collection of computer
-tournaments presented here is the largest and most diverse collection in the
-literature. The \numberofstrategies strategies are drawn from the Axelrod Python Library and
-include strategies from the \IPD{} literature. The computer tournaments include
-tournaments of four different types. So what is the best way of playing the
-\IPD{}? And is there a single dominant strategy for the \IPD{}? There was not a
-single strategy within the collection of the \numberofstrategies strategies that
-managed to perform well in all the tournaments variations it competed in. Even
-if on average a strategy ranked highly in a specific environment this did not
-guarantee its success over the different tournament types. Nevertheless, in
-subsections~\ref{section:top_performances}
-and~\ref{section:evaluation_of_performance} we examined the best performing
-strategies across various tournament types and analysed their salient features.
-this demonstrated that there are properties associated with the success of
-strategies which in fact contradict the originally suggested properties of
-Axelrod~\cite{Axelrod1981}.
+tournaments presented here is the largest and most diverse in the literature.
+The \numberofstrategies strategies are drawn from \axelrod{} library and include
+strategies from the \IPD{} literature. The computer tournaments encompass four
+different types. So, what is the best way to play the \IPD{}? And is there a
+single dominant strategy for the \IPD{}? There was not a single strategy within
+the collection of \numberofstrategies strategies that managed to perform well in
+all the tournament variations it competed in. A strategy ranking highly in a
+specific environment did not guarantee its success over different tournament
+types, with a few exceptions - strategies that generalize better. Already
+well-known in the AI/ML literature, adding noise to training data leads to more
+robust models. We see that clearly here, where the strategies trained for noise
+(or designed for noise) tend to be better generalists. There were instances
+where a few strategies trained in narrow conditions outperformed more generalist
+strategies, as they tend to overfit. However, the strategies trained with noise
+perform well in general, whilst the strategies trained specifically on no noise
+or small subpopulations do not.
 
+We also examined the best-performing strategies across various tournament
+types and analyzed their salient features. This demonstrated that there are
+properties associated with the success of strategies that contradict the
+originally suggested properties of Axelrod~\cite{Axelrod1981}.
 We showed that complex or \textbf{clever} strategies can be effective, whether
 trained against a corpus of possible opponents or purposely designed to mitigate
 the impact of noise such as the DBS strategy. Moreover, we found some
