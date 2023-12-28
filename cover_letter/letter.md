@@ -48,6 +48,10 @@ publication in your journal.
  
 As potential referees, we would like to suggest the following:
 
-- Yohsuke Murase (will add email and details)
-- Xingru Chen ...
-- Eladio Montero ...
+- Yohsuke Murase (yohsuke.murase@gmail.com, RIKEN Center for Computational
+Science) has authored numerous papers on strategies for the repeated prisoner's
+dilemma and on repeated games more generally.
+- Xingru Chen (xingrucz@gmail.com, Beijing University of Posts and Telecommunications)
+is a mathematician interested in game theory and reinforcement learning.
+- Eladio Montero (eladio.montero@vub.be, Artificial Intelligence Lab Brussels)
+explores behavior using game theory and data analysis.
