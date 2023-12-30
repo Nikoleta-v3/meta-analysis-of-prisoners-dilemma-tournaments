@@ -68,13 +68,18 @@ however, rely on performance against a small number of somewhat arbitrarily sele
 strategies in a small number of tournaments, casting doubt on the generalizability
 of conclusions. In this work, we analyze a large collection of \numberofstrategies
 strategies in thousands of computer tournaments, present the top performing strategies across multiple
-tournament types, and distill their salient features.
-The results show that there is not yet a single
-strategy that performs well in diverse Iterated Prisoner's Dilemma scenarios,
-nevertheless there are several properties that heavily influence the best performing
-strategies. This refines the properties described by Axelrod in light of
-recent and more diverse opponent populations to: be nice, be provocable and generous,
-be a little envious, be clever, and adapt to the environment. More precisely,
+tournament types, and distill their salient features. 
+We find that although a strategy's high ranking in a specific environment
+does not guarantee success across different tournament types, certain strategies
+consistently perform well across various settings. Notably,
+strategies designed or trained for noise are the strategies that generalise
+better—an observation well established in AI/ML literature where adding noise to
+training data enhances model robustness.
+We identify several crucial properties
+heavily influencing the success of strategies, refining Axelrod's described
+properties in light of encounters with more diverse opponents to: being
+cooperative, responsive to provocation, generous yet slightly envious, clever,
+and adaptable to the prevailing environment. More precisely,
 we find that strategies perform best when their probability of cooperation
 matches the total tournament population's aggregate cooperation probabilities.
 The features of high performing strategies help cast some light on why
@@ -207,7 +212,7 @@ against, finding it hard to adapt to the new strategies.
 
 It is important to note that we do not assert the existence of a single
 best-performing strategy across all tournaments or tournament types. On the
-contrary, our work demonstrates that such a strategy does not exist
+contrary, our work demonstrates that such a strategy does not always exist
 (notwithstanding a few strategies with broadly high performance). The primary
 objective of this paper, presented in the latter parts of the paper, is to
 continue the discussion on the properties of successful strategies, a
@@ -745,9 +750,8 @@ tournaments presented here is the largest and most diverse in the literature.
 The \numberofstrategies strategies are drawn from \axelrod{} library and include
 strategies from the \IPD{} literature. The computer tournaments encompass four
 different types. So, what is the best way to play the \IPD{}? And is there a
-single dominant strategy for the \IPD{}? There was not a single strategy within
-the collection of \numberofstrategies strategies that managed to perform well in
-all the tournament variations it competed in. A strategy ranking highly in a
+single dominant strategy for the \IPD{}?
+A strategy ranking highly in a
 specific environment did not guarantee its success over different tournament
 types, with a few exceptions - strategies that generalize better. Already
 well-known in the AI/ML literature, adding noise to training data leads to more

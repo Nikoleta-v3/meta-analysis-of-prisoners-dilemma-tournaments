@@ -25,12 +25,16 @@ tournaments resembling Axelrod’s original ones, tournaments with noise,
 probabilistic match length, and both noise and probabilistic match length.
 
 We present the top-performing strategies across multiple tournament types and
-distill their salient features. The results show that there is not yet a single
-strategy that performs well in diverse Iterated Prisoner’s Dilemma scenarios;
-nevertheless, there are several properties that heavily influence the
-best-performing strategies. This refines the properties described by Axelrod in
-light of recent and more diverse opponent populations: be nice, be provocable
-and generous, be a little envious, be clever, and adapt to the environment.
+distill their key features. We observe that while a strategy's high ranking in a
+specific environment does not guarantee success in different tournament types,
+certain strategies consistently perform well across various settings. Notably,
+these are strategies designed or trained for noise—an observation well
+established in AI/ML literature where adding noise to training data enhances
+model robustness. We identify several crucial properties that significantly
+influence strategy success. These findings refine the properties initially
+described by Axelrod in response to recent encounters with more diverse opponent
+populations: being cooperative, responsive to provocation, generous yet slightly
+envious, clever, and adaptable to the environment.
 
 Our findings shed interesting light on why strategies such as Tit For Tat have
 historically performed well in tournaments, while zero-determinant strategies
@@ -55,3 +59,16 @@ dilemma and on repeated games more generally.
 is a mathematician interested in game theory and reinforcement learning.
 - Eladio Montero (eladio.montero@vub.be, Artificial Intelligence Lab Brussels)
 explores behavior using game theory and data analysis.
+
+We hope that you will consider our manuscript for publication in the Focus Issue
+on Game Theory and AI in Complex Systems.
+
+On behalf of the authors,
+
+Nikoleta E Glynatsi
+
+Postdoctoral Researcher
+Research Group Dynamics of Social Behavior
+Max Planck Institute for Evolutionary Biology, Plön, Germany
+Website: https://nikoleta-v3.github.io
+Email: glynatsi@evobio.mpg.de
