@@ -39,7 +39,7 @@ envious, clever, and adaptable to the environment.
 Our findings shed interesting light on why strategies such as Tit For Tat have
 historically performed well in tournaments, while zero-determinant strategies
 typically do not fare well in tournament settings. We demonstrate that diversity
-in the population of opponent strategies is of paramount importance in the
+in the population of opponent strategies is paramount in the
 construction and evaluation of game theory strategies. Furthermore, our findings
 have implications for the future training of autonomous agents, as understanding
 the crucial features for incorporation into these agents becomes essential.
