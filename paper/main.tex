@@ -65,7 +65,7 @@ introduction of the zero-determinant strategies and the use of sophisticated lea
 structures such as neural networks. Many new strategies have been introduced and tested
 in a variety of tournaments and population dynamics. Typical results in the literature,
 however, rely on performance against a small number of somewhat arbitrarily selected
-strategies in a small number of tournaments, casting doubt on the generalizability
+strategies, casting doubt on the generalizability
 of conclusions. In this work, we analyze a large collection of \numberofstrategies
 strategies in thousands of computer tournaments, present the top performing strategies across multiple
 tournament types, and distill their salient features.
@@ -80,16 +80,15 @@ matches the total tournament population's aggregate cooperation probabilities.
 The features of high performing strategies help cast some light on why
 strategies such as Tit For Tat performed historically well in tournaments and
 why zero-determinant strategies typically do not fare well in tournament
-settings. Furthermore, our findings have implications for the future training of
-autonomous agents, as understanding the crucial features for incorporation into
-these agents becomes essential.
+settings.
 \end{abstract}
 
-\section{Background}
+\section{Introduction}
 
 The Iterated Prisoner's Dilemma (\IPD) is a repeated two-player game that models
 behavioral interactions, specifically interactions where self-interest clashes
-with collective interest. In each turn of the game, both players simultaneously
+with collective interest. It encompasses a wide range of social and
+biological phenomena. In each turn of the game, both players simultaneously
 and independently decide between cooperation (\(C\)) and defection (\(D\)). This
 decision is made with the memory of all prior interactions. The payoffs for each
 player at each turn are influenced by their own choice and the choice of the
@@ -110,11 +109,16 @@ where typically \(T > R > P > S\) and \(2R > T + S\). The most common values
 used in the literature~\cite{Axelrod1981} are \(R=3\), \(P=1\), \(T=5\),
 \(S=0\), and these are the values also used in this work.
 
+
+
 Conceptualizing strategies and understanding the best way to play the game have
 been of interest to the scientific community since the formulation of the game
-in 1950~\cite{Flood1958}. Following Axelrod's computer tournaments in the
-1980s~\cite{Axelrod1980a, Axelrod1980b}, round-robin computer tournaments became
-a common evaluation technique for newly designed strategies.
+\cite{Axelrod1980a, Beaufils1997, Press2012, Tzafestas2000, Hilbe2017,
+Glynatsi2020, Murase2021, Schmid2022, Chen2023}.
+This extends to both tournament settings and population dynamics.
+Computer tournaments became a common evaluation technique for newly designed
+strategies following Axelrod's computer tournaments in the
+1980s~\cite{Axelrod1980a, Axelrod1980b}.
 The winner of both of Axelrod's tournaments~\cite{Axelrod1980a, Axelrod1980b}
 was the simple strategy Tit For Tat (\TFT{}). \TFT{} cooperates on the first turn
 and thereafter copies the previous action of its opponent, retaliating against
@@ -165,7 +169,7 @@ Finally, others introduced strategies deviating completely from the originally
 suggested properties of success. For example, a set of ``envious'' Iterated
 Prisoner's Dilemma (\IPD) strategies were introduced, called zero-determinant
 strategies (ZDs), in~\cite{Press2012}. These strategies attempt to force a
-linear relationship between stationary payoffs against other memory-one
+linear relationship between stationary payoffs against their
 opponents, potentially ensuring that they receive a higher average payout. While
 ZDs were introduced with a small tournament in which some were reportedly
 successful \cite{Stewart2012}, this result has not generally held in future
@@ -231,8 +235,7 @@ value of diversity in training datasets, such as variations in image perspective
 skin color, etc., are critical in training accurate and generalizable machine
 learning models, we show that diversity in the population of opponent strategies
 is of paramount importance in the construction and evaluation of game theory
-strategies. As AI agents start to interact as scale, they will benefit from
-exposure to a wide variety of alternative agents. Moreover, conducting a similar
+strategies. Moreover, conducting a similar
 analysis can shed light on already trained strategies, aiding in understanding
 the key features they have autonomously developed during their training
 processes.
@@ -249,7 +252,7 @@ section~\ref{section:conclusion}. This manuscript introduces several parameters,
 which are discussed in the following sections; the full set of parameters and
 their definitions are also provided in the Supplementary Material.
 
-\section{Data collection}\label{section:data_collection}
+\section{Model}\label{section:data_collection}
 
 The data collection of various types of tournaments and the use of different
 strategies are made possible due to an open-source library called \axelrod{}~\cite{axelrodproject}
@@ -513,7 +516,7 @@ stochastic  &  If a strategy is stochastic & strategy classifier from APL & bool
 makes use of game &  If a strategy makes used of the game information & strategy classifier from APL & boolean  & Na &  Na \\
 makes use of length &  If a strategy makes used of the number of turns & strategy classifier from APL & boolean  & Na &  Na \\
 memory usage &  The memory size of a strategy divided by the number of turns & memory size from APL & float & 0 &  1 \\
-SSE & A measure of how far a strategy is from ZD behaviour & method described in~\cite{Knight2019} & float & 0 & 1 \\
+SSE & A measure of how far a strategy is from ZD behaviour & method described in~\cite{Knight2024} & float & 0 & 1 \\
 max cooperating rate $(C_{\text{max}})$  & The biggest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
 min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
 median cooperating rate $(C_{\text{median}})$ & The median cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
@@ -541,7 +544,7 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     whether it makes use of the number of turns or the game's payoffs. The
     memory usage is calculated as the number of turns the strategy considers to
     make an action (which is specified in the APL) divided by the number of
-    turns. The SSE (introduced in~\cite{Knight2019}) shows how close a strategy
+    turns. The SSE (introduced in~\cite{Knight2024}) shows how close a strategy
     is to behaving as a ZDs, and subsequently, in an extortionate way. The
     method identifies the ZDs closest to a given strategy and calculates the
     algebraic distance between them as the sum of squared error (SSE). A SSE value of 1 indicates
@@ -690,7 +693,7 @@ attempt to exploit all opponents and cannot actively adapt back to mutual
 cooperation against stronger strategies, which requires a deeper memory. It's
 worth noting that ZDs tend to perform poorly in population games for a similar
 reason: they aim to exploit other players using ZDs, failing to form a
-cooperative subpopulation~\cite{Knight2017evolution}. This makes them effective
+cooperative subpopulation~\cite{Knight2018evolution}. This makes them effective
 invaders but poor at resisting invasion.
 
 \begin{figure}[!htbp]
