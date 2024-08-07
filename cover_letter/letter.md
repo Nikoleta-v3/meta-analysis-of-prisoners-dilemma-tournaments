@@ -2,8 +2,8 @@ Dear Editors,
 
 I am pleased to submit our research paper entitled “Properties of Winning
 Iterated Prisoner’s Dilemma Strategies” by Nikoleta E. Glynatsi, Vincent Knight,
-and Marc Harper for your consideration for publication in the Journal of Physics:
-Complexity as part of the Focus Issue on Game Theory and AI in Complex Systems.
+and Marc Harper for your consideration for publication in the journal
+PLOS Computational Biology.
 
 Exploring the performance of strategies in the Iterated Prisoner’s Dilemma (IPD)
 has been a topic of interest to the scientific community for decades, following
@@ -34,18 +34,17 @@ and generous, be a little envious, be clever, and adapt to the environment.
 
 Our findings shed interesting light on why strategies such as Tit For Tat have
 historically performed well in tournaments, while zero-determinant strategies
-typically do not fare well in tournament settings. We demonstrate that diversity
+typically do not fare well in tournament settings. Moreover, we demonstrate that diversity
 in the population of opponent strategies is of paramount importance in the
-construction and evaluation of game theory strategies. Furthermore, our findings
-have implications for the future training of autonomous agents, as understanding
-the crucial features for incorporation into these agents becomes essential.
+construction and evaluation of game theory strategies.
 
-We believe that our paper aligns with the scope and objectives of the Focus Issue on
-Game Theory and AI in Complex Systems and will contribute to the ongoing
-scientific discourse in the field of autonomous agents in repeated games.
+We believe that our paper aligns with the scope and objectives of your journal.
+More specifically it provides comprehensive computational simulations that
+uncover new insights into the dynamics of the Prisoner's Dilemma, advancing our
+understanding of strategic behavior in diverse biological and social systems.
 Therefore, we would be delighted if this article could be considered for
 publication in your journal.
- 
+
 As potential referees, we would like to suggest the following:
 
 - Yohsuke Murase (yohsuke.murase@gmail.com, RIKEN Center for Computational
