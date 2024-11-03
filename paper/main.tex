@@ -24,6 +24,7 @@
 \usepackage{enumerate}
 \usepackage[table]{xcolor}
 \usepackage{authblk}
+\usepackage{listings}
 %%%%%%%%%%%%%%%%%
 
 \newcommand{\colortext}[1]{\textcolor{blue}{#1}}
@@ -40,6 +41,29 @@
 \def\IPD{\texttt{IPD}}
 
 \setlength{\tabcolsep}{3pt}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codegreen},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                                             
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \title{Properties of Winning Iterated Prisoner's Dilemma Strategies.}
 \author[1, 2]{Nikoleta E. Glynatsi}
@@ -113,8 +137,8 @@ used in the literature~\cite{Axelrod1981} are \(R=3\), \(P=1\), \(T=5\),
 
 Conceptualizing strategies and understanding the best way to play the game have
 been of interest to the scientific community since the formulation of the game
-\cite{Axelrod1980a, Beaufils1997, Press2012, Tzafestas2000, Hilbe2017,
-Glynatsi2020, Murase2021, Schmid2022, Chen2023}.
+\cite{Axelrod1980a, Nowak1992, Nowak1993, Beaufils1997, Press2012, Tzafestas2000, Hilbe2017,
+Glynatsi2020, Murase2021, Schmid2022, Li2022, Chen2023}.
 This extends to both tournament settings and population dynamics.
 Computer tournaments became a common evaluation technique for newly designed
 strategies following Axelrod's computer tournaments in the
@@ -190,6 +214,28 @@ impossible due to insufficient descriptions and lack of published
 implementations or code. Despite these challenges, the absence of thorough
 testing raises concerns about claims regarding the superiority or robustness of
 newly introduced strategies.
+
+Beyond these difficulties, we believe that limited comprehensive analyses are
+rooted in field conventions. Tournaments or evolutionary dynamics often rely on
+a select list of hand-picked strategies chosen by modelers, typically based on
+specific properties they wish to examine. This practice may stem from
+misconceptions, such as the assumption that because \TFT{} performs
+relatively well, it is sufficient to test only against \TFT{} variants.
+Another misconception may stem from the Press \& Dyson result~\cite{Press2012},
+which implies that lower memory strategies will always dominate pairwise
+interactions, leading some to consider only memory-one strategies. However, this
+result holds strictly only in pairwise interactions.
+
+It is not only the set of strategies or the tournament parameters such as noise
+that may impact results but also the design of the round-robin tournament itself. To
+address this~\cite{Rapoport2015} separately examined the effects of changes in format, objective
+criteria, and payoff values on tournament outcomes. They demonstrated that
+\TFT's performance declined under certain conditions. To our knowledge,
+this is the only study that has reanalyzed the tournament structure and
+critically evaluated it. However, in this work, we employ an extensive list of
+strategies made possible by the \axelrod{} package, an approach that would
+have been difficult to achieve previously. Unlike the authors of that study, we
+do not consider a new tournament design.
 
 In this paper, we evaluate the performance of a significant number of \IPD{}
 strategies across a diverse array of tournaments. Many of the strategies used in
@@ -282,6 +328,48 @@ allowed to vary to assess the impact of smoothing. The winner of each tournament
 is determined based on the average score achieved by a strategy from the entire
 set of repetitions, not by the number of wins.
 
+
+To run a tournament, only a few lines of code are required
+(Figure~\ref{fig:axelrod_code}). Specifically, one needs to define the list of
+strategies that the players use when participating in the tournament, the number
+of repetitions, the number of turns or the probability of each match ending, and
+the probability of noise. We demonstrate two examples in
+Figure~\ref{fig:axelrod_code}: one with a fixed number of turns and one with a
+probabilistic ending. A tournament is an instance of the `Tournament` class. To
+execute the tournament, users need to run the `play()` method, which returns an
+instance of the `Results` class. This instance includes many details of the
+tournament, such as the winner and the average score. Additionally, a more
+detailed summary of the tournament is provided, which we use in this analysis
+and describe in detail below.
+
+\begin{figure}
+\begin{lstlisting}[language=Python]
+>>> import axelrod as axl
+
+>>> players = [axl.TitForTat(), axl.GTFT(), axl.Gradual(), axl.EvolvedLookerUp2_2_2()]
+
+>>> standard_tournament = axl.Tournament(players=players, turns=50, repetitions=10, noise=0)
+
+>>> results = standard_tournament.play()
+
+>>> prob_noisy_end_tournament = axl.Tournament(players=players, prob_end=0.5,
+...                                            repetitions=10, noise=0.001)
+
+>>> results = prob_noisy_end_tournament.play()
+\end{lstlisting}
+\caption{{\bf Example usage of the \axelrod package for running tournaments.}
+The strategies that players use are saved in a list, which is then passed to the
+Tournament class. In this example, strategies we previously discussed, such as \TFT, Generous Tit-for-Tat, Gradual, and a stochastic strategy
+evolved through reinforcement learning, are included. We create a standard
+tournament where noise is set to 0, as
+well as a noisy tournament with probabilistic ending. Once an instance of the
+tournament class is defined, executing the tournament is straightforward. The play()
+method generates all possible pairs from the list of strategies, including
+pairs where each strategy plays against itself, and then iterates through each
+match to play it. Each match is repeated according to the specified number of
+repetitions, with results aggregated to a tournament summary.}\label{fig:axelrod_code}
+\end{figure}
+
 The process of collecting tournament results is outlined in
 Algorithm~\ref{algorithm:data_generation}. For each trial, a random size \(N\)
 is selected, and a random list of \(N\) strategies from the \numberofstrategies
@@ -294,6 +382,19 @@ each trial, we collect the results for four different tournaments, resulting in
 a total of \numberofalltournaments $(\uniquenumberofseeds \times 4)$ tournament
 results. Each tournament outputs a result summary in the form of
 Table~\ref{table:output_result}.
+
+
+The summary contains statistics regarding each strategy that participated in the
+tournament, such as its rank, cooperation rate, time spent in each state, and
+the probability of cooperating after each of the four possible outcomes of the
+previous round. In our analysis, we will use the measures for each strategy that
+are provided in the summary, as well as additional measures we calculated.
+Namely, these include the SSE error, the average cooperation in each tournament,
+the maximum, and the minimum values. The SSE (introduced in~\cite{Knight2024})
+shows how close a strategy is to behaving as a ZDs, and subsequently, in an
+extortionate way. We also consider how each strategy's cooperation rate \(C_r\)
+compares to those of the tournament as a whole, for example, by comparing
+\(C_r\) to \(C_{\text{max}}\).
 
 \begin{algorithm}[!htbp]
     \setstretch{1.35}
@@ -318,7 +419,7 @@ Table~\ref{table:output_result}.
 \end{algorithm}
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
-\begin{table}[b]
+\begin{table}[t]
     \begin{center}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{ccccccgcgcgcgcg}
@@ -522,7 +623,7 @@ min cooperating rate $(C_{\text{min}})$ & The smallest cooperating rate in a giv
 median cooperating rate $(C_{\text{median}})$ & The median cooperating rate in a given tournament  & result summary  & float & 0 & 1\\
 mean cooperating rate $(C_{\text{mean}})$ & The mean cooperating rate in a given tournament  & result summary  & float & 0 & 1 \\
 $C_r$ / $C_{\text{max}}$ & A strategy's cooperating rate divided by the maximum & result summary  & float & 0 & 1 \\
-$C_{\text{min}}$ / $C_r$ & A strategy's cooperating rate divided by the minimum & result summary  & float & 0 & 1 \\
+$C_{\text{min}}$ / $C_r$ & The minimum divided by a strategy's cooperating rate & result summary  & float & 0 & 1 \\
 $C_r$ / $C_{\text{median}}$ & A strategy's cooperating rate divided by the median  & result summary  & float & 0 & 1\\
 $C_r$ / $C_{\text{mean}}$ & A strategy's cooperating rate divided by the mean & result summary  & float & 0 & 1 \\
 $C_r$ & The cooperating ratio of a strategy & result summary  & float & 0 & 1 \\
@@ -574,8 +675,13 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
 \end{center}
 \caption{\textbf{Correlations between the features of Table~\ref{table:manual_features}
 and the normalised rank and the median score.}
-The correlation coefficients are calculated using the Spearman's rank
-correlation coefficient.}\label{table:correlations}
+For each type of tournament, standard, noisy, probabilistic ending, and noisy
+probabilistic ending, we run a correlation analsysif. For each tournament we
+check the correlation between each feature used in our analysis and the normalised
+random and median score. Note that the correlation coefficients are calculated
+using the Spearman's rank correlation coefficient. A negative value
+indicates a negative correlation and in the case of the normalised rank
+a smaller rank translats to better position in the tournament.}\label{table:correlations}
 \end{table}
 
 In standard tournaments, the features \(CC\) to \(C\), \(C_r\), \(C_r /
@@ -667,10 +773,15 @@ suited for noise holding grudges against defections.
     \centering
         \centering
         \includegraphics[width=\textwidth]{../images/features_result.pdf}
-        \caption{\textbf{Distributions of \(C_r\) and \(C_r / C_{\text{mean}}\)
-        for the winners of tournaments.} A value of \(C_r / C_{\text{mean}} =
-        1\) imply that the cooperating ratio of the winner was the same as the
-        mean cooperating ratio of the tournament.}
+        \caption{{\bf Distributions of \(C_r\) and \(C_r / C_{\text{mean}}\)
+        for the winners of tournaments.} In this distribution, we consider the
+        winners of the tournaments, specifically the strategies that ranked
+        first in each tournament. For each type of tournament, we plot the
+        cooperation rate of the winner in the tournament they won, as well as
+        the ratio of the winner's cooperation rate to that of the entire
+        tournament. A value of \(C_r / C_{\text{mean}} = 1\) implies that the
+        cooperation ratio of the winner was the same as the mean cooperation
+        ratio of the tournament.}
         \label{fig:discussion_cooperation_measures}
 \end{figure}
 
@@ -700,13 +811,16 @@ invaders but poor at resisting invasion.
     \centering
         \centering
         \includegraphics[width=.75\textwidth]{../images/sse.pdf}
-        \caption{\textbf{Distributions of SSE error for the winners of
-        tournaments.} As a reminder, the SSE error shows how close a strategy is
-        to behaving as a ZDs, and subsequently, in an extortionate way. A SSE
-        value of 1 indicates no extortionate behaviour at all whereas a value of
-        0 indicates that a strategy is behaving as a ZDs.}
+        \caption{\textbf{Distributions of SSE error for the winners of tournaments.}
+        Here, we again consider the winners of the tournaments, separated by type of
+        tournament, and plot their SSE error. As a reminder, the SSE error indicates how
+        closely a strategy behaves like a Zero-Determinant (ZD) strategy, and
+        subsequently, in an extortionate way. An SSE value of 1 indicates no
+        extortionate behavior at all, whereas a value of 0 indicates that a strategy is
+        behaving as a ZD.}
         \label{fig:discussion_sse}
 \end{figure}
+
 
 Finally, we examine the distributions of the cooperation rates after the
 outcomes \(CC, CD, DC\), and \(DD\), as shown in
@@ -735,10 +849,18 @@ expected, skewed towards 0.
     \centering
         \centering
         \includegraphics[width=\textwidth]{../images/rates_result.pdf}
-        \caption{\textbf{Distributions of rates $CC$ to $C$, $CD$ to $C$, $DC$
-        to $C$, and $DD$ to $C$ for the winners of
-        tournaments.}}\label{fig:discussion_rates}
+        \caption{\textbf{Distributions of rates \(CC\) to \(C\), \(CD\) to \(C\), \(DC\)
+        to \(C\), and \(DD\) to \(C\) for the winners of tournaments.} The result
+        summary from the tournaments records how often each strategy cooperated after
+        each possible outcome of the previous round. Specifically, we analyze the
+        probability with which a strategy chose \(C\) following the outcomes. Here, we
+        plot the distributions of these probabilities for the winners of the
+        tournaments. We separate them by type of tournament, from top to bottom:
+        standard, noisy, probabilistic ending, and noisy probabilistic ending. From left
+        to right, we plot the distributions of cooperation after the outcomes \(CC\),
+        \(CD\), \(DC\), and \(DD\).}\label{fig:discussion_rates}
 \end{figure}
+
 
 \section{Discussion}\label{section:conclusion}
 
@@ -822,6 +944,13 @@ context: the fitness landscape is a function of the population (where fitness in
 this case is tournament performance). While that may seem obvious now, it shows
 why historical tournament results on small or arbitrary populations of
 strategies have so often failed to produce generalizable results.
+
+To this end, many strategies, such as Win-Stay-Lose-Shift and Generous
+Tit For Tat, emerged due to their strong performance in evolutionary dynamics.
+Axelrod's original work relied on computer tournaments, so we chose to remain
+consistent with this approach, as a comprehensive study like ours had not yet
+been undertaken. However, evolutionary settings would be an exciting direction
+for future study.
 
 Overall, the five properties successful strategies need to have in a \IPD{} competition
 based on the analysis that has been presented in this manuscript are:
