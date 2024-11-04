@@ -25,6 +25,12 @@
 \usepackage[table]{xcolor}
 \usepackage{authblk}
 \usepackage{listings}
+\usepackage{xparse}
+
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{teal}{#1}}%
+}
+
 %%%%%%%%%%%%%%%%%
 
 \newcommand{\colortext}[1]{\textcolor{blue}{#1}}
@@ -277,14 +283,14 @@ strategy in the Iterated Prisoner's Dilemma (\IPD{}) are:
 We believe that the discussion on the properties of winning strategies holds
 significant importance. It aims to provide guidance to researchers designing new
 strategies and those training strategies. Specifically, much like the recognized
-value of diversity in training datasets, such as variations in image perspective,
-skin color, etc., are critical in training accurate and generalizable machine
-learning models, we show that diversity in the population of opponent strategies
-is of paramount importance in the construction and evaluation of game theory
-strategies. Moreover, conducting a similar
-analysis can shed light on already trained strategies, aiding in understanding
-the key features they have autonomously developed during their training
-processes.
+value of diversity in training datasets~\cite{Gong:IEEE:2019}, such as
+variations in image perspective, skin color, etc., are critical in training
+accurate and generalizable machine learning models, we show that diversity in
+the population of opponent strategies is of paramount importance in the
+construction and evaluation of game theory strategies. Moreover, conducting a
+similar analysis can shed light on already trained strategies, aiding in
+understanding the key features they have autonomously developed during their
+training processes.
 
 The rest of the paper is organized as follows. In
 section~\ref{section:data_collection}, we describe the data collection process.
@@ -335,12 +341,13 @@ strategies that the players use when participating in the tournament, the number
 of repetitions, the number of turns or the probability of each match ending, and
 the probability of noise. We demonstrate two examples in
 Figure~\ref{fig:axelrod_code}: one with a fixed number of turns and one with a
-probabilistic ending. A tournament is an instance of the `Tournament` class. To
-execute the tournament, users need to run the `play()` method, which returns an
-instance of the `Results` class. This instance includes many details of the
-tournament, such as the winner and the average score. Additionally, a more
-detailed summary of the tournament is provided, which we use in this analysis
-and describe in detail below.
+probabilistic ending. A tournament is an instance of the \texttt{Tournament}
+class. To execute the tournament, users need to run the \texttt{play()}
+method, which returns an instance of the \texttt{ResultSet} class. This
+instance includes many details of the tournament, such as the winner and the
+average score of the participants. Additionally, the instance contains a more
+detailed summary of the tournament, which we use in our analysis. We describe
+the results summary in detail below.
 
 \begin{figure}
 \begin{lstlisting}[language=Python]
@@ -357,13 +364,13 @@ and describe in detail below.
 
 >>> results = prob_noisy_end_tournament.play()
 \end{lstlisting}
-\caption{{\bf Example usage of the \axelrod package for running tournaments.}
+\caption{{\bf Example usage of the \axelrod{} package for running tournaments.}
 The strategies that players use are saved in a list, which is then passed to the
 Tournament class. In this example, strategies we previously discussed, such as \TFT, Generous Tit-for-Tat, Gradual, and a stochastic strategy
 evolved through reinforcement learning, are included. We create a standard
-tournament where noise is set to 0, as
+tournament where \texttt{noise} is set to 0, as
 well as a noisy tournament with probabilistic ending. Once an instance of the
-tournament class is defined, executing the tournament is straightforward. The play()
+tournament class is defined, executing the tournament is straightforward. The \texttt{play()}
 method generates all possible pairs from the list of strategies, including
 pairs where each strategy plays against itself, and then iterates through each
 match to play it. Each match is repeated according to the specified number of
@@ -385,41 +392,20 @@ Table~\ref{table:output_result}.
 
 
 The summary contains statistics regarding each strategy that participated in the
-tournament, such as its rank, cooperation rate, time spent in each state, and
-the probability of cooperating after each of the four possible outcomes of the
-previous round. In our analysis, we will use the measures for each strategy that
-are provided in the summary, as well as additional measures we calculated.
-Namely, these include the SSE error, the average cooperation in each tournament,
-the maximum, and the minimum values. The SSE (introduced in~\cite{Knight2024})
-shows how close a strategy is to behaving as a ZDs, and subsequently, in an
-extortionate way. We also consider how each strategy's cooperation rate \(C_r\)
-compares to those of the tournament as a whole, for example, by comparing
-\(C_r\) to \(C_{\text{max}}\).
+tournament, such as its rank, cooperation rate, time spent in each state when
+only a single past round is considered, and the probability of cooperating after
+each of the four possible outcomes of the previous round. In our analysis, we
+will use the measures for each strategy provided in the summary, as well as
+additional measures we calculated. Namely, these include the SSE error, the
+average, median, maximum, and minimum cooperation rates in each tournament. The
+SSE (introduced in~\cite{Knight2024}) shows how closely a strategy behaves as a
+zero-determinant strategy and subsequently in an extortionate way. We also
+consider how each strategy's cooperation rate \(C_r\) compares to those of the
+tournament as a whole, for example, by comparing \(C_r\) to \(C_{\text{max}}\).
 
-\begin{algorithm}[!htbp]
-    \setstretch{1.35}
-    \For{\text{seed} $\in [0, 11420]$}{
-        $N \gets \text{randomly select integer}\in [3, 195]$\;
-        $\text{players} \gets  \text{randomly select $N$ players}$\;
-        $k \gets  \text{randomly select integer}\in [10, 100]$\;
-        $n \gets  \text{randomly select integer}\in [1, 200]$\;
-        $p_n \gets  \text{randomly select float}\in [0, 1]$\;
-        $p_e \gets   \text{randomly select float}\in [0, 1]$\;
-        \vspace{0.4cm}
-        $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, k)$\;
-        $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p_n, k)$\;
-        $\text{result probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_e, k)$\;
-        $\text{result noisy probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_n, p_e, k)$\;
-
-    }
-    \KwRet{result standard, result noisy, result probabilistic ending,
-    result noisy probabilistic ending}\;
-    \caption{Tournament Data Collection Algorithm}
-    \label{algorithm:data_generation}
-\end{algorithm}
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
-\begin{table}[t]
+\begin{table}[b]
     \begin{center}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{ccccccgcgcgcgcg}
@@ -450,6 +436,28 @@ match wins, and the probability that the strategy cooperated in the opening
 move. Additionally, it provides the probabilities of a strategy being in any of
 the four states ($CC, CD, DC, DD$) and the cooperation rate after each state.}\label{table:output_result}
 \end{table}
+
+\begin{algorithm}[!htbp]
+    \setstretch{1.35}
+    \For{\text{seed} $\in [0, 11420]$}{
+        $N \gets \text{randomly select integer}\in [3, 195]$\;
+        $\text{players} \gets  \text{randomly select $N$ players}$\;
+        $k \gets  \text{randomly select integer}\in [10, 100]$\;
+        $n \gets  \text{randomly select integer}\in [1, 200]$\;
+        $p_n \gets  \text{randomly select float}\in [0, 1]$\;
+        $p_e \gets   \text{randomly select float}\in [0, 1]$\;
+        \vspace{0.4cm}
+        $\text{result standard}$ $\gets$ Axelrod.tournament$(\text{players}, n, k)$\;
+        $\text{result noisy}$ $\gets$ Axelrod.tournament$(\text{players}, n, p_n, k)$\;
+        $\text{result probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_e, k)$\;
+        $\text{result noisy probabilistic ending}$ $\gets$ Axelrod.tournament$(\text{players}, p_n, p_e, k)$\;
+
+    }
+    \KwRet{result standard, result noisy, result probabilistic ending,
+    result noisy probabilistic ending}\;
+    \caption{Tournament Data Collection Algorithm}
+    \label{algorithm:data_generation}
+\end{algorithm}
 
 During the data collection process, the probabilities of noise (\(p_n\)) and
 tournament ending (\(p_e\)) were allowed to take values between 0 and 1.
@@ -674,14 +682,14 @@ $k$ & The number of repetitions of a given tournament & trial summary & integer 
     }
 \end{center}
 \caption{\textbf{Correlations between the features of Table~\ref{table:manual_features}
-and the normalised rank and the median score.}
-For each type of tournament, standard, noisy, probabilistic ending, and noisy
-probabilistic ending, we run a correlation analsysif. For each tournament we
-check the correlation between each feature used in our analysis and the normalised
-random and median score. Note that the correlation coefficients are calculated
-using the Spearman's rank correlation coefficient. A negative value
-indicates a negative correlation and in the case of the normalised rank
-a smaller rank translats to better position in the tournament.}\label{table:correlations}
+and the normalised rank and the median score.} For each type of
+tournament, standard, noisy, probabilistic ending, and noisy probabilistic
+ending, we conduct a correlation analysis. For each tournament, we check the
+correlation between each feature used in our analysis and the normalized random
+and median scores. Note that the correlation coefficients are calculated using
+Spearman's rank correlation coefficient. A negative value indicates a negative
+correlation, and in the case of the normalized rank, a smaller rank translates
+to a better position in the tournament.}\label{table:correlations}
 \end{table}
 
 In standard tournaments, the features \(CC\) to \(C\), \(C_r\), \(C_r /
@@ -876,7 +884,7 @@ all the tournament variations it competed in. A strategy ranking highly in a
 specific environment did not guarantee its success over different tournament
 types, with a few exceptions - strategies that generalize better. Already
 well-known in the AI/ML literature, adding noise to training data leads to more
-robust models. We see that clearly here, where the strategies trained for noise
+robust models~\cite{Bishop1995}. We see that clearly here, where the strategies trained for noise
 (or designed for noise) tend to be better generalists. There were instances
 where a few strategies trained in narrow conditions outperformed more generalist
 strategies, as they tend to overfit. However, the strategies trained with noise
