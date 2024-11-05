@@ -246,9 +246,9 @@ do not consider a new tournament design.
 In this paper, we evaluate the performance of a significant number of \IPD{}
 strategies across a diverse array of tournaments. Many of the strategies used in
 our analysis are drawn from well-known and named strategies in \IPD{}
-literature, including previous tournament winners. This contrasts with other
-work that may have randomly generated essentially arbitrary strategies, often
-constrained to specific classes such as memory-one strategies or those of a
+literature, including previous tournament winners.
+This contrasts with other work that is often constrained to specific classes such as 
+as memory-one strategies or those of a
 certain structural form like finite state machines or deterministic memory-two
 strategies. Furthermore, our tournaments encompass variations, including standard
 tournaments resembling Axelrod's original ones, tournaments with noise,
@@ -938,20 +938,22 @@ last move while also minimizing instances where it is exploited by an opponent
 could also explain why Tit For \(N\) Tats does not fare well for $N > 1$ -- it
 fails to achieve the proper cooperation ratio by tolerating too many defections.
 
-Similarly, our results could suggest an explanation regarding the intuitively
-unexpected effectiveness of memory-one strategies historically. Given that among
-the important features associated with success are the relative cooperation rate
-to the population average and the four memory-one probabilities of cooperating
-conditional on the previous round of play, these features can be optimized by a
-memory-one strategy such as \TFT. Usage of more history becomes valuable when
-there are exploitable opponent patterns. This is indicated by the importance of
-SSE as a feature, showing that the first-approximation provided by a memory-one
-strategy is no longer sufficient.
-These results highlight a central idea in evolutionary game theory in this
-context: the fitness landscape is a function of the population (where fitness in
-this case is tournament performance). While that may seem obvious now, it shows
-why historical tournament results on small or arbitrary populations of
-strategies have so often failed to produce generalizable results.
+Our results may also help explain the historically unexpected effectiveness of
+memory-one strategies~\cite{Camerer2011}. The success of these strategies
+contradicts the intuitive assumption that a longer memory and therefore more
+information would yield better strategic performance~\cite{Binmore1987}. Given
+that among the important features associated with success are the relative
+cooperation rate to the population average and the four memory-one probabilities
+of cooperating conditional on the previous round of play, these features can be
+optimized by a memory-one strategy such as \TFT. Usage of more history becomes
+valuable when there are exploitable opponent patterns. This is indicated by the
+importance of SSE as a feature, showing that the first-approximation provided by
+a memory-one strategy is no longer sufficient. These results highlight a central
+idea in evolutionary game theory in this context: the fitness landscape is a
+function of the population (where fitness in this case is tournament
+performance)~\cite{Hofbauer2003}. While that may seem obvious now, it shows why
+historical tournament results on small or arbitrary populations of strategies
+have so often failed to produce generalizable results.
 
 To this end, many strategies, such as Win-Stay-Lose-Shift and Generous
 Tit For Tat, emerged due to their strong performance in evolutionary dynamics.
@@ -985,8 +987,8 @@ could be applied and provide new insights in the field.
 
 \section{Data availability statement}
 
-The raw and processed datasets have been made publicly available~\cite{data,
-raw_data} and can be used for further analysis and insights.
+The raw and processed datasets have been made publicly available~\cite{raw_data, data}
+and can be used for further analysis and insights.
 
 \section{Acknowledgements}
 
