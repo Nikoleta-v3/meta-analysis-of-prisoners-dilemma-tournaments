@@ -1,41 +1,80 @@
 \section{Multivariate linear regression on median score}\label{app:regression_median_score}
 
-A multivariate linear regression has also been fitted to model the relationship between
-the features and the median score. The features included are given
-by Table~\ref{table:linear_regression_on_median} alongside their corresponding \(p\) values
-in the distinct tournaments and their regression coefficients.
+A multivariate linear regression has also been fitted to model the relationship
+between the features and the median score. The features included are given in
+Table~\ref{table:linear_regression_on_median} alongside their corresponding
+\(p\) values in distinct tournaments and their regression coefficients.
+Table~\ref{table:linear_regression_on_median} provides the results when
+considering tournaments with \(p_n \leq 0.1\) and \(p_e \leq 0.1\). The results
+when the probabilities are not constrained are given in
+Table~\ref{table:linear_regression_on_median_full_dataset}.
 
 \newcolumntype{g}{>{\columncolor{Gray}}c}
-\begin{table}[h]
+\begin{table}[!htbp]
     \begin{center}
-\resizebox{\textwidth}{!}{
+\resizebox{.8\textwidth}{!}{
 \begin{tabular}{lggccggccgg}
     \toprule
-    & \multicolumn{2}{g}{Standard} & \multicolumn{2}{c}{Noisy} & \multicolumn{2}{g}{Probabilistic ending} & \multicolumn{2}{c}{Noisy probabilistic ending} & \multicolumn{2}{g}{Overall}\\
+    & \multicolumn{2}{g}{Standard} & \multicolumn{2}{c}{Noisy} & \multicolumn{2}{g}{Probabilistic ending} & \multicolumn{2}{c}{Noisy probabilistic ending}\\
     \midrule
-    & \multicolumn{2}{g}{\(R\) adjusted: 0.576} & \multicolumn{2}{c}{\(R\) adjusted: 0.679} & \multicolumn{2}{g}{\(R\) adjusted: 0.816} & \multicolumn{2}{c}{\(R\) adjusted: 0.930} & \multicolumn{2}{g}{\(R\) adjusted: 0.318} \\
-    {} &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value \\
+    & \multicolumn{2}{g}{\(R\) adjusted: 0.576} & \multicolumn{2}{c}{\(R\) adjusted: 0.561} & \multicolumn{2}{g}{\(R\) adjusted: 0.488} & \multicolumn{2}{c}{\(R\) adjusted: 0.762}\\
+    {} &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value \\
     \midrule
-    $CC$ to $C$ rate   &  0.043 &  0.000 & -0.380 &  0.000 &  0.224 &  0.000 &  0.078 &    0.0 &  0.308 &    0.0 \\
-    $CD$ to $C$ rate   & -0.325 &  0.000 &  0.124 &  0.000 &  0.060 &  0.000 &  0.073 &    0.0 & -0.014 &    0.0 \\
-    $C_r$ / $C_{max}$  &      - &      - & -1.044 &  0.000 &      - &      - & -1.251 &    0.0 &      - &      - \\
-    $C_r$ / $C_{mean}$ &  0.553 &  0.000 & -0.101 &  0.000 & -1.136 &  0.000 & -0.089 &    0.0 & -0.665 &    0.0 \\
-    $C_{max}$          &  0.059 &  0.000 &      - &      - & -0.044 &  0.086 & -1.396 &    0.0 &      - &      - \\
-    $C_{mean}$         &  1.837 &  0.000 &  3.078 &  0.000 &  1.506 &  0.000 &  3.645 &    0.0 &      - &      - \\
-    $C_{min}$          &  0.156 &  0.000 &  1.528 &  0.000 &  0.311 &  0.000 &      - &      - &      - &      - \\
-    $C_{min}$ / $C_r$  & -0.049 &  0.000 & -0.378 &  0.000 & -0.204 &  0.000 &      - &      - & -0.257 &    0.0 \\
-    $DC$ to $C$ rate   & -0.204 &  0.000 &  0.074 &  0.000 &  0.066 &  0.000 &  0.066 &    0.0 &  0.007 &    0.0 \\
-    $k$                & -0.000 &  0.853 & -0.000 &  0.987 &  0.000 &  0.008 &  0.000 &    0.0 &      - &      - \\
-    $n$                & -0.000 &  0.000 &      - &      - &      - &      - &      - &      - &      - &      - \\
-    $p_e$              &      - &      - &      - &      - &  0.025 &  0.000 & -0.095 &    0.0 &      - &      - \\
-    $p_n$              &      - &      - &  0.124 &  0.000 &      - &      - &      - &      - &      - &      - \\
-    SSE                & -0.294 &  0.000 & -0.319 &  0.000 &  0.055 &  0.000 &  0.010 &    0.0 & -0.015 &    0.0 \\
-    constant           &  0.925 &  0.000 &  1.536 &  0.000 &  2.466 &  0.000 &  2.299 &    0.0 &  2.924 &    0.0 \\
-    memory usage       &  0.010 &  0.000 & -0.004 &  0.000 &      - &      - &      - &      - &      - &      - \\
+    constant             &  0.928 &  0.000 &  1.082 &  0.000 &  1.259 &  0.000 &  1.642 &  0.000 \\
+    $CC$ to $C$ rate     &  0.043 &  0.000 &  0.104 &  0.000 &  0.024 &  0.000 & -0.032 &  0.000 \\
+    $CD$ to $C$ rate     & -0.325 &  0.000 & -0.052 &  0.000 & -0.229 &  0.000 & -0.110 &  0.000 \\
+    $DC$ to $C$ rate     & -0.204 &  0.000 & -0.076 &  0.000 & -0.102 &  0.000 & -0.070 &  0.000 \\
+    SSE                  & -0.294 &  0.000 & -0.186 &  0.000 & -0.131 &  0.000 & -0.109 &  0.000 \\
+    $C_{max}$            &  0.056 &  0.000 & -0.060 &  0.011 & -0.005 &  0.849 & -0.240 &  0.000 \\
+    $C_{min}$            &  0.156 &  0.000 & -0.159 &  0.000 &  0.012 &  0.385 &  0.083 &  0.005 \\
+    $C_{mean}$           &  1.838 &  0.000 &  2.247 &  0.000 &  1.822 &  0.000 &  2.030 &  0.000 \\
+    $C_{min}$ / $C_r$    & -0.049 &  0.000 &  0.040 &  0.000 & -0.018 &  0.000 & -0.065 &  0.000 \\
+    $C_r$ / $C_{mean}$   &  0.552 &  0.000 & -0.227 &  0.000 &  0.027 &  0.125 & -0.043 &  0.000 \\
+    $k$                  & -0.000 &  0.856 & -0.000 &  0.245 & -0.000 &  0.610 & -0.000 &  0.572 \\
+    $n$                  & -0.000 &  0.000 &      - &      - &      - &      - &      - &      - \\
+    memory usage         &  0.010 &  0.000 &  0.004 &  0.000 &      - &      - &      - &      - \\
+    $C_r$ / $C_{median}$ &      - &      - &  0.252 &  0.000 &  0.181 &  0.000 &      - &      - \\
+    $p_n$                &      - &      - &  0.770 &  0.000 &      - &      - &  0.494 &  0.000 \\
+    $p_e$                &      - &      - &      - &      - &  0.763 &  0.000 &  0.285 &  0.000 \\
+    \bottomrule
+\end{tabular}}
+\end{center}
+\caption{Results of multivariate linear regressions with the median score as the dependent variable.
+\(R\) squared is reported for each model. For noisy tournaments $p_n \leq 0.1$
+and for probabilistic ending tournaments $p_e \leq 0.1$.}
+\label{table:linear_regression_on_median}
+\end{table}
+
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\begin{table}[!htbp]
+    \begin{center}
+\resizebox{.8\textwidth}{!}{
+\begin{tabular}{lggccggccgg}
+    \toprule
+    & \multicolumn{2}{g}{Standard} & \multicolumn{2}{c}{Noisy} & \multicolumn{2}{g}{Probabilistic ending} & \multicolumn{2}{c}{Noisy probabilistic ending}\\
+    \midrule
+    & \multicolumn{2}{g}{\(R\) adjusted: 0.575} & \multicolumn{2}{c}{\(R\) adjusted: 0.666} & \multicolumn{2}{g}{\(R\) adjusted: 0.816} & \multicolumn{2}{c}{\(R\) adjusted: 0.869} \\
+    {} &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value &  Coefficient &  \(p\)-value\\
+    \midrule
+    constant           &  0.928 &  0.000 &  2.143 &  0.000 &  2.466 &  0.000 &  1.824 &  0.000 \\
+    $CC$ to $C$ rate   &  0.043 &  0.000 & -0.468 &  0.000 &  0.223 &  0.000 & -0.008 &  0.000 \\
+    $CD$ to $C$ rate   & -0.325 &  0.000 &  0.105 &  0.000 &  0.060 &  0.000 &  0.074 &  0.000 \\
+    $DC$ to $C$ rate   & -0.204 &  0.000 &  0.060 &  0.000 &  0.066 &  0.000 & -0.002 &  0.011 \\
+    SSE                & -0.294 &  0.000 & -0.365 &  0.000 &  0.055 &  0.000 & -0.035 &  0.000 \\
+    $C_{max}$          &  0.056 &  0.000 &      - &      - & -0.045 &  0.081 & -0.181 &  0.000 \\
+    $C_{min}$          &  0.156 &  0.000 &  0.264 &  0.000 &  0.311 &  0.000 &      - &      - \\
+    $C_{mean}$         &  1.838 &  0.000 &  2.046 &  0.000 &  1.506 &  0.000 &  2.273 &  0.000 \\
+    $C_{min}$ / $C_r$  & -0.049 &  0.000 & -0.252 &  0.000 & -0.204 &  0.000 &      - &      - \\
+    $C_r$ / $C_{mean}$ &  0.552 &  0.000 & -0.579 &  0.000 & -1.137 &  0.000 & -0.610 &  0.000 \\
+    $k$                & -0.000 &  0.856 &  0.000 &  0.788 &  0.000 &  0.009 &  0.000 &  0.005 \\
+    $n$                & -0.000 &  0.000 &      - &      - &      - &      - &      - &      - \\
+    memory usage       &  0.010 &  0.000 & -0.006 &  0.000 &      - &      - &      - &      - \\
+    $p_n$              &      - &      - &  0.119 &  0.000 &      - &      - &      - &      - \\
+    $p_e$              &      - &      - &      - &      - &  0.025 &  0.000 & -0.028 &  0.000 \\
     \bottomrule
 \end{tabular}}
 \end{center}
 \caption{Results of multivariate linear regressions with the median score as the dependent variable.
 \(R\) squared is reported for each model.}
-\label{table:linear_regression_on_median}
+\label{table:linear_regression_on_median_full_dataset}
 \end{table}
