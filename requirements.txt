@@ -13,7 +13,7 @@ seaborn==0.8.1
 tornado==5.0.2
 tqdm==4.31.1
 treeinterpreter==0.2.2
-ipython==5.0.0
+ipython==7.16.3
 prompt_toolkit== 1.0.18
 statsmodels==0.11.1
 invoke==1.4.1
